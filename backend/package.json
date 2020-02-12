@@ -24,7 +24,7 @@
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "dev": "nodemon src/",
     "start": "node src/",
-    "jest": "jest  --forceExit"
+    "jest": "jest  --forceExit --verbose=false"
   },
   "dependencies": {
     "@feathersjs/authentication": "^4.4.1",
@@ -38,6 +38,7 @@
     "@feathersjs/transport-commons": "^4.5.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "feathers-hooks-common": "^5.0.2",
     "feathers-mongoose": "^8.1.1",
     "helmet": "^3.21.2",
     "mongodb-core": "^3.2.7",

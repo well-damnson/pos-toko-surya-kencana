@@ -6,7 +6,7 @@
   "author": "AttreaVe <johansiautama@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"cd frontend && yarn start\" \"cd backend && yarn start\"",
+    "start": "concurrently \"cd frontend && yarn start\" \"cd backend && yarn dev\"",
     "postinstall": "cd frontend && yarn && cd ../backend && yarn"
   },
   "devDependencies": {

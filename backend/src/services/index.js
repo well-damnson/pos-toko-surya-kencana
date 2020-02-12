@@ -1,5 +1,9 @@
 const users = require('./users/users.service.js');
+const registration = require('./registration/registration.service.js');
+const licenses = require('./licenses/licenses.service.js');
 // eslint-disable-next-line no-unused-vars
-module.exports = function (app) {
+module.exports = function(app) {
   app.configure(users);
+  app.configure(registration);
+  app.configure(licenses);
 };
