@@ -1,0 +1,15 @@
+{
+  "name": "point-of-sales-toko-mas-surya-kencana",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jhnoa/POSTokoMasSuryaKencana.git",
+  "author": "AttreaVe <johansiautama@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"cd frontend && yarn start\" \"cd backend && yarn start\"",
+    "postinstall": "cd frontend && yarn && cd ../backend && yarn"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
