@@ -19,6 +19,8 @@ const authentication = require('./authentication');
 
 const mongoose = require('./mongoose');
 
+const {license} = require('./license');
+
 const app = express(feathers());
 
 // Load app configuration
@@ -53,4 +55,7 @@ app.use(express.errorHandler({logger}));
 
 app.hooks(appHooks);
 
+license(app);
+
+// console.log(process);
 module.exports = app;
