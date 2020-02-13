@@ -16,13 +16,10 @@ const _SECRET_ = 'P3k5i445OjNa';
 // AES(UUID, SECRET) = LICENSE
 
 function encrypt(data, secret) {
-  console.log('process: encrypt', {data, secret});
   if (typeof data !== 'string' || data instanceof String) {
     data = data.toString();
   }
   let result = CryptoJS.AES.encrypt(data, secret || _SECRET_).toString();
-  let result1 = CryptoJS.AES.encrypt(data, _SECRET_).toString();
-  console.log('result: encrypt', {result, result1});
   return result;
 }
 function decrypt(data, secret) {
@@ -33,7 +30,6 @@ function decrypt(data, secret) {
 }
 
 function checkValid(licenseWithSecret, uuid) {
-  console.log('process: checkValid', {...licenseWithSecret, uuid});
   let {license, secret} = licenseWithSecret;
   if (license !== undefined && license.length > 0) {
     let decrypted = decrypt(license, secret);
@@ -44,9 +40,7 @@ function checkValid(licenseWithSecret, uuid) {
 }
 
 async function checkFile() {
-  console.log('checking license');
   let rawdata = await fs.readFileSync(path, 'utf8');
-  console.log(rawdata);
   let licenseWithSecret = JSON.parse(decrypt(rawdata));
   let uuid = await machineId(true);
   return checkValid(licenseWithSecret, uuid);
@@ -54,7 +48,6 @@ async function checkFile() {
 
 function setApp(app, value) {
   app.set('licenseValid', value);
-  console.log('License:', app.get('licenseValid'));
 }
 
 function randomString(length) {
@@ -134,20 +127,16 @@ async function debugTest() {
   let license = encrypt(uuid, secret);
   let decrypted = decrypt(license, secret);
   let toConsole = {uuid, secret, license, decrypted};
-  console.log('TESTING: ', toConsole);
-  // return {license, secret};
+  return toConsole;
 }
 
 async function test(app) {
   let make = async function(license, secret) {
     let uuid = await machineId(true);
-    console.log('process: make', {license, secret, uuid});
     let valid = checkValid({license, secret}, uuid);
-    console.log('result: make', valid);
     if (valid) {
       try {
         let data = encrypt(JSON.stringify({license, secret}));
-        console.log(data);
         await fs.writeFileSync(path, data);
       } catch (error) {
         console.log(error);
@@ -162,22 +151,16 @@ async function test(app) {
   try {
     if (fs.existsSync(path)) {
       //file exists
-      console.log('license file exist');
       let checkResult = await checkFile();
       if (checkResult) {
-        console.log('Thank You for Buying this Software');
         setApp(app, true);
       } else {
-        console.log('License File Exists but License Not Valid');
         setApp(app, false);
         licenseEmitter.on('newLicense', make);
       }
     } else {
       //file not exists
-      console.log('License File NOT Exist');
-      console.log('Ask Support for Licensing');
-      if (process.env.NODE_ENV !== 'production') await debugTest();
-      // console.log('Testing:', await debugTest());
+      await debugTest();
 
       setApp(app, false);
       licenseEmitter.on('newLicense', make);

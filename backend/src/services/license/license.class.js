@@ -10,7 +10,6 @@ exports.License = class License {
     this.app = app;
   }
   async create(data, params) {
-    console.log(data);
     let {license, secret} = data;
     licenseEvent.emit('newLicense', license, secret);
     const [value] = await once(licenseEvent, 'resultLicense');

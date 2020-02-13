@@ -57,5 +57,4 @@ app.hooks(appHooks);
 
 license(app);
 
-// console.log(process);
 module.exports = app;
