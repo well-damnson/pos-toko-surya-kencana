@@ -46,91 +46,100 @@ async function checkFile() {
   return checkValid(licenseWithSecret, uuid);
 }
 
-function setApp(app, value) {
-  app.set('licenseValid', value);
-}
+// function randomString(length) {
+//   let available = [
+//     'a',
+//     'b',
+//     'c',
+//     'd',
+//     'e',
+//     'f',
+//     'g',
+//     'h',
+//     'i',
+//     'j',
+//     'k',
+//     'l',
+//     'm',
+//     'n',
+//     'o',
+//     'p',
+//     'q',
+//     'r',
+//     's',
+//     't',
+//     'u',
+//     'v',
+//     'w',
+//     'x',
+//     'y',
+//     'z',
+//     'A',
+//     'B',
+//     'C',
+//     'D',
+//     'E',
+//     'F',
+//     'G',
+//     'H',
+//     'I',
+//     'J',
+//     'K',
+//     'L',
+//     'M',
+//     'N',
+//     'O',
+//     'P',
+//     'Q',
+//     'R',
+//     'S',
+//     'T',
+//     'U',
+//     'V',
+//     'W',
+//     'X',
+//     'Y',
+//     'Z',
+//     '1',
+//     '2',
+//     '3',
+//     '4',
+//     '5',
+//     '6',
+//     '7',
+//     '8',
+//     '9',
+//     '0',
+//   ];
+//   let result = '';
+//   for (let index = 0; index < length; index++) {
+//     result += available[Math.floor(Math.random() * available.length)];
+//   }
+//   return result;
+// }
+// async function debugTest() {
+//   let uuid = await machineId(true);
+//   let secret = randomString(10);
+//   let license = encrypt(uuid, secret);
+//   let decrypted = decrypt(license, secret);
+//   let toConsole = {uuid, secret, license, decrypted};
+//   return toConsole;
+// }
 
-function randomString(length) {
-  let available = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '0',
-  ];
-  let result = '';
-  for (let index = 0; index < length; index++) {
-    result += available[Math.floor(Math.random() * available.length)];
-  }
-  return result;
-}
-async function debugTest() {
+async function m_id() {
   let uuid = await machineId(true);
-  let secret = randomString(10);
-  let license = encrypt(uuid, secret);
-  let decrypted = decrypt(license, secret);
-  let toConsole = {uuid, secret, license, decrypted};
-  return toConsole;
+  let machineSerialNumber = uuid.split('-');
+  machineSerialNumber = [
+    machineSerialNumber[2],
+    machineSerialNumber[0],
+    machineSerialNumber[1],
+    machineSerialNumber[4],
+    machineSerialNumber[3],
+  ].join('-');
+  console.log('Serial Number:', machineSerialNumber);
 }
 
-async function test(app) {
+async function test(next) {
   let make = async function(license, secret) {
     let uuid = await machineId(true);
     let valid = checkValid({license, secret}, uuid);
@@ -141,7 +150,7 @@ async function test(app) {
       } catch (error) {
         console.log(error);
       }
-      setApp(app, true);
+      next(true);
       licenseEmitter.removeAllListeners('newLicense');
       licenseEmitter.emit('resultLicense', true);
     } else {
@@ -153,16 +162,17 @@ async function test(app) {
       //file exists
       let checkResult = await checkFile();
       if (checkResult) {
-        setApp(app, true);
+        next(true);
       } else {
-        setApp(app, false);
+        await m_id();
+        next(false);
         licenseEmitter.on('newLicense', make);
       }
     } else {
       //file not exists
-      await debugTest();
-
-      setApp(app, false);
+      // await debugTest();
+      await m_id();
+      next(false);
       licenseEmitter.on('newLicense', make);
     }
   } catch (err) {
