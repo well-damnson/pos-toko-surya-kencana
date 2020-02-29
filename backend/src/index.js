@@ -8,10 +8,15 @@ process.on('unhandledRejection', (reason, p) =>
   logger.error('Unhandled Rejection at: Promise ', p, reason),
 );
 
-server.on('listening', () =>
+server.on('listening', async () => {
+  setInterval(() => {
+    console.log('backing up');
+    let backup = app.service('backup');
+    backup.find();
+  }, 3600000);
   logger.info(
     'Feathers application started on http://%s:%d',
     app.get('host'),
     port,
-  ),
-);
+  );
+});

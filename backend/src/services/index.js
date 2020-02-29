@@ -8,6 +8,7 @@ const memberArea = require('./member-area/member-area.service.js');
 const itemArea = require('./item-area/item-area.service.js');
 const transactions = require('./transactions/transactions.service.js');
 const transactionArea = require('./transaction-area/transaction-area.service.js');
+const backup = require('./backup/backup.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function(app) {
   app.configure(users);
@@ -20,4 +21,5 @@ module.exports = function(app) {
   app.configure(itemArea);
   app.configure(transactions);
   app.configure(transactionArea);
+  app.configure(backup);
 };

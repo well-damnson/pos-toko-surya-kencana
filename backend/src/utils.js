@@ -38,10 +38,46 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function backup() {
+  // let now = new Date();
+  // console.log(now);
+  // console.log(now.toISOString());
+  // console.log(now.toJSON());
+  // console.log(now.toUTCString());
+  // let dir = './backup';
+  // let filename = `${
+  //   now
+  //     .toISOString()
+  //     .replace(/-/g, '')
+  //     .replace(/:/g, '')
+  //     .replace(/T/g, '')
+  //     .split('.')[0]
+  // }.json`;
+
+  // if (!fs.existsSync(dir)) {
+  //   fs.mkdirSync(dir, {recursive: true});
+  // }
+  // await fs.writeFile(`backup/${filename}`, JSON.stringify(data), (err) => {
+  //   if (err) {
+  //     throw err;
+  //   }
+  //   console.log(`File Saved as ${dir}/${filename}`);
+  // });
+  // return;
+
+  require('./backupScript')();
+}
+
+function restore() {
+  require('./restoreScript')();
+}
+
 module.exports = {
   dateToArray,
   arrayToDate,
   prepend,
   filterObject,
   capitalizeFirstLetter,
+  backup,
+  restore,
 };
