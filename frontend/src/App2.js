@@ -1,7 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { View } from 'react-native';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { View } from "react-native";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         >
           Learn React
         </a>
-        <View style={{ width: 100, height: 20, backgroundColor: 'red' }} />
+        <View style={{ width: 100, height: 20, backgroundColor: "red" }} />
       </header>
     </div>
   );
