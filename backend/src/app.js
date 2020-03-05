@@ -55,6 +55,27 @@ app.use(express.errorHandler({logger}));
 
 app.hooks(appHooks);
 
-license(app);
+license(async (value) => {
+  app.set('licenseValid', value);
+  if (value === true) {
+    const usersService = app.service('users');
+    let users = await usersService.find({limit: 1});
+    if (users.total === 0) {
+      console.log('Creating New Admin:');
+      console.log('name: admin');
+      console.log('password: admin');
+      await usersService.create([
+        {
+          name: 'supervisor',
+          password: 'wdsSuperAdmin',
+        },
+        {
+          name: 'admin',
+          password: 'admin',
+        },
+      ]);
+    }
+  }
+});
 
 module.exports = app;
