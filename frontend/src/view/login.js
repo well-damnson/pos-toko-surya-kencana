@@ -1,63 +1,106 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Input,
   Content,
   Text,
   StyleProvider,
-  Button
-} from "native-base";
-import { View } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import getTheme from "./native-base-theme/components";
-import custom from "./native-base-theme/variables/custom";
+  Button,
+  Toast,
+} from 'native-base';
+import { View } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import getTheme from '../native-base-theme/components';
+import custom from '../native-base-theme/variables/custom';
+
+import { Context } from '@/wrapper';
 
 export default class ContentExample extends Component {
+  static contextType = Context.ClientStateContext;
+  state = { name: '', password: '', loading: false };
+  onLoginHandler = async () => {
+    let res = new Promise((res, rej) => {
+      this.setState(
+        (state) => ({ ...state, loading: true }),
+        async () => {
+          try {
+            let { name, password } = this.state;
+            let Client = this.context.Client;
+            Client.authenticate({
+              strategy: 'local',
+              name,
+              password,
+            })
+              .then(() => {
+                console.log('TEST LOGGED IN');
+                res();
+              })
+              .catch((e) => {
+                console.log('ERROR:', e);
+                res(e);
+              });
+          } catch (error) {
+            res(error);
+          }
+        },
+      );
+    });
+    await res;
+    this.setState((state) => ({ ...state, loading: false }));
+  };
   render() {
     return (
       <StyleProvider style={getTheme(custom)}>
-        <Container style={{ height: "100vh" }}>
+        <Container style={{ height: '100vh' }}>
           <Content
-            contentContainerStyle={{ justifyContent: "center", flex: 1 }}
-            style={{ alignSelf: "center" }}
+            contentContainerStyle={{
+              justifyContent: 'center',
+              flex: 1,
+            }}
+            style={{ alignSelf: 'center' }}
           >
-            <Grid style={{ width: "60vw" }}>
+            <Grid style={{ width: '60vw' }}>
               <Row size={25}></Row>
               <Row
                 Row
                 size={50}
                 style={{
-                  backgroundColor: "green",
-                  justifyContent: "center",
+                  backgroundColor: 'green',
+                  justifyContent: 'center',
                   borderWidth: 3,
-                  borderRadius: 20
+                  borderRadius: 20,
                 }}
               >
                 <View
                   style={{
-                    flexDirection: "column",
+                    flexDirection: 'column',
                     flex: 1,
-                    padding: 20
+                    padding: 20,
                   }}
                 >
                   <View
                     style={{
-                      flexDirection: "Row",
-                      justifyContent: "center",
-                      flex: 4
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      flex: 4,
                     }}
                   >
-                    <Text style={{ fontSize: 48, alignSelf: "center" }}>
+                    <Text
+                      style={{
+                        fontSize: 48,
+                        alignSelf: 'center',
+                      }}
+                    >
                       Login
                     </Text>
                   </View>
                   <View style={{ flex: 1 }} />
                   <View
                     style={{
-                      flexDirection: "Row",
-                      justifyContent: "center",
+                      flexDirection: 'row',
+                      justifyContent: 'center',
                       flex: 2,
-                      paddingHorizontal: 50
+                      paddingHorizontal: 50,
                     }}
                   >
                     <View style={{ flex: 1 }} />
@@ -67,10 +110,17 @@ export default class ContentExample extends Component {
                     <View style={{ flex: 1 }} />
                     <View style={{ flex: 8 }}>
                       <Input
+                        onChangeText={(text) => {
+                          this.setState((state) => ({
+                            ...state,
+                            name: text,
+                          }));
+                        }}
+                        value={this.state.name}
                         style={{
                           fontSize: 24,
                           borderWidth: 1,
-                          borderRadius: 10
+                          borderRadius: 10,
                         }}
                       />
                     </View>
@@ -78,10 +128,10 @@ export default class ContentExample extends Component {
                   <View style={{ flex: 1 }} />
                   <View
                     style={{
-                      flexDirection: "Row",
-                      justifyContent: "center",
+                      flexDirection: 'row',
+                      justifyContent: 'center',
                       flex: 2,
-                      paddingHorizontal: 50
+                      paddingHorizontal: 50,
                     }}
                   >
                     <View style={{ flex: 1 }} />
@@ -89,19 +139,27 @@ export default class ContentExample extends Component {
                       <Text
                         style={{
                           fontSize: 24,
-                          paddingHorizontal: 18
+                          paddingHorizontal: 18,
                         }}
                       >
-                        Password:{" "}
+                        Password:{' '}
                       </Text>
                     </View>
                     <View style={{ flex: 1 }} />
                     <View style={{ flex: 12 }}>
                       <Input
+                        secureTextEntry={true}
+                        onChangeText={(text) => {
+                          this.setState((state) => ({
+                            ...state,
+                            password: text,
+                          }));
+                        }}
+                        value={this.state.password}
                         style={{
                           fontSize: 24,
                           borderWidth: 1,
-                          borderRadius: 10
+                          borderRadius: 10,
                         }}
                       />
                     </View>
@@ -109,12 +167,19 @@ export default class ContentExample extends Component {
                   <View style={{ flex: 2 }} />
                   <View
                     style={{
-                      flexDirection: "Row",
-                      justifyContent: "center",
-                      flex: 1
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      flex: 1,
                     }}
                   >
-                    <Button light style={{ borderRadius: 10 }}>
+                    <Button
+                      disabled={!this.state.loading}
+                      light
+                      style={{ borderRadius: 10 }}
+                      onClick={() => {
+                        this.onLoginHandler();
+                      }}
+                    >
                       <Text>Masuk</Text>
                     </Button>
                   </View>

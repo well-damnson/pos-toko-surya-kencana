@@ -64,16 +64,16 @@ license(async (value) => {
       console.log('Creating New Admin:');
       console.log('name: admin');
       console.log('password: admin');
-      await usersService.create([
-        {
-          name: 'supervisor',
-          password: 'wdsSuperAdmin',
-        },
-        {
-          name: 'admin',
-          password: 'admin',
-        },
-      ]);
+      let result = await usersService.create({
+        name: 'admin',
+        password: 'admin',
+      });
+      let result1 = await usersService.create({
+        name: 'supervisor',
+        password: 'wdsSuperAdmin',
+      });
+      console.log(result);
+      console.log(result1);
     }
   }
 });

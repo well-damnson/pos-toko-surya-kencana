@@ -8,7 +8,7 @@
   "scripts": {
     "start": "concurrently \"yarn frontend\" \"yarn backend\"",
     "backend": "cd backend && yarn dev",
-    "frontend": "cd frontend && yarn start",
+    "frontend": "cd frontend && yarn electron",
     "postinstall": "cd frontend && yarn && cd ../backend && yarn"
   },
   "devDependencies": {
