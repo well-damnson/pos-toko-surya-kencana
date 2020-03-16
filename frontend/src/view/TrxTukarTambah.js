@@ -46,7 +46,7 @@ export default class Jual extends Component {
             <Grid>
               {/* section 1 - Header */}
               <Row
-                size={10}
+                size={15}
                 style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
               >
                 <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
@@ -208,7 +208,7 @@ export default class Jual extends Component {
                     padding: 5
                   }}
                 >
-                  Barang DiBeli
+                  Barang Dibeli
                 </Text>
               </Row>
               {/* section 3 - tabel penjualan */}
