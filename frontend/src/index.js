@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./modals/modalTambahItem";
+import App from "./view/newsMemberBirthday";
 import * as serviceWorker from "./serviceWorker";
 
 import { Provide } from "./wrapper";

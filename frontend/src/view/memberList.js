@@ -101,7 +101,9 @@ export default class Jual extends Component {
                     >
                       <Text style={{ alignSelf: "center" }}>Tgl Lahir: </Text>
                       <TextInput
+                        placeholder="DD"
                         style={{
+                          textAlign: "center",
                           marginTop: 12,
                           marginRight: 5,
                           backgroundColor: "white",
@@ -112,7 +114,9 @@ export default class Jual extends Component {
                         }}
                       />
                       <TextInput
+                        placeholder="MM"
                         style={{
+                          textAlign: "center",
                           marginTop: 12,
                           marginRight: 5,
                           backgroundColor: "white",
@@ -123,7 +127,9 @@ export default class Jual extends Component {
                         }}
                       />
                       <TextInput
+                        placeholder="YYYY"
                         style={{
+                          textAlign: "center",
                           marginTop: 12,
                           marginRight: 5,
                           backgroundColor: "white",
