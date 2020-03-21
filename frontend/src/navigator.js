@@ -12,6 +12,8 @@ import TrxBeli from './view/trxBeli';
 import TrxJual from './view/trxJual';
 import TrxTukar from './view/trxTukarTambah';
 import Barcode from './view/barcode';
+import TambahMember from './view/tambahMember';
+import TambahItem from './view/tambahItem';
 
 let Routes = {
   Activation: {
@@ -52,6 +54,14 @@ let Routes = {
   },
   Barcode: {
     Component: Barcode,
+    Menu: true,
+  },
+  TambahMember: {
+    Component: TambahMember,
+    Menu: true,
+  },
+  TambahItem: {
+    Component: TambahItem,
     Menu: true,
   },
 };

@@ -64,7 +64,7 @@ let Menu = () => {
                   <ListItem itemDivider>
                     <Text style={{ fontSize: 24 }}>Member</Text>
                   </ListItem>
-                  <ListItem button onPress={() => console.log('y')}>
+                  <ListItem button onPress={() => setNav('TambahMember')}>
                     <Text>Tambah Member</Text>
                   </ListItem>
                   <ListItem button onPress={() => setNav('MemberList')}>
