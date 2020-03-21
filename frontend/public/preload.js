@@ -203,28 +203,12 @@ window.path = () => {
 };
 // 13 23 04 10 12 00 32 14 10 33 16 06 29 33 05 07;
 
-let dummy = () => {
-  if (!license && !secret) {
-    // CREATE LICENSE, DUMP AND ACTIVATE
+window.dummy = () => {
+  // CREATE LICENSE, DUMP AND ACTIVATE
+
+  window.ActivationCode().then((activationCode) => {
+    let obj = { activationCode };
     let license = licenseDebug(obj);
     console.log(license);
-
-    // NOW CHECK IF LICENSE IS GOOD
-    let decode = true;
-
-    if (decode) {
-      let activationCodePromise = new Promise(createActivationCode).then(
-        (activationCode) => {
-          let debug = licenseDebug({ activationCode, secret: license.secret });
-          console.log(debug);
-          if (
-            license.license === debug.license &&
-            license.secret === debug.secret
-          ) {
-            console.log('Activation Success');
-          }
-        },
-      );
-    }
-  }
+  });
 };

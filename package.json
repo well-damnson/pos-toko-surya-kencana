@@ -8,10 +8,13 @@
   "scripts": {
     "start": "concurrently \"yarn frontend\" \"yarn backend\"",
     "backend": "cd backend && yarn dev",
-    "frontend": "cd frontend && yarn electron",
+    "frontend": "cd frontend && yarn start",
     "postinstall": "cd frontend && yarn && cd ../backend && yarn"
   },
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^1.6.8"
   }
 }

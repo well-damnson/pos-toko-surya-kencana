@@ -1,7 +1,8 @@
 import React from 'react';
 import * as ClientContext from './context/client';
+import * as NavContext from './context/nav';
 
-let imported = { ...ClientContext };
+let imported = { ...ClientContext, ...NavContext };
 let keys = Object.keys(imported);
 console.log(imported, keys);
 let Provider = [];
@@ -46,6 +47,6 @@ class Provide extends React.Component {
   }
 }
 
-export { Provide,  Context };
+export { Provide, Context };
 
 export default Hook;

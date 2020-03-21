@@ -7550,6 +7550,11 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+jsbarcode@^3.8.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.11.0.tgz#20623e008b101ef45d0cce9c8022cdf49be28547"
+  integrity sha512-/ozCd7wsa+VIHo9sUc03HneVEQrH7cVWfJolUT/WOW1m8mJ2e3iYZje6C9X3LFHdczlesqFHRpxLtbVsNtjyow==
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -10278,6 +10283,14 @@ react-art@^16.12.0:
     prop-types "^15.6.2"
     scheduler "^0.18.0"
 
+react-barcode@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-barcode/-/react-barcode-1.4.0.tgz#ebc85ff1b8b49ac4b947b7f3745d684c6c363902"
+  integrity sha512-xDxIc9WUTQPMcwc3kbCVsjh03WiPyynms9OSdsNSh2AAgB6XqMiy9hYWkCNHgdNdvurkvKB6hm25AZHXyQfvlQ==
+  dependencies:
+    jsbarcode "^3.8.0"
+    prop-types "^15.6.2"
+
 react-dev-utils@^10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.1.0.tgz#ccf82135f6dc2fc91969bc729ce57a69d8e86025"
@@ -10445,6 +10458,13 @@ react-timer-mixin@^0.13.4:
   version "0.13.4"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
   integrity sha512-4+ow23tp/Tv7hBM5Az5/Be/eKKF7DIvJ09voz5LyHGQaqqz9WV8YMs31eFvcYQs7d451LSg7kDJV70XYN/Ug/Q==
+
+react-to-print@^2.6.3:
+  version "2.6.3"
+  resolved "https://registry.yarnpkg.com/react-to-print/-/react-to-print-2.6.3.tgz#a32c85099babdcc6d597546772fc3d6703b0e230"
+  integrity sha512-+4NNaO5E0DaFOgPAR5mm8uT0lS45w6Wzfq8dSJicvn6SghWwgI7/TKrrt59vasjtey8s5rBK6V3q4XPo08fTRA==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-tween-state@^0.1.5:
   version "0.1.5"

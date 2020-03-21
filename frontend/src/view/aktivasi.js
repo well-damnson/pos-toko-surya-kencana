@@ -19,12 +19,12 @@ export default class ContentExample extends Component {
     activation: 'XXXX-XXXX-XXXX-XXXX',
   };
   async componentDidMount() {
-    let activated = await window.checkLicense();
-    if (activated) {
-      console.log('Activated already, Activation Not Needed');
-    } else {
-      console.log('Activation Needed');
-    }
+    // let activated = await window.checkLicense();
+    // if (activated) {
+    //   console.log('Activated already, Activation Not Needed');
+    // } else {
+    //   console.log('Activation Needed');
+    // }
     let res = await window.ActivationCode();
     console.log(res);
     this.setState((state) => ({ ...state, activation: res }));
