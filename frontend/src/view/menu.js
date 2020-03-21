@@ -76,7 +76,7 @@ let Menu = () => {
                   <ListItem button onPress={() => console.log('z')}>
                     <Text style={{ fontSize: 24 }}>Laporan</Text>
                   </ListItem>
-                  <ListItem button onPress={() => console.log('z')}>
+                  <ListItem button onPress={() => setNav('Barcode')}>
                     <Text style={{ fontSize: 24 }}>Print Barcode</Text>
                   </ListItem>
                   <ListItem itemDivider button>

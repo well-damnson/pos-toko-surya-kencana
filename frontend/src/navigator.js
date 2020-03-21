@@ -11,6 +11,7 @@ import NewsPoin from './view/newsMemberPoin';
 import TrxBeli from './view/trxBeli';
 import TrxJual from './view/trxJual';
 import TrxTukar from './view/trxTukarTambah';
+import Barcode from './view/barcode';
 
 let Routes = {
   Activation: {
@@ -47,6 +48,10 @@ let Routes = {
   },
   Blank: {
     Component: () => <div />,
+    Menu: true,
+  },
+  Barcode: {
+    Component: Barcode,
     Menu: true,
   },
 };
