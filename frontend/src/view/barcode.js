@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Barcode from 'react-barcode';
 import ReactToPrint from 'react-to-print';
 
@@ -9,8 +9,11 @@ import {
   Right,
   Button,
   Input,
+  Form,
   Item,
   StyleProvider,
+  Picker,
+  Icon,
 } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
@@ -122,9 +125,36 @@ let Page = (props) => {
 
 let Render = () => {
   let printRef = useRef();
+  let [posisi, setPosisi] = useState('key0');
+  console.log(posisi);
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <StyleProvider style={getTheme(custom)}>
+          <Form
+            style={{
+              flex: 2,
+              alignSelf: 'center',
+              height: '3vh',
+              backgroundColor: '#FFF',
+              width: '20vw',
+            }}
+          >
+            <Picker
+              mode="dropdown"
+              style={{ width: undefined }}
+              selectedValue={posisi}
+              onValueChange={setPosisi}
+            >
+              <Picker.Item label="Pilih" value="key0" />
+              <Picker.Item label="Kalung" value="key1" />
+              <Picker.Item label="Liontin" value="key2" />
+              <Picker.Item label="Anting" value="key3" />
+              <Picker.Item label="Cincin" value="key4" />
+            </Picker>
+          </Form>
+        </StyleProvider>
+
         <div style={{ flex: 1 }}></div>
         <ReactToPrint
           trigger={() => (
