@@ -20,5 +20,4 @@ module.exports = function(app) {
   app.configure(itemArea);
   app.configure(transactions);
   app.configure(transactionArea);
-  app.configure(backup);
 };
