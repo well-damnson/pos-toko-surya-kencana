@@ -54,7 +54,7 @@ export default class Jual extends Component {
                   style={{
                     alignSelf: "center",
                     height: "3vh",
-                    backgroundColor: "#FFF",
+                    backgroundColor: "#FFFFFF",
                     width: "15vw"
                   }}
                   regular
