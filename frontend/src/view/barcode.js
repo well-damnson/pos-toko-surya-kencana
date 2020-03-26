@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Barcode from 'react-barcode';
 import ReactToPrint from 'react-to-print';
 
@@ -19,6 +19,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import getTheme from './../native-base-theme/components';
 import custom from '../native-base-theme/variables/custom';
+
+import Hook from '@/wrapper';
 
 let test = (data) => {
   let { nama, berat, kadar, barcode } = data;
@@ -85,21 +87,23 @@ let SingleBarcode = (data) => {
   );
 };
 
-let MultiBarcode = () => {
-  let randomDataCreator = (number) => {
-    let samplename = ['CMK', 'ACP', 'SKF', 'REK', 'VKM', 'PRK'];
-    let result = [];
-    for (let index = 0; index < number; index++) {
-      let obj = {};
-      obj.nama = samplename[Math.floor(Math.random() * samplename.length)];
-      obj.berat = Math.floor(Math.random() * 40);
-      obj.kadar = Math.floor(Math.random() * 50) + 45;
-      obj.barcode = '000000000000';
-      result.push(obj);
-    }
-    return result;
-  };
-  let data = randomDataCreator(37);
+let MultiBarcode = (props) => {
+  // console.log('PROPS:', props);
+  // let randomDataCreator = (number) => {
+  //   let samplename = ['CMK', 'ACP', 'SKF', 'REK', 'VKM', 'PRK'];
+  //   let result = [];
+  //   for (let index = 0; index < number; index++) {
+  //     let obj = {};
+  //     obj.nama = samplename[Math.floor(Math.random() * samplename.length)];
+  //     obj.berat = Math.floor(Math.random() * 40);
+  //     obj.kadar = Math.floor(Math.random() * 50) + 45;
+  //     obj.barcode = '000000000000';
+  //     result.push(obj);
+  //   }
+  //   return result;
+  // };
+  // let data = randomDataCreator(37);
+  let { data } = props;
   return (
     <div
       style={{
@@ -124,9 +128,44 @@ let Page = (props) => {
 };
 
 let Render = () => {
+  let { Client } = Hook.useClientState();
   let printRef = useRef();
-  let [posisi, setPosisi] = useState('key0');
-  console.log(posisi);
+  let [posisi, setPosisi] = useState('-');
+  let [pickItem, setPickItem] = useState([]);
+  let [printItem, setPrintItem] = useState([]);
+  useEffect(() => {
+    let fetchFunction = async () => {
+      let ItemAreaServices = Client.service('item-area');
+      let data = await ItemAreaServices.find();
+      console.log(data);
+      let pos = {};
+      for (let index = 0; index < data.length; index++) {
+        const item = data[index];
+        let { posisi } = item;
+        pos[posisi] = true;
+      }
+      let pickItem = Object.keys(pos);
+      console.log(pickItem);
+      setPickItem(pickItem);
+    };
+    fetchFunction();
+  }, []);
+
+  useEffect(() => {
+    let fetchFunction = async () => {
+      console.log('PICKITEM:', posisi);
+      if (posisi === '-') {
+        setPrintItem([]);
+      } else {
+        let ItemAreaServices = Client.service('item-area');
+        let data = await ItemAreaServices.find({ query: { posisi } });
+        console.log(data);
+        setPrintItem(data);
+      }
+    };
+    fetchFunction();
+  }, [posisi]);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -146,11 +185,10 @@ let Render = () => {
               selectedValue={posisi}
               onValueChange={setPosisi}
             >
-              <Picker.Item label="Pilih" value="key0" />
-              <Picker.Item label="Kalung" value="key1" />
-              <Picker.Item label="Liontin" value="key2" />
-              <Picker.Item label="Anting" value="key3" />
-              <Picker.Item label="Cincin" value="key4" />
+              <Picker.Item label="Pilih" value="-" />
+              {pickItem.map((val, i) => (
+                <Picker.Item key={i} label={val} value={val} />
+              ))}
             </Picker>
           </Form>
         </StyleProvider>
@@ -178,53 +216,10 @@ let Render = () => {
 
       <div ref={printRef} style={{ margin: 0 }}>
         <Page>
-          <MultiBarcode />
+          <MultiBarcode data={printItem} />
         </Page>
       </div>
     </div>
-  );
-};
-
-let Render2 = () => {
-  let printRef = useRef();
-  return (
-    <StyleProvider style={getTheme(custom)}>
-      <Container>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          <Grid>
-            <Row
-              size={10}
-              style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
-            >
-              <p style={{ alignSelf: 'center' }}>Member Barcode: </p>
-              <Item
-                style={{
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '15vw',
-                }}
-                regular
-              >
-                <Input style={{ height: '3vh' }} />
-              </Item>
-              <Button
-                light
-                style={{
-                  alignSelf: 'center',
-                  marginLeft: '1vw',
-                  borderWidth: 1,
-                  borderRadius: 15,
-                }}
-              >
-                <p> Tambahkan Manual </p>
-              </Button>
-            </Row>
-            <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
-          </Grid>
-        </Content>
-      </Container>
-    </StyleProvider>
   );
 };
 
