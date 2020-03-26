@@ -12,7 +12,7 @@ module.exports = function(app) {
       alamat: {type: String, trim: true},
       hp: {type: String, trim: true, required: true},
       lahir: {type: Number, required: true},
-      barcode: {type: String, trim: true},
+      barcode: {type: String, trim: true, required: true, unique: true},
       poin: {type: Number, default: 0},
     },
     {

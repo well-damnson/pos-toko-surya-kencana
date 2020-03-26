@@ -9,14 +9,16 @@ exports.News = class News {
   setup(app) {
     this.app = app;
   }
-  
+
   async find(params) {
     let fixedYear = 2000;
     // console.log(new Date(2020, 11, 31).toString());
     // console.log(dateToArray(new Date(2020, 11, 31)));
 
     // let today = new Date(2020, 10, 24).setHours(0, 0, 0, 0);
-    let today = new Date(Date.now()).setHours(0, 0, 0, 0);
+    let today = new Date(new Date(Date.now()).setHours(0, 0, 0, 0)).setFullYear(
+      fixedYear,
+    );
     // console.log(dateToArray(today));
 
     let minus7day = new Date(today - 604800000).setFullYear(fixedYear);
@@ -27,6 +29,7 @@ exports.News = class News {
     const membersService = this.app.service('members');
 
     let members = await membersService.find({paginate: false});
+    console.log('Today:', today);
     let birthday = [];
     let point = [];
     for (let index = 0; index < members.length; index++) {
@@ -34,7 +37,11 @@ exports.News = class News {
       let {lahir, poin} = member;
       let time = new Date(lahir).setFullYear(fixedYear);
       member.lahir = dateToArray(member.lahir);
-      if (time >= minus7day && time <= plus7day) {
+      // if (time >= minus7day && time <= plus7day) {
+      //   birthday.push(member);
+      // }
+      console.log(lahir);
+      if (time === today) {
         birthday.push(member);
       }
       if (poin >= 25) {
