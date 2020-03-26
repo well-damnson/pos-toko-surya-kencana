@@ -10,7 +10,7 @@ import NewsBirthday from './view/newsMemberBirthday';
 import NewsPoin from './view/newsMemberPoin';
 import TrxBeli from './view/trxBeli';
 import TrxJual from './view/trxJual';
-import TrxTukar from './view/trxTukarTambah';
+import TrxTukar from './view/trxTukar';
 import Barcode from './view/barcode';
 import TambahMember from './view/tambahMember';
 import TambahItem from './view/tambahItem';
