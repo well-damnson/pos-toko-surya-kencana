@@ -11,7 +11,7 @@ import {
 } from "native-base";
 import { Text, View } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import getTheme from "../native-base-theme/components";
+import getTheme from "./../native-base-theme/components";
 import custom from "../native-base-theme/variables/custom";
 import { currency } from "../utils";
 
@@ -46,7 +46,7 @@ export default class Jual extends Component {
             <Grid>
               {/* section 1 - Header */}
               <Row
-                size={15}
+                size={10}
                 style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
               >
                 <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
@@ -74,141 +74,16 @@ export default class Jual extends Component {
                 </Button>
               </Row>
               {/* section 2 - label penanda jual */}
-              <Row
-                size={7}
-                style={{ backgroundColor: "#FFF", justifyContent: "center" }}
-              >
+              <Row size={8} style={{ backgroundColor: "#FFF" }}>
                 <Text
                   style={{
                     alignSelf: "center",
                     marginLeft: "5vw",
-                    fontSize: 24,
+                    fontSize: 32,
                     padding: 5
                   }}
                 >
-                  Barang Dijual
-                </Text>
-              </Row>
-              {/* section 3 - tabel penjualan */}
-              <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
-                <Grid>
-                  {/* section 3.1 - whitespace */}
-                  <Col size={5}></Col>
-                  {/* section 3.2 - tabel */}
-                  <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
-                    {/* section 3.2.1 - tabel isi */}
-                    <Row size={95}>
-                      <Col
-                        size={7}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Nomor
-                        </Text>
-                      </Col>
-                      <Col
-                        size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Kode Barang
-                        </Text>
-                      </Col>
-                      <Col
-                        size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Berat
-                        </Text>
-                      </Col>
-                      <Col
-                        size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Kadar
-                        </Text>
-                      </Col>
-                      <Col
-                        size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Harga
-                        </Text>
-                      </Col>
-                      <Col
-                        size={10}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
-                      >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Tools
-                        </Text>
-                      </Col>
-                    </Row>
-                    {/*section 3.2.2 - total harga */}
-                    <Row
-                      size={10}
-                      style={{
-                        backgroundColor: "#c2eec7",
-                        justifyContent: "center",
-                        borderWidth: 1
-                      }}
-                    >
-                      <Text
-                        style={{
-                          alignSelf: "center",
-                          fontWeight: "bold",
-                          fontSize: 24
-                        }}
-                      >
-                        Total Harga
-                      </Text>
-                      <Text
-                        style={{
-                          alignSelf: "center",
-                          fontWeight: "bold",
-                          fontSize: 24
-                        }}
-                      >
-                        {currency()}
-                      </Text>
-                    </Row>
-                  </Col>
-                  {/* section 3.3 Tombol Aksi*/}
-                  <Col size={20}>
-                    <Button
-                      light
-                      style={{
-                        alignSelf: "center",
-                        marginLeft: "1vw",
-                        borderWidth: 1,
-                        borderRadius: 15,
-                        marginTop: 50,
-                        width: "10vw",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <Text>Tambah Barang</Text>
-                    </Button>
-                    <View style={{ flex: 1 }}></View>
-                  </Col>
-                </Grid>
-              </Row>
-              <Row
-                size={7}
-                style={{ backgroundColor: "#FFF", justifyContent: "center" }}
-              >
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    marginLeft: "5vw",
-                    fontSize: 24,
-                    padding: 5
-                  }}
-                >
-                  Barang Dibeli
+                  Barang Jual
                 </Text>
               </Row>
               {/* section 3 - tabel penjualan */}
@@ -222,48 +97,191 @@ export default class Jual extends Component {
                     <Row size={95}>
                       <Col
                         size={5}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
                       >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
-                          Nomor
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
+                          No
                         </Text>
+                        <Content>
+                          <View
+                            style={{
+                              alignSelf: "center",
+                              height: "2vw",
+                              width: "2vw",
+                              justifyContent: "center"
+                            }}
+                          >
+                            <Text
+                              style={{
+                                color: "Black",
+                                alignSelf: "center",
+                                fontSize: 12
+                              }}
+                            >
+                              1
+                            </Text>
+                          </View>
+                        </Content>
                       </Col>
                       <Col
                         size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
                       >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
+                          Kode Barang
+                        </Text>
+                        <View
+                          style={{
+                            alignSelf: "center",
+                            height: "2vw",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "Black",
+                              alignSelf: "center",
+                              fontSize: 12
+                            }}
+                          >
+                            AntamPure24-001
+                          </Text>
+                        </View>
+                      </Col>
+                      <Col
+                        size={15}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
+                      >
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
                           Berat
                         </Text>
+                        <View
+                          style={{
+                            alignSelf: "center",
+                            height: "2vw",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "Black",
+                              alignSelf: "center",
+                              fontSize: 12
+                            }}
+                          >
+                            15gr
+                          </Text>
+                        </View>
                       </Col>
                       <Col
                         size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
                       >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
                           Kadar
                         </Text>
+                        <View
+                          style={{
+                            alignSelf: "center",
+                            height: "2vw",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "Black",
+                              alignSelf: "center",
+                              fontSize: 12
+                            }}
+                          >
+                            100%
+                          </Text>
+                        </View>
                       </Col>
                       <Col
                         size={15}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
                       >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
                           Harga
                         </Text>
+                        <View
+                          style={{
+                            alignSelf: "center",
+                            height: "2vw",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "Black",
+                              alignSelf: "center",
+                              fontSize: 12
+                            }}
+                          >
+                            {currency()} 120.000
+                          </Text>
+                        </View>
                       </Col>
                       <Col
                         size={10}
-                        style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}
+                        style={{
+                          backgroundColor: "#f6dbdb",
+                          borderWidth: 1,
+                          padding: 5,
+                          alignItems: "center"
+                        }}
                       >
-                        <Text style={{ alignSelf: "center", fontSize: 24 }}>
+                        <Text style={{ alignSelf: "center", fontSize: 18 }}>
                           Tools
                         </Text>
+                        <View
+                          style={{
+                            alignSelf: "center",
+                            height: "2vw",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "Black",
+                              alignSelf: "center",
+                              fontSize: 12
+                            }}
+                          >
+                            Hapus
+                          </Text>
+                        </View>
                       </Col>
                     </Row>
                     {/*section 3.2.2 - total harga */}
                     <Row
-                      size={10}
+                      size={5}
                       style={{
                         backgroundColor: "#c2eec7",
                         justifyContent: "center",
@@ -325,7 +343,7 @@ export default class Jual extends Component {
                 </Grid>
               </Row>
               {/* section 4 - white space */}
-              <Row size={1} style={{ backgroundColor: "#FFF" }}></Row>
+              <Row size={10} style={{ backgroundColor: "#FFF" }}></Row>
             </Grid>
           </Content>
         </Container>

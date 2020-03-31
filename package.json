@@ -15,6 +15,8 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^1.6.8"
+    "@react-pdf/renderer": "^1.6.8",
+    "react-table": "^7.0.0",
+    "styled-components": "^5.0.1"
   }
 }

@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+}
+
+.body {
+  flex: 80%;
+}
+
+.bodylogin {
+  flex: 100%;
+}
+
+.menu::-webkit-scrollbar {
+  display: none;
+}
+.menu {
+  flex: 20%;
+}

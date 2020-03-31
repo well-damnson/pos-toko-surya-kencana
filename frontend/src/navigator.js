@@ -1,69 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Hook from './wrapper';
+import Hook from "./wrapper";
 
-import Activation from './view/aktivasi';
-import Login from './view/login';
-import MemberList from './view/memberList';
-import Menu from './view/menu';
-import NewsBirthday from './view/newsMemberBirthday';
-import NewsPoin from './view/newsMemberPoin';
-import TrxBeli from './view/trxBeli';
-import TrxJual from './view/trxJual';
-import TrxTukar from './view/trxTukar';
-import Barcode from './view/barcode';
-import TambahMember from './view/tambahMember';
-import TambahItem from './view/tambahItem';
+import Activation from "./view/aktivasi";
+import Login from "./view/login";
+import MemberList from "./view/memberList";
+import Menu from "./view/menu";
+import NewsBirthday from "./view/newsMemberBirthday";
+import NewsPoin from "./view/newsMemberPoin";
+import TrxBeli from "./view/trxBeli";
+import TrxJual from "./view/trxJual";
+import TrxTukar from "./view/trxTukar";
+import Barcode from "./view/barcode";
+import TambahMember from "./view/tambahMember";
+import TambahItem from "./view/tambahItem";
+
+import "./navigator.css";
 
 let Routes = {
   Activation: {
     Component: Activation,
-    Menu: false,
+    Menu: false
   },
   Login: {
     Component: Login,
-    Menu: false,
+    Menu: false
   },
   MemberList: {
     Component: MemberList,
-    Menu: true,
+    Menu: true
   },
   NewsBirthday: {
     Component: NewsBirthday,
-    Menu: true,
+    Menu: true
   },
   NewsPoin: {
     Component: NewsPoin,
-    Menu: true,
+    Menu: true
   },
   TrxBeli: {
     Component: TrxBeli,
-    Menu: true,
+    Menu: true
   },
   TrxJual: {
     Component: TrxJual,
-    Menu: true,
+    Menu: true
   },
   TrxTukar: {
     Component: TrxTukar,
-    Menu: true,
+    Menu: true
   },
   Blank: {
     Component: () => <div />,
-    Menu: true,
+    Menu: true
   },
   Barcode: {
     Component: Barcode,
-    Menu: true,
+    Menu: true
   },
   TambahMember: {
     Component: TambahMember,
-    Menu: true,
+    Menu: true
   },
   TambahItem: {
     Component: TambahItem,
-    Menu: true,
-  },
+    Menu: true
+  }
 };
 
 let ActivationCheck = async () => {
@@ -84,10 +86,10 @@ let Navigator = ({ children }) => {
   // Only First Time Run
   if (ready === false) {
     // Check Activation
-    ActivationCheck().then((Activated) => {
-      console.log('Activated', Activated);
+    ActivationCheck().then(Activated => {
+      console.log("Activated", Activated);
       if (Activated) {
-        setNavigation('Login');
+        setNavigation("Login");
         setReady(true);
       } else {
         setReady(true);
@@ -97,10 +99,16 @@ let Navigator = ({ children }) => {
   // Prepare Layout Content
   let Content = Routes[navigation].Component;
   let MenuLayout = Routes[navigation].Menu === true ? Menu : null;
+  let LoginCheck = Routes[navigation].Login === true;
+
   return ready ? (
-    <div>
-      <div>{MenuLayout && <MenuLayout />}</div>
-      <div>
+    <div class="container">
+      {MenuLayout && (
+        <div class="menu">
+          <MenuLayout />
+        </div>
+      )}
+      <div class={"body" + (LoginCheck ? "login" : "")}>
         <Content />
       </div>
     </div>
