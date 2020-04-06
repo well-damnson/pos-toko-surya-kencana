@@ -14,6 +14,7 @@ import getTheme from '../native-base-theme/components';
 import custom from '../native-base-theme/variables/custom';
 
 import Hook from '@/wrapper';
+import FailedLoginModal from '@/modals/modalFailedLogin';
 
 // export default class ContentExample extends Component {
 let Login = () => {
@@ -22,6 +23,7 @@ let Login = () => {
   console.log(dispatch);
   let { Client } = Hook.useClientState();
   let [state, setState] = useState({ name: '', password: '', loading: false });
+  let [failed, setFailed] = useState(false);
   let onLoginHandler = async () => {
     let res = new Promise((res, rej) => {
       setState((state) => ({ ...state, loading: true }));
@@ -53,6 +55,7 @@ let Login = () => {
       dispatch('Blank');
     } else {
       // MEANS LOGIN FAILED
+      setFailed(true);
       setState((state) => ({ ...state, loading: false }));
     }
   };
@@ -203,6 +206,12 @@ let Login = () => {
             <Row size={25}></Row>
           </Grid>
         </Content>
+        <FailedLoginModal
+          show={failed}
+          handleClose={() => {
+            setFailed(false);
+          }}
+        />
       </Container>
     </StyleProvider>
   );
