@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import {
   Container,
   Input,
@@ -130,6 +130,9 @@ let Login = () => {
                         borderWidth: 1,
                         borderRadius: 10,
                       }}
+                      onSubmitEditing={() => {
+                        onLoginHandler();
+                      }}
                     />
                   </View>
                 </View>
@@ -168,6 +171,9 @@ let Login = () => {
                         fontSize: 24,
                         borderWidth: 1,
                         borderRadius: 10,
+                      }}
+                      onSubmitEditing={() => {
+                        onLoginHandler();
                       }}
                     />
                   </View>
