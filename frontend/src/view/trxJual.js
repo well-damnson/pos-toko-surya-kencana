@@ -12,7 +12,7 @@ import {
 } from "native-base";
 import { Text, View } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
+import { currency } from "../currencyFormat";
 import { useTable } from "react-table";
 
 const Styles = styled.div`
@@ -44,6 +44,15 @@ const Styles = styled.div`
       }
     }
   }
+      tfoot {
+      tr:first-child {
+        td {
+          border-top: 2px solid black;
+        }
+      }
+      font-weight: bolder;
+    }
+  }
 `;
 
 function Table() {
@@ -54,7 +63,7 @@ function Table() {
         col2: "AntamPure24-001",
         col3: "200gr",
         col4: "85%",
-        col5: "Rp. 2.750.000",
+        col5: 2750000,
         col6: "hapus",
       },
       {
@@ -62,7 +71,7 @@ function Table() {
         col2: "AntamPure24-002",
         col3: "100gr",
         col4: "85%",
-        col5: "Rp. 1.575.000",
+        col5: 1575000,
         col6: "hapus",
       },
       {
@@ -70,7 +79,7 @@ function Table() {
         col2: "AntamPure24-001",
         col3: "200gr",
         col4: "45%",
-        col5: "Rp. 1.800.000",
+        col5: 1800000,
         col6: "hapus",
       },
     ],
@@ -91,18 +100,38 @@ function Table() {
         accessor: "col3",
       },
       { Header: "Kadar", accessor: "col4" },
-      { Header: "Harga", accessor: "col5" },
+      {
+        Header: "Harga",
+        accessor: "col5",
+        Footer: (info) => {
+          const total = React.useMemo(
+            () => info.rows.reduce((sum, row) => row.values.col5 + sum, 0),
+            [info.rows]
+          );
+          return <>Total: {currency(total)}</>;
+        },
+        // Cell: (props) =>
+        //   new Intl.NumberFormat("id-ID", {
+        //     style: "currency",
+        //     currency: "IDR",
+        //   }).format(props.value),
+        // https://stackoverflow.com/questions/48704269/react-table-package-formatting-float-as-currency , https://medium.com/@nidhinkumar/react-js-number-format-and-styling-a1a6e211e629
+      },
       { Header: "Tools", accessor: "col6" },
     ],
     []
   );
+  // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    footerGroups,
     rows,
     prepareRow,
   } = useTable({ columns, data });
+
+  // Render the UI for your table
   return (
     <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
       <thead>
@@ -147,6 +176,15 @@ function Table() {
           );
         })}
       </tbody>
+      <tfoot>
+        {footerGroups.map((group) => (
+          <tr {...group.getFooterGroupProps()}>
+            {group.headers.map((column) => (
+              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+            ))}
+          </tr>
+        ))}
+      </tfoot>
     </table>
   );
 }
