@@ -4,7 +4,7 @@ import Hook from "./wrapper";
 
 import Activation from "./view/aktivasi";
 import Login from "./view/login";
-import MemberList from "./view/memberList";
+import MemberList from "./view/itemList";
 import Menu from "./view/menu";
 import NewsBirthday from "./view/newsMemberBirthday";
 import NewsPoin from "./view/newsMemberPoin";
@@ -20,52 +20,52 @@ import "./navigator.css";
 let Routes = {
   Activation: {
     Component: Activation,
-    Menu: false
+    Menu: false,
   },
   Login: {
     Component: Login,
-    Menu: false
+    Menu: false,
   },
   MemberList: {
     Component: MemberList,
-    Menu: true
+    Menu: true,
   },
   NewsBirthday: {
     Component: NewsBirthday,
-    Menu: true
+    Menu: true,
   },
   NewsPoin: {
     Component: NewsPoin,
-    Menu: true
+    Menu: true,
   },
   TrxBeli: {
     Component: TrxBeli,
-    Menu: true
+    Menu: true,
   },
   TrxJual: {
     Component: TrxJual,
-    Menu: true
+    Menu: true,
   },
   TrxTukar: {
     Component: TrxTukar,
-    Menu: true
+    Menu: true,
   },
   Blank: {
     Component: () => <div />,
-    Menu: true
+    Menu: true,
   },
   Barcode: {
     Component: Barcode,
-    Menu: true
+    Menu: true,
   },
   TambahMember: {
     Component: TambahMember,
-    Menu: true
+    Menu: true,
   },
   TambahItem: {
     Component: TambahItem,
-    Menu: true
-  }
+    Menu: true,
+  },
 };
 
 let ActivationCheck = async () => {
@@ -86,7 +86,7 @@ let Navigator = ({ children }) => {
   // Only First Time Run
   if (ready === false) {
     // Check Activation
-    ActivationCheck().then(Activated => {
+    ActivationCheck().then((Activated) => {
       console.log("Activated", Activated);
       if (Activated) {
         setNavigation("Login");

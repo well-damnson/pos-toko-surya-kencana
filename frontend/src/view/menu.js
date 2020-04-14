@@ -6,7 +6,7 @@ import {
   List,
   ListItem,
   Text,
-  StyleProvider
+  StyleProvider,
 } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import getTheme from "../native-base-theme/components";
@@ -25,14 +25,13 @@ let Menu = () => {
             size={20}
             style={{
               backgroundColor: "#635DB7",
-              borderWidth: 1
             }}
           >
             <Row
               size={30}
               style={{
                 backgroundColor: "#635DB7",
-                justifyContent: "center"
+                justifyContent: "center",
               }}
             >
               <Thumbnail
@@ -40,12 +39,12 @@ let Menu = () => {
                   height: 200,
                   width: 200,
                   alignSelf: "center",
-                  borderRadius: 100
+                  borderRadius: 100,
                 }}
                 source={{ uri: uri }}
               ></Thumbnail>
             </Row>
-            <Row size={70} style={{ backgroundColor: "#98a45f" }}>
+            <Row size={80} style={{ backgroundColor: "#98a45f" }}>
               <Col>
                 <ListItem itemDivider>
                   <Text style={{ fontSize: 24 }}>Transaksi</Text>
@@ -69,22 +68,22 @@ let Menu = () => {
                   <Text>List Member</Text>
                 </ListItem>
                 <ListItem itemDivider button>
-                  <Text style={{ fontSize: 1 }}> </Text>
-                </ListItem>
-                <ListItem button onPress={() => console.log("z")}>
-                  <Text style={{ fontSize: 24 }}>Laporan</Text>
-                </ListItem>
-                <ListItem button onPress={() => setNav("Barcode")}>
-                  <Text style={{ fontSize: 24 }}>Print Barcode</Text>
-                </ListItem>
-                <ListItem itemDivider button>
                   <Text style={{ fontSize: 24 }}> News Feed </Text>
                 </ListItem>
                 <ListItem button onPress={() => setNav("NewsBirthday")}>
                   <Text>Member Ber-ulang tahun</Text>
                 </ListItem>
-                <ListItem last button onPress={() => setNav("NewsPoin")}>
+                <ListItem button onPress={() => setNav("NewsPoin")}>
                   <Text>Member > 25 Poin </Text>
+                </ListItem>
+                <ListItem itemDivider button onPress={() => console.log("z")}>
+                  <Text style={{ fontSize: 24 }}> Laporan </Text>
+                </ListItem>
+                <ListItem itemDivider button onPress={() => setNav("Barcode")}>
+                  <Text style={{ fontSize: 24 }}> Print Barcode </Text>
+                </ListItem>
+                <ListItem itemDivider button>
+                  <Text style={{ fontSize: 24 }}> Administrasi </Text>
                 </ListItem>
               </Col>
             </Row>

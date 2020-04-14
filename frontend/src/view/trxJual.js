@@ -5,9 +5,10 @@ import {
   Content,
   Left,
   Right,
+  Radio,
   Button,
   Input,
-  Item
+  Item,
 } from "native-base";
 import { Text, View } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -20,7 +21,7 @@ const Styles = styled.div`
   table {
     width: 100%;
     border-spacing: 0;
-    border-radius: 20;
+    border-radius: 5px;
     border: 1px solid black;
 
     tr {
@@ -54,7 +55,7 @@ function Table() {
         col3: "200gr",
         col4: "85%",
         col5: "Rp. 2.750.000",
-        col6: "hapus"
+        col6: "hapus",
       },
       {
         col1: "2",
@@ -62,7 +63,7 @@ function Table() {
         col3: "100gr",
         col4: "85%",
         col5: "Rp. 1.575.000",
-        col6: "hapus"
+        col6: "hapus",
       },
       {
         col1: "3",
@@ -70,8 +71,8 @@ function Table() {
         col3: "200gr",
         col4: "45%",
         col5: "Rp. 1.800.000",
-        col6: "hapus"
-      }
+        col6: "hapus",
+      },
     ],
     []
   );
@@ -79,19 +80,19 @@ function Table() {
     () => [
       {
         Header: "No.",
-        accessor: "col1" // accessor is the "key" in the data
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
         Header: "Kode Barang",
-        accessor: "col2"
+        accessor: "col2",
       },
       {
         Header: "Berat",
-        accessor: "col3"
+        accessor: "col3",
       },
       { Header: "Kadar", accessor: "col4" },
       { Header: "Harga", accessor: "col5" },
-      { Header: "Tools", accessor: "col6" }
+      { Header: "Tools", accessor: "col6" },
     ],
     []
   );
@@ -100,21 +101,21 @@ function Table() {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
   } = useTable({ columns, data });
   return (
     <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th
                 {...column.getHeaderProps()}
                 style={{
                   borderBottom: "solid 3px red",
                   background: "aliceblue",
                   color: "black",
-                  fontWeight: "bold"
+                  fontWeight: "bold",
                 }}
               >
                 {column.render("Header")}
@@ -124,18 +125,18 @@ function Table() {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
+        {rows.map((row) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
+              {row.cells.map((cell) => {
                 return (
                   <td
                     {...cell.getCellProps()}
                     style={{
                       padding: "10px",
                       border: "solid 1px gray",
-                      background: "papayawhip"
+                      background: "papayawhip",
                     }}
                   >
                     {cell.render("Cell")}
@@ -151,6 +152,12 @@ function Table() {
 }
 
 export default class Jual extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      radioSelected: undefined,
+    };
+  }
   render() {
     return (
       <Container>
@@ -167,7 +174,7 @@ export default class Jual extends Component {
                   alignSelf: "center",
                   height: "3vh",
                   backgroundColor: "#FFF",
-                  width: "15vw"
+                  width: "15vw",
                 }}
                 regular
               >
@@ -179,7 +186,7 @@ export default class Jual extends Component {
                   alignSelf: "center",
                   marginLeft: "1vw",
                   borderWidth: 1,
-                  borderRadius: 15
+                  borderRadius: 15,
                 }}
               >
                 <Text> Tambahkan Manual </Text>
@@ -192,7 +199,7 @@ export default class Jual extends Component {
                   alignSelf: "center",
                   marginLeft: "5vw",
                   fontSize: 32,
-                  padding: 5
+                  padding: 5,
                 }}
               >
                 Barang Jual
@@ -220,12 +227,150 @@ export default class Jual extends Component {
                       borderRadius: 15,
                       marginTop: 50,
                       width: "10vw",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <Text>Tambah Barang</Text>
                   </Button>
                   <View style={{ flex: 1 }}></View>
+                  <Text
+                    style={{
+                      alignSelf: "center",
+                    }}
+                  >
+                    Metode Pembayaran
+                  </Text>
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      marginLeft: 5,
+                      paddingLeft: 5,
+                    }}
+                  >
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item1" })
+                        }
+                        selected={this.state.radioSelected == "item1"}
+                      />
+                      <Text style={{ marginRight: 5 }}>Tunai</Text>
+                    </View>
+                    <View
+                      style={{ flexDirection: "row", alignSelf: "flex-start" }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item2" })
+                        }
+                        selected={this.state.radioSelected == "item2"}
+                      />
+                      <Text style={{ marginRight: 5 }}>BCA</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item3" })
+                        }
+                        selected={this.state.radioSelected == "item3"}
+                      />
+                      <Text style={{ marginRight: 5 }}>Mandiri</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item4" })
+                        }
+                        selected={this.state.radioSelected == "item4"}
+                      />
+                      <Text style={{ marginRight: 5 }}>BNI</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item5" })
+                        }
+                        selected={this.state.radioSelected == "item5"}
+                      />
+                      <Text style={{ marginRight: 5 }}>BRI</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item6" })
+                        }
+                        selected={this.state.radioSelected == "item6"}
+                      />
+                      <Text style={{ marginRight: 5 }}>Visa</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item7" })
+                        }
+                        selected={this.state.radioSelected == "item7"}
+                      />
+                      <Text style={{ marginRight: 5 }}>Master</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item8" })
+                        }
+                        selected={this.state.radioSelected == "item8"}
+                      />
+                      <Text style={{ marginRight: 5 }}>Go-Pay</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      <Radio
+                        onPress={() =>
+                          this.setState({ radioSelected: "item9" })
+                        }
+                        selected={this.state.radioSelected == "item9"}
+                      />
+                      <Text style={{ marginRight: 5 }}>OVO</Text>
+                    </View>
+                  </View>
                   <Button
                     light
                     style={{
@@ -235,7 +380,7 @@ export default class Jual extends Component {
                       borderRadius: 15,
                       marginBottom: 50,
                       width: "10vw",
-                      justifyContent: "center"
+                      justifyContent: "center",
                     }}
                   >
                     <Text> Selesai </Text>
