@@ -13,6 +13,7 @@
 .menu::-webkit-scrollbar {
   display: none;
 }
+
 .menu {
   flex: 20%;
 }

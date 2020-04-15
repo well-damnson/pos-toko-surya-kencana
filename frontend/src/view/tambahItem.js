@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Item,
@@ -9,23 +9,23 @@ import {
   Button,
   Form,
   Picker,
-} from 'native-base';
-import { View } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+} from "native-base";
+import { View, TextInput } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 let TambahItem = () => {
   let defaultState = {
-    nama: '',
-    jenis: '-',
-    jenisBaru: '',
-    berat: '',
-    kadar: '',
-    posisi: '-',
-    posisiBaru: '',
-    picture: '',
-    beli: '',
+    nama: "",
+    jenis: "-",
+    jenisBaru: "",
+    berat: "",
+    kadar: "",
+    posisi: "-",
+    posisiBaru: "",
+    picture: "",
+    beli: "",
   };
 
   let [state, setState] = useState({
@@ -39,7 +39,7 @@ let TambahItem = () => {
 
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
-      value = value.replace(/[^\d.-]/g, '');
+      value = value.replace(/[^\d.-]/g, "");
     }
     setState((state) => ({ ...state, [key]: value }));
   };
@@ -47,7 +47,7 @@ let TambahItem = () => {
     let jenisList = {};
     let posisList = {};
     let dataFetch = async () => {
-      let itemAreaServices = Client.service('item-area');
+      let itemAreaServices = Client.service("item-area");
       let data = await itemAreaServices.find();
       data.forEach(({ posisi, jenis }) => {
         jenisList[jenis] = true;
@@ -70,17 +70,17 @@ let TambahItem = () => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.nama}
-                onChangeText={(text) => setter('nama', text)}
+                onChangeText={(text) => setter("nama", text)}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -89,36 +89,25 @@ let TambahItem = () => {
           <Row style={{ margin: 10 }}>
             <Text style={{ flex: 1.5 }}>Jenis:</Text>
             <View style={{ flex: 0.2 }} />
-            {/* <Item
-                style={{
-                  flex: 2,
-                  alignSelf: "center",
-                  height: "3vh",
-                  backgroundColor: "#FFF",
-                  width: "20vw"
-                }}
-                regular
-              >
-                <Input style={{ height: "3vh" }} />
-              </Item> */}
             <Form
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
+                paddingLeft: state.jenis === "-" ? 30 : 0,
               }}
             >
               <Picker
                 mode="dropdown"
-                // placeholder="Select your SIM"
+                placeholder="Select your SIM"
                 // placeholderStyle={{ color: '#bfc6ea' }}
                 // placeholderIconColor="#007aff"
                 style={{ width: undefined }}
                 selectedValue={state.jenis}
                 onValueChange={(value) => {
-                  setter('jenis', value);
+                  setter("jenis", value);
                 }}
               >
                 <Picker.Item label="Buat Baru" value="-" />
@@ -129,16 +118,19 @@ let TambahItem = () => {
             </Form>
             <div
               style={{
-                display: state.jenis === '-' ? 'block' : 'none',
-                marginLeft: '5px',
+                alignSelf: "center",
+                display: state.jenis === "-" ? "block" : "none",
+                marginLeft: 20,
               }}
             >
-              <Input
+              <TextInput
                 style={{
-                  borderWidth: '1px',
+                  width: "10vw",
+                  height: "3vh",
+                  borderWidth: "1px",
                 }}
                 value={state.jenisBaru}
-                onChangeText={(text) => setter('jenisBaru', text)}
+                onChangeText={(text) => setter("jenisBaru", text)}
               />
             </div>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -150,17 +142,17 @@ let TambahItem = () => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.berat}
-                onChangeText={(text) => setter('berat', text, true)}
+                onChangeText={(text) => setter("berat", text, true)}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>gr</Text>
@@ -173,17 +165,17 @@ let TambahItem = () => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.kadar}
-                onChangeText={(text) => setter('kadar', text, true)}
+                onChangeText={(text) => setter("kadar", text, true)}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>%</Text>
@@ -196,20 +188,21 @@ let TambahItem = () => {
             <Form
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
+                paddingLeft: state.posisi === "-" ? 30 : 0,
               }}
             >
               <Picker
                 mode="dropdown"
-                // placeholder="Select your SIM"
+                placeholder="Select your SIM"
                 // placeholderStyle={{ color: '#bfc6ea' }}
                 // placeholderIconColor="#007aff"
                 style={{ width: undefined }}
                 selectedValue={state.posisi}
-                onValueChange={(value) => setter('posisi', value)}
+                onValueChange={(value) => setter("posisi", value)}
               >
                 <Picker.Item label="Buat Baru" value="-" />
                 {posisiList.map((value, index) => (
@@ -219,16 +212,19 @@ let TambahItem = () => {
             </Form>
             <div
               style={{
-                display: state.posisi === '-' ? 'block' : 'none',
-                marginLeft: '5px',
+                alignSelf: "center",
+                display: state.posisi === "-" ? "block" : "none",
+                marginLeft: 20,
               }}
             >
-              <Input
+              <TextInput
                 style={{
-                  borderWidth: '1px',
+                  width: "10vw",
+                  height: "3vh",
+                  borderWidth: "1px",
                 }}
                 value={state.posisiBaru}
-                onChangeText={(text) => setter('posisiBaru', text)}
+                onChangeText={(text) => setter("posisiBaru", text)}
               />
             </div>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -261,17 +257,17 @@ let TambahItem = () => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.beli}
-                onChangeText={(text) => setter('beli', text)}
+                onChangeText={(text) => setter("beli", text)}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -279,7 +275,7 @@ let TambahItem = () => {
 
           <Row style={{ margin: 10 }}>
             <View style={{ flex: 3 }} />
-            <Button rounded light style={{ backgroundColor: '#D9D9D9' }}>
+            <Button rounded light style={{ backgroundColor: "#D9D9D9" }}>
               <Text>Simpan</Text>
             </Button>
             <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />

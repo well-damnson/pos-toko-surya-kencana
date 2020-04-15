@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@react-pdf/renderer": "^1.6.8",
+    "modal-enhanced-react-native-web": "^0.2.0",
     "react-table": "^7.0.0",
     "styled-components": "^5.0.1"
   }
