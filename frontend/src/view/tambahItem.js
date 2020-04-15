@@ -18,11 +18,11 @@ import Hook from '@/wrapper';
 let TambahItem = () => {
   let defaultState = {
     nama: '',
-    jenis: '',
+    jenis: '-',
     jenisBaru: '',
     berat: '',
     kadar: '',
-    posisi: '',
+    posisi: '-',
     posisiBaru: '',
     picture: '',
     beli: '',
@@ -268,7 +268,11 @@ let TambahItem = () => {
               }}
               regular
             >
-              <Input style={{ height: '3vh' }} />
+              <Input
+                style={{ height: '3vh' }}
+                value={state.beli}
+                onChangeText={(text) => setter('beli', text)}
+              />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
