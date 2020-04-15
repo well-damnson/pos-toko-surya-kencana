@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   Content,
@@ -9,11 +9,11 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import { Text, View } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
-import { useTable } from "react-table";
+} from 'native-base';
+import { Text, View } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
+import { useTable } from 'react-table';
 
 import TambahItemModal from '../modals/modalTambahItem';
 
@@ -48,55 +48,33 @@ const Styles = styled.div`
   }
 `;
 
-function Table() {
-  const data = React.useMemo(
-    () => [
-      {
-        col1: "1",
-        col2: "AntamPure24-001",
-        col3: "200gr",
-        col4: "85%",
-        col5: "Rp. 2.750.000",
-        col6: "hapus",
-      },
-      {
-        col1: "2",
-        col2: "AntamPure24-002",
-        col3: "100gr",
-        col4: "85%",
-        col5: "Rp. 1.575.000",
-        col6: "hapus",
-      },
-      {
-        col1: "3",
-        col2: "AntamPure24-001",
-        col3: "200gr",
-        col4: "45%",
-        col5: "Rp. 1.800.000",
-        col6: "hapus",
-      },
-    ],
-    []
-  );
+function Table({ dat, setDat }) {
+  let removeData = (index) => {
+    let newData = [...dat];
+    newData.splice(index, 1);
+    setDat(newData);
+  };
+
+  const data = React.useMemo(() => dat, [dat]);
   const columns = React.useMemo(
     () => [
       {
-        Header: "No.",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No.',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Kode Barang",
-        accessor: "col2",
+        Header: 'Kode Barang',
+        accessor: 'nama',
       },
       {
-        Header: "Berat",
-        accessor: "col3",
+        Header: 'Berat (gr)',
+        accessor: 'berat',
       },
-      { Header: "Kadar", accessor: "col4" },
-      { Header: "Harga", accessor: "col5" },
-      { Header: "Tools", accessor: "col6" },
+      { Header: 'Kadar (%)', accessor: 'kadar' },
+      { Header: 'Harga', accessor: 'beli' },
+      { Header: 'Tools', accessor: 'col6' },
     ],
-    []
+    [],
   );
   const {
     getTableProps,
@@ -106,7 +84,7 @@ function Table() {
     prepareRow,
   } = useTable({ columns, data });
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -114,36 +92,66 @@ function Table() {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: "solid 3px red",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
+                  borderBottom: 'solid 3px red',
+                  background: 'aliceblue',
+                  color: 'black',
+                  fontWeight: 'bold',
                 }}
               >
-                {column.render("Header")}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, rowIndex) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
+              {row.cells.map((cell, index) => {
+                let num = (
                   <td
-                    {...cell.getCellProps()}
+                    key={index}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
                     }}
                   >
-                    {cell.render("Cell")}
+                    {rowIndex + 1}
                   </td>
                 );
+                let content = (
+                  <td
+                    key={index + 1}
+                    {...cell.getCellProps()}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                );
+                let remove = (
+                  <td
+                    key={index + 2}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
+                    }}
+                  >
+                    <button onClick={() => removeData(rowIndex)}>Hapus</button>
+                  </td>
+                );
+                return index === 0
+                  ? num
+                  : index !== row.cells.length - 1
+                  ? content
+                  : remove;
               })}
             </tr>
           );
@@ -153,250 +161,192 @@ function Table() {
   );
 }
 
-export default class Beli extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      radioSelected: undefined,
-    };
-  }
-  render() {
-    return (
-      <Container>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          <Grid>
-            {/* section 1 - Header */}
-            <Row
-              size={10}
-              style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
+let Beli = () => {
+   let [state, setState] = useState({
+     paymentMethod: 'Tunai',
+     noRef: '',
+     memberBarcode: '',
+   });
+  let [beli, setBeli] = useState([
+    {
+      nama: 'AntamPure24-001',
+      berat: 200,
+      kadar: 85,
+      beli: 2750000,
+    },
+    {
+      nama: 'AntamPure24-002',
+      berat: 100,
+      kadar: 85,
+      beli: 1575000,
+    },
+    {
+      nama: 'AntamPure24-001',
+      berat: 200,
+      kadar: 45,
+      beli: 1800000,
+    },
+  ]);
+
+  let [transactionData, setTransactionData] = useState({});
+
+  useEffect(() => {
+    let total = 0;
+    for (let index = 0; index < beli.length; index++) {
+      const { beli: harga } = beli[index];
+      total += harga;
+    }
+
+    setTransactionData({ ...state, beli, total, type: 'beli' });
+  }, [state, beli]);
+  console.log(transactionData);
+
+  let listRadio = [
+    'Tunai',
+    'BCA',
+    'Mandiri',
+    'BNI',
+    'BRI',
+    'Visa',
+    'Master',
+    'Go-Pay',
+    'OVO',
+  ];
+
+  let RadioButton = (item, index) => (
+    <View
+      key={index}
+      style={{
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+      }}
+    >
+      <Radio
+        onPress={() => setState({ paymentMethod: item })}
+        selected={state.paymentMethod == item}
+      />
+      <Text style={{ marginRight: 5 }}>{item}</Text>
+    </View>
+  );
+
+  return (
+    <Container>
+      <Content contentContainerStyle={{ flex: 1 }}>
+        <Grid>
+          {/* section 1 - Header */}
+          <Row
+            size={10}
+            style={{
+              backgroundColor: '#d3ece1',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
+            <Item
+              style={{
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFFFFF',
+                width: '15vw',
+              }}
+              regular
             >
-              <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
-              <Item
-                style={{
-                  alignSelf: "center",
-                  height: "3vh",
-                  backgroundColor: "#FFFFFF",
-                  width: "15vw",
-                }}
-                regular
-              >
-                <Input style={{ height: "3vh" }} />
-              </Item>
-              <Button
-                light
-                style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
-                  borderWidth: 1,
-                  borderRadius: 15,
-                }}
-              >
-                <Text> Tambahkan Manual </Text>
-              </Button>
-            </Row>
-            {/* section 2 - label penanda jual */}
-            <Row size={5} style={{ backgroundColor: "#FFF" }}>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  marginLeft: "5vw",
-                  fontSize: 32,
-                }}
-              >
-                Barang Beli
-              </Text>
-            </Row>
-            {/* section 3 - tabel penjualan */}
-            <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
-              <Grid>
-                {/* section 3.1 - whitespace */}
-                <Col size={5}></Col>
-                {/* section 3.2 - tabel */}
-                <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
-                  <Styles>
-                    <Table />
-                  </Styles>
-                </Col>
-                {/* section 3.3 Tombol Aksi*/}
-                <Col size={20}>
-                  <Button
-                    light
-                    style={{
-                      alignSelf: "center",
-                      marginLeft: "1vw",
-                      borderWidth: 1,
-                      borderRadius: 15,
-                      marginTop: 50,
-                      width: "10vw",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text>Tambah Barang</Text>
-                  </Button>
-                  <View style={{ flex: 1 }}></View>
-                  <Text
-                    style={{
-                      alignSelf: "center",
-                    }}
-                  >
-                    Metode Pembayaran
-                  </Text>
-                  <View
-                    style={{
-                      alignSelf: "center",
-                      marginLeft: 5,
-                      paddingLeft: 5,
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item1" })
-                        }
-                        selected={this.state.radioSelected == "item1"}
-                      />
-                      <Text style={{ marginRight: 5 }}>Tunai</Text>
-                    </View>
-                    <View
-                      style={{ flexDirection: "row", alignSelf: "flex-start" }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item2" })
-                        }
-                        selected={this.state.radioSelected == "item2"}
-                      />
-                      <Text style={{ marginRight: 5 }}>BCA</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item3" })
-                        }
-                        selected={this.state.radioSelected == "item3"}
-                      />
-                      <Text style={{ marginRight: 5 }}>Mandiri</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item4" })
-                        }
-                        selected={this.state.radioSelected == "item4"}
-                      />
-                      <Text style={{ marginRight: 5 }}>BNI</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item5" })
-                        }
-                        selected={this.state.radioSelected == "item5"}
-                      />
-                      <Text style={{ marginRight: 5 }}>BRI</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item6" })
-                        }
-                        selected={this.state.radioSelected == "item6"}
-                      />
-                      <Text style={{ marginRight: 5 }}>Visa</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item7" })
-                        }
-                        selected={this.state.radioSelected == "item7"}
-                      />
-                      <Text style={{ marginRight: 5 }}>Master</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item8" })
-                        }
-                        selected={this.state.radioSelected == "item8"}
-                      />
-                      <Text style={{ marginRight: 5 }}>Go-Pay</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: "item9" })
-                        }
-                        selected={this.state.radioSelected == "item9"}
-                      />
-                      <Text style={{ marginRight: 5 }}>OVO</Text>
-                    </View>
-                  </View>
-                  <Button
-                    light
-                    style={{
-                      alignSelf: "center",
-                      marginLeft: "1vw",
-                      borderWidth: 1,
-                      borderRadius: 15,
-                      marginBottom: 50,
-                      width: "10vw",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text> Selesai </Text>
-                  </Button>
-                </Col>
-              </Grid>
-            </Row>
-            {/* section 4 - white space */}
-            <Row size={10} style={{ backgroundColor: "#FFF" }}></Row>
-          </Grid>
-        </Content>
-      </Container>
-    );
-  }
-}
+              <Input style={{ height: '3vh' }} />
+            </Item>
+            <Button
+              light
+              style={{
+                alignSelf: 'center',
+                marginLeft: '1vw',
+                borderWidth: 1,
+                borderRadius: 15,
+              }}
+            >
+              <Text> Tambahkan Manual </Text>
+            </Button>
+          </Row>
+          {/* section 2 - label penanda jual */}
+          <Row size={5} style={{ backgroundColor: '#FFF' }}>
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginLeft: '5vw',
+                fontSize: 32,
+              }}
+            >
+              Barang Beli
+            </Text>
+          </Row>
+          {/* section 3 - tabel penjualan */}
+          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+            <Grid>
+              {/* section 3.1 - whitespace */}
+              <Col size={5}></Col>
+              {/* section 3.2 - tabel */}
+              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+                <Styles>
+                  <Table dat={beli} setDat={setBeli} />
+                </Styles>
+              </Col>
+              {/* section 3.3 Tombol Aksi*/}
+              <Col size={20}>
+                <Button
+                  light
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    marginTop: 50,
+                    width: '10vw',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text>Tambah Barang</Text>
+                </Button>
+                <View style={{ flex: 1 }}></View>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                  }}
+                >
+                  Metode Pembayaran
+                </Text>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: 5,
+                    paddingLeft: 5,
+                  }}
+                >
+                  {listRadio.map((item, index) => RadioButton(item, index))}
+                </View>
+                <Button
+                  light
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    marginBottom: 50,
+                    width: '10vw',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text> Selesai </Text>
+                </Button>
+              </Col>
+            </Grid>
+          </Row>
+          {/* section 4 - white space */}
+          <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
+        </Grid>
+      </Content>
+    </Container>
+  );
+};
+
+export default Beli;
 
 // section 1 - Header               untuk memasukan barcode member
 // section 2 - Label penanda        penanda halaman

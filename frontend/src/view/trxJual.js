@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   Container,
@@ -55,34 +55,7 @@ const Styles = styled.div`
   }
 `;
 
-function Table() {
-  let [dat, setDat] = useState([
-    {
-      col1: '1',
-      col2: 'AntamPure24-001',
-      col3: '200gr',
-      col4: '85%',
-      col5: 2750000,
-      col6: 'hapus',
-    },
-    {
-      col1: '2',
-      col2: 'AntamPure24-002',
-      col3: '100gr',
-      col4: '85%',
-      col5: 1575000,
-      col6: 'hapus',
-    },
-    {
-      col1: '3',
-      col2: 'AntamPure24-001',
-      col3: '200gr',
-      col4: '45%',
-      col5: 1800000,
-      col6: 'hapus',
-    },
-  ]);
-  let addData = () => {};
+function Table({ dat, setDat }) {
   let removeData = (index) => {
     let newData = [...dat];
     newData.splice(index, 1);
@@ -98,19 +71,19 @@ function Table() {
       },
       {
         Header: 'Kode Barang',
-        accessor: 'col2',
+        accessor: 'nama',
       },
       {
-        Header: 'Berat',
-        accessor: 'col3',
+        Header: 'Berat (gr)',
+        accessor: 'berat',
       },
-      { Header: 'Kadar', accessor: 'col4' },
+      { Header: 'Kadar (%)', accessor: 'kadar' },
       {
         Header: 'Harga',
-        accessor: 'col5',
+        accessor: 'jual',
         Footer: (info) => {
           const total = React.useMemo(
-            () => info.rows.reduce((sum, row) => row.values.col5 + sum, 0),
+            () => info.rows.reduce((sum, row) => row.values.jual + sum, 0),
             [info.rows],
           );
           return <>Total: {currency(total)}</>;
@@ -223,248 +196,189 @@ function Table() {
   );
 }
 
-export default class Jual extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      radioSelected: undefined,
-    };
-  }
-  render() {
-    return (
-      <Container>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          <Grid>
-            {/* section 1 - Header */}
-            <Row
-              size={10}
-              style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+let Jual = () => {
+  let [state, setState] = useState({
+    paymentMethod: 'Tunai',
+    noRef: '',
+    memberBarcode: '',
+  });
+  let [jual, setJual] = useState([
+    {
+      nama: 'AntamPure24-001',
+      berat: 200,
+      kadar: 85,
+      jual: 2750000,
+    },
+    {
+      nama: 'AntamPure24-002',
+      berat: 100,
+      kadar: 85,
+      jual: 1575000,
+    },
+    {
+      nama: 'AntamPure24-001',
+      berat: 200,
+      kadar: 45,
+      jual: 1800000,
+    },
+  ]);
+
+  let [transactionData, setTransactionData] = useState({});
+
+  useEffect(() => {
+    let total = 0;
+    for (let index = 0; index < jual.length; index++) {
+      const { jual: harga } = jual[index];
+      total += harga;
+    }
+
+    setTransactionData({ ...state, jual, total, type: 'jual' });
+  }, [state, jual]);
+  console.log(transactionData);
+  let listRadio = [
+    'Tunai',
+    'BCA',
+    'Mandiri',
+    'BNI',
+    'BRI',
+    'Visa',
+    'Master',
+    'Go-Pay',
+    'OVO',
+  ];
+
+  let RadioButton = (item, index) => (
+    <View
+      key={index}
+      style={{
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
+      }}
+    >
+      <Radio
+        onPress={() => setState((state) => ({ ...state, paymentMethod: item }))}
+        selected={state.paymentMethod === item}
+      />
+      <Text style={{ marginRight: 5 }}>{item}</Text>
+    </View>
+  );
+
+  return (
+    <Container>
+      <Content contentContainerStyle={{ flex: 1 }}>
+        <Grid>
+          {/* section 1 - Header */}
+          <Row
+            size={10}
+            style={{
+              backgroundColor: '#d3ece1',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
+            <Item
+              style={{
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '15vw',
+              }}
+              regular
             >
-              <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
-              <Item
-                style={{
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '15vw',
-                }}
-                regular
-              >
-                <Input style={{ height: '3vh' }} />
-              </Item>
-              <Button
-                light
-                style={{
-                  alignSelf: 'center',
-                  marginLeft: '1vw',
-                  borderWidth: 1,
-                  borderRadius: 15,
-                }}
-              >
-                <Text> Tambahkan Manual </Text>
-              </Button>
-            </Row>
-            {/* section 2 - label penanda jual */}
-            <Row size={8} style={{ backgroundColor: '#FFF' }}>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  marginLeft: '5vw',
-                  fontSize: 32,
-                  padding: 5,
-                }}
-              >
-                Barang Jual
-              </Text>
-            </Row>
-            {/* section 3 - tabel penjualan */}
-            <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
-              <Grid>
-                {/* section 3.1 - whitespace */}
-                <Col size={5}></Col>
-                {/* section 3.2 - tabel */}
-                <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
-                  <Styles>
-                    <Table />
-                  </Styles>
-                </Col>
-                {/* section 3.3 Tombol Aksi*/}
-                <Col size={20}>
-                  <Button
-                    light
-                    style={{
-                      alignSelf: 'center',
-                      marginLeft: '1vw',
-                      borderWidth: 1,
-                      borderRadius: 15,
-                      marginTop: 50,
-                      width: '10vw',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Text>Tambah Barang</Text>
-                  </Button>
-                  <View style={{ flex: 1 }}></View>
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                    }}
-                  >
-                    Metode Pembayaran
-                  </Text>
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      marginLeft: 5,
-                      paddingLeft: 5,
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item1' })
-                        }
-                        selected={this.state.radioSelected == 'item1'}
-                      />
-                      <Text style={{ marginRight: 5 }}>Tunai</Text>
-                    </View>
-                    <View
-                      style={{ flexDirection: 'row', alignSelf: 'flex-start' }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item2' })
-                        }
-                        selected={this.state.radioSelected == 'item2'}
-                      />
-                      <Text style={{ marginRight: 5 }}>BCA</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item3' })
-                        }
-                        selected={this.state.radioSelected == 'item3'}
-                      />
-                      <Text style={{ marginRight: 5 }}>Mandiri</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item4' })
-                        }
-                        selected={this.state.radioSelected == 'item4'}
-                      />
-                      <Text style={{ marginRight: 5 }}>BNI</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item5' })
-                        }
-                        selected={this.state.radioSelected == 'item5'}
-                      />
-                      <Text style={{ marginRight: 5 }}>BRI</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item6' })
-                        }
-                        selected={this.state.radioSelected == 'item6'}
-                      />
-                      <Text style={{ marginRight: 5 }}>Visa</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item7' })
-                        }
-                        selected={this.state.radioSelected == 'item7'}
-                      />
-                      <Text style={{ marginRight: 5 }}>Master</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item8' })
-                        }
-                        selected={this.state.radioSelected == 'item8'}
-                      />
-                      <Text style={{ marginRight: 5 }}>Go-Pay</Text>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Radio
-                        onPress={() =>
-                          this.setState({ radioSelected: 'item9' })
-                        }
-                        selected={this.state.radioSelected == 'item9'}
-                      />
-                      <Text style={{ marginRight: 5 }}>OVO</Text>
-                    </View>
-                  </View>
-                  <Button
-                    light
-                    style={{
-                      alignSelf: 'center',
-                      marginLeft: '1vw',
-                      borderWidth: 1,
-                      borderRadius: 15,
-                      marginBottom: 50,
-                      width: '10vw',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Text> Selesai </Text>
-                  </Button>
-                </Col>
-              </Grid>
-            </Row>
-            {/* section 4 - white space */}
-            <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
-          </Grid>
-        </Content>
-      </Container>
-    );
-  }
-}
+              <Input style={{ height: '3vh' }} />
+            </Item>
+            <Button
+              light
+              style={{
+                alignSelf: 'center',
+                marginLeft: '1vw',
+                borderWidth: 1,
+                borderRadius: 15,
+              }}
+            >
+              <Text> Tambahkan Manual </Text>
+            </Button>
+          </Row>
+          {/* section 2 - label penanda jual */}
+          <Row size={8} style={{ backgroundColor: '#FFF' }}>
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginLeft: '5vw',
+                fontSize: 32,
+                padding: 5,
+              }}
+            >
+              Barang Jual
+            </Text>
+          </Row>
+          {/* section 3 - tabel penjualan */}
+          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+            <Grid>
+              {/* section 3.1 - whitespace */}
+              <Col size={5}></Col>
+              {/* section 3.2 - tabel */}
+              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+                <Styles>
+                  <Table dat={jual} setDat={setJual} />
+                </Styles>
+              </Col>
+              {/* section 3.3 Tombol Aksi*/}
+              <Col size={20}>
+                <Button
+                  light
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    marginTop: 50,
+                    width: '10vw',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text>Tambah Barang</Text>
+                </Button>
+                <View style={{ flex: 1 }}></View>
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                  }}
+                >
+                  Metode Pembayaran
+                </Text>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: 5,
+                    paddingLeft: 5,
+                  }}
+                >
+                  {listRadio.map((item, index) => RadioButton(item, index))}
+                </View>
+                <Button
+                  light
+                  style={{
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    marginBottom: 50,
+                    width: '10vw',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text> Selesai </Text>
+                </Button>
+              </Col>
+            </Grid>
+          </Row>
+          {/* section 4 - white space */}
+          <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
+        </Grid>
+      </Content>
+    </Container>
+  );
+};
+
+export default Jual;

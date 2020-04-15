@@ -36,7 +36,7 @@ let styles = {
 let FailedLoginModal = ({ handleClose, show }) => {
   useEffect(
     () => {
-      let timer1 = setTimeout(() => handleClose(), 5000);
+      let timer1 = setTimeout(() => handleClose(), 3000);
 
       // this will clear Timeout when component unmont like in willComponentUnmount
       return () => {
