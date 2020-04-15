@@ -1,0 +1,20 @@
+[
+  {
+    "nama": "CMK 2-56",
+    "jenis": "Cincin",
+    "berat": 2,
+    "kadar": 56,
+    "posisi": "A2",
+    "picture": "",
+    "beli": 600000
+  },
+  {
+    "nama": "CMK 3-90",
+    "jenis": "Cincin",
+    "berat": 3,
+    "kadar": 90,
+    "posisi": "A5",
+    "picture": "",
+    "beli": 1400000
+  }
+]

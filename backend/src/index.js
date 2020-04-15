@@ -14,6 +14,20 @@ server.on('listening', async () => {
     let backup = app.service('backup');
     backup.find();
   }, 3600000);
+
+  setTimeout(() => {
+    let dummyItemData = async () => {
+      const itemsService = app.service('items');
+      let items = await itemsService.find({limit: 1});
+      if (items.total === 0) {
+        let dummyData = require('./dummyItemData.json');
+        const itemsAreaService = app.service('item-area');
+        let itemsArea = await itemsAreaService.create(dummyData);
+        console.log(itemsArea);
+      }
+    };
+    dummyItemData();
+  }, 2000);
   logger.info(
     'Feathers application started on http://%s:%d',
     app.get('host'),

@@ -15,8 +15,6 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { currency } from '../utils';
 import { useTable } from 'react-table';
 
-import TambahItemModal from '../modals/modalTambahItem';
-
 const Styles = styled.div`
   padding: 1rem;
 
@@ -60,29 +58,29 @@ const Styles = styled.div`
 function Table() {
   let [dat, setDat] = useState([
     {
-        col1: "1",
-        col2: "AntamPure24-001",
-        col3: "200gr",
-        col4: "85%",
-        col5: 2750000,
-        col6: "hapus",
-      },
-      {
-        col1: "2",
-        col2: "AntamPure24-002",
-        col3: "100gr",
-        col4: "85%",
-        col5: 1575000,
-        col6: "hapus",
-      },
-      {
-        col1: "3",
-        col2: "AntamPure24-001",
-        col3: "200gr",
-        col4: "45%",
-        col5: 1800000,
-        col6: "hapus",
-      },
+      col1: '1',
+      col2: 'AntamPure24-001',
+      col3: '200gr',
+      col4: '85%',
+      col5: 2750000,
+      col6: 'hapus',
+    },
+    {
+      col1: '2',
+      col2: 'AntamPure24-002',
+      col3: '100gr',
+      col4: '85%',
+      col5: 1575000,
+      col6: 'hapus',
+    },
+    {
+      col1: '3',
+      col2: 'AntamPure24-001',
+      col3: '200gr',
+      col4: '45%',
+      col5: 1800000,
+      col6: 'hapus',
+    },
   ]);
   let addData = () => {};
   let removeData = (index) => {
@@ -108,12 +106,12 @@ function Table() {
       },
       { Header: 'Kadar', accessor: 'col4' },
       {
-        Header: "Harga",
-        accessor: "col5",
+        Header: 'Harga',
+        accessor: 'col5',
         Footer: (info) => {
           const total = React.useMemo(
             () => info.rows.reduce((sum, row) => row.values.col5 + sum, 0),
-            [info.rows]
+            [info.rows],
           );
           return <>Total: {currency(total)}</>;
         },
@@ -137,7 +135,7 @@ function Table() {
     prepareRow,
   } = useTable({ columns, data });
 
-  let [showTambah, setShowTambah] = useState(false) 
+  let [showTambah, setShowTambah] = useState(false);
   return (
     <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
       <thead>
@@ -216,7 +214,7 @@ function Table() {
         {footerGroups.map((group) => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map((column) => (
-              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+              <td {...column.getFooterProps()}>{column.render('Footer')}</td>
             ))}
           </tr>
         ))}
@@ -245,10 +243,10 @@ export default class Jual extends Component {
               <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
               <Item
                 style={{
-                  alignSelf: "center",
-                  height: "3vh",
-                  backgroundColor: "#FFF",
-                  width: "15vw",
+                  alignSelf: 'center',
+                  height: '3vh',
+                  backgroundColor: '#FFF',
+                  width: '15vw',
                 }}
                 regular
               >
@@ -309,138 +307,138 @@ export default class Jual extends Component {
                   <View style={{ flex: 1 }}></View>
                   <Text
                     style={{
-                      alignSelf: "center",
+                      alignSelf: 'center',
                     }}
                   >
                     Metode Pembayaran
                   </Text>
                   <View
                     style={{
-                      alignSelf: "center",
+                      alignSelf: 'center',
                       marginLeft: 5,
                       paddingLeft: 5,
                     }}
                   >
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item1" })
+                          this.setState({ radioSelected: 'item1' })
                         }
-                        selected={this.state.radioSelected == "item1"}
+                        selected={this.state.radioSelected == 'item1'}
                       />
                       <Text style={{ marginRight: 5 }}>Tunai</Text>
                     </View>
                     <View
-                      style={{ flexDirection: "row", alignSelf: "flex-start" }}
+                      style={{ flexDirection: 'row', alignSelf: 'flex-start' }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item2" })
+                          this.setState({ radioSelected: 'item2' })
                         }
-                        selected={this.state.radioSelected == "item2"}
+                        selected={this.state.radioSelected == 'item2'}
                       />
                       <Text style={{ marginRight: 5 }}>BCA</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item3" })
+                          this.setState({ radioSelected: 'item3' })
                         }
-                        selected={this.state.radioSelected == "item3"}
+                        selected={this.state.radioSelected == 'item3'}
                       />
                       <Text style={{ marginRight: 5 }}>Mandiri</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item4" })
+                          this.setState({ radioSelected: 'item4' })
                         }
-                        selected={this.state.radioSelected == "item4"}
+                        selected={this.state.radioSelected == 'item4'}
                       />
                       <Text style={{ marginRight: 5 }}>BNI</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item5" })
+                          this.setState({ radioSelected: 'item5' })
                         }
-                        selected={this.state.radioSelected == "item5"}
+                        selected={this.state.radioSelected == 'item5'}
                       />
                       <Text style={{ marginRight: 5 }}>BRI</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item6" })
+                          this.setState({ radioSelected: 'item6' })
                         }
-                        selected={this.state.radioSelected == "item6"}
+                        selected={this.state.radioSelected == 'item6'}
                       />
                       <Text style={{ marginRight: 5 }}>Visa</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item7" })
+                          this.setState({ radioSelected: 'item7' })
                         }
-                        selected={this.state.radioSelected == "item7"}
+                        selected={this.state.radioSelected == 'item7'}
                       />
                       <Text style={{ marginRight: 5 }}>Master</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item8" })
+                          this.setState({ radioSelected: 'item8' })
                         }
-                        selected={this.state.radioSelected == "item8"}
+                        selected={this.state.radioSelected == 'item8'}
                       />
                       <Text style={{ marginRight: 5 }}>Go-Pay</Text>
                     </View>
                     <View
                       style={{
-                        flexDirection: "row",
-                        alignSelf: "flex-start",
+                        flexDirection: 'row',
+                        alignSelf: 'flex-start',
                       }}
                     >
                       <Radio
                         onPress={() =>
-                          this.setState({ radioSelected: "item9" })
+                          this.setState({ radioSelected: 'item9' })
                         }
-                        selected={this.state.radioSelected == "item9"}
+                        selected={this.state.radioSelected == 'item9'}
                       />
                       <Text style={{ marginRight: 5 }}>OVO</Text>
                     </View>

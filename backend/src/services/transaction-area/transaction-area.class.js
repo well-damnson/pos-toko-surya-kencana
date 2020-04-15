@@ -25,7 +25,7 @@ exports.TransactionArea = class TransactionArea {
 
     const app = this.app;
     const transactionsService = app.service('transactions');
-    
+
     return result;
   }
 

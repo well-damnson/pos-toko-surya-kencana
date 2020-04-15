@@ -15,6 +15,8 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { currency } from "../utils";
 import { useTable } from "react-table";
 
+import TambahItemModal from '../modals/modalTambahItem';
+
 const Styles = styled.div`
   padding: 1rem;
 
