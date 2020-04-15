@@ -98,7 +98,7 @@ let ModalTambahItem = (props) => {
                 placeholderStyle={{ color: '#bfc6ea' }}
                 placeholderIconColor="#007aff"
                 style={{ width: undefined }}
-                selectedValue={this.state.selected}
+                selectedValue={state.jenis}
                 onValueChange={(text) => setValue('jenis', text)}
               >
                 <Picker.Item label="Kalung" value="key1" />
@@ -174,8 +174,8 @@ let ModalTambahItem = (props) => {
                 placeholderStyle={{ color: '#bfc6ea' }}
                 placeholderIconColor="#007aff"
                 style={{ width: undefined }}
-                selectedValue={this.state.selected2}
-                onValueChange={(text) => setValue('jenis', text)}
+                selectedValue={state.posisi}
+                onValueChange={(text) => setValue('posisi', text)}
               >
                 <Picker.Item label="Pilih" value="key0" />
                 <Picker.Item label="A1" value="key1" />
@@ -221,7 +221,11 @@ let ModalTambahItem = (props) => {
               }}
               regular
             >
-              <Input style={{ height: '3vh' }} />
+              <Input
+                style={{ height: '3vh' }}
+                value={state.beli}
+                onChangeText={(text) => setValue('beli', value)}
+              />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
