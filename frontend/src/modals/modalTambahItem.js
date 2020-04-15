@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Item,
@@ -9,22 +9,22 @@ import {
   Button,
   Form,
   Picker,
-} from 'native-base';
-import { View } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+} from "native-base";
+import { View } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 let ModalTambahItem = (props) => {
   let { Client } = Hook.useClientState();
 
   let [state, setState] = useState({
-    nama: '',
-    jenis: '',
+    nama: "",
+    jenis: "",
     berat: 0,
     kadar: 0,
-    posisi: '',
-    picture: '',
+    posisi: "",
+    picture: "",
     beli: 0,
   });
   let [posisi, setPosisi] = useState([]);
@@ -32,7 +32,7 @@ let ModalTambahItem = (props) => {
 
   useEffect(() => {
     let fetchFunction = async () => {
-      let itemsService = Client.service('item-area');
+      let itemsService = Client.service("item-area");
       let data = await itemsService.find();
       console.log(data);
     };
@@ -52,17 +52,17 @@ let ModalTambahItem = (props) => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
                 value={state.nama}
-                onChangeText={(text) => setValue('nama', text)}
-                style={{ height: '3vh' }}
+                onChangeText={(text) => setValue("nama", text)}
+                style={{ height: "3vh" }}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -86,20 +86,20 @@ let ModalTambahItem = (props) => {
             <Form
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
             >
               <Picker
                 mode="dropdown"
                 placeholder="jenis"
-                placeholderStyle={{ color: '#bfc6ea' }}
+                placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
                 style={{ width: undefined }}
                 selectedValue={state.jenis}
-                onValueChange={(text) => setValue('jenis', text)}
+                onValueChange={(text) => setValue("jenis", text)}
               >
                 <Picker.Item label="Kalung" value="key1" />
                 <Picker.Item label="Liontin" value="key2" />
@@ -116,17 +116,17 @@ let ModalTambahItem = (props) => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
                 value={state.berat}
-                onChangeText={(text) => setValue('berat', text)}
-                style={{ height: '3vh' }}
+                onChangeText={(text) => setValue("berat", text)}
+                style={{ height: "3vh" }}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>gr</Text>
@@ -139,17 +139,17 @@ let ModalTambahItem = (props) => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
                 value={state.kadar}
-                onChangeText={(text) => setValue('kadar', text)}
-                style={{ height: '3vh' }}
+                onChangeText={(text) => setValue("kadar", text)}
+                style={{ height: "3vh" }}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>%</Text>
@@ -162,20 +162,20 @@ let ModalTambahItem = (props) => {
             <Form
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
             >
               <Picker
                 mode="dropdown"
                 placeholder="Select your SIM"
-                placeholderStyle={{ color: '#bfc6ea' }}
+                placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
                 style={{ width: undefined }}
                 selectedValue={state.posisi}
-                onValueChange={(text) => setValue('posisi', text)}
+                onValueChange={(text) => setValue("posisi", text)}
               >
                 <Picker.Item label="Pilih" value="key0" />
                 <Picker.Item label="A1" value="key1" />
@@ -195,11 +195,11 @@ let ModalTambahItem = (props) => {
               light
               style={{
                 flex: 1,
-                alignSelf: 'center',
-                height: '3vh',
-                justifyContent: 'center',
-                backgroundColor: '#D9D9D9',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                justifyContent: "center",
+                backgroundColor: "#D9D9D9",
+                width: "20vw",
               }}
             >
               <Text>Unggah</Text>
@@ -214,17 +214,17 @@ let ModalTambahItem = (props) => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.beli}
-                onChangeText={(text) => setValue('beli', value)}
+                onChangeText={(text) => setValue("beli", value)}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -232,7 +232,7 @@ let ModalTambahItem = (props) => {
 
           <Row style={{ margin: 10 }}>
             <View style={{ flex: 3 }} />
-            <Button rounded light style={{ backgroundColor: '#D9D9D9' }}>
+            <Button rounded light style={{ backgroundColor: "#D9D9D9" }}>
               <Text>Simpan</Text>
             </Button>
             <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />
@@ -276,14 +276,14 @@ class ContentExample extends Component {
               <Item
                 style={{
                   flex: 2,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
                 regular
               >
-                <Input style={{ height: '3vh' }} />
+                <Input style={{ height: "3vh" }} />
               </Item>
               <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
@@ -306,16 +306,16 @@ class ContentExample extends Component {
               <Form
                 style={{
                   flex: 2,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
               >
                 <Picker
                   mode="dropdown"
                   placeholder="Select your SIM"
-                  placeholderStyle={{ color: '#bfc6ea' }}
+                  placeholderStyle={{ color: "#bfc6ea" }}
                   placeholderIconColor="#007aff"
                   style={{ width: undefined }}
                   selectedValue={this.state.selected}
@@ -337,14 +337,14 @@ class ContentExample extends Component {
               <Item
                 style={{
                   flex: 1.5,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
                 regular
               >
-                <Input style={{ height: '3vh' }} />
+                <Input style={{ height: "3vh" }} />
               </Item>
               <Text style={{ marginHorizontal: 10 }}>gr</Text>
               <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -356,14 +356,14 @@ class ContentExample extends Component {
               <Item
                 style={{
                   flex: 1.5,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
                 regular
               >
-                <Input style={{ height: '3vh' }} />
+                <Input style={{ height: "3vh" }} />
               </Item>
               <Text style={{ marginHorizontal: 10 }}>%</Text>
               <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
@@ -375,16 +375,16 @@ class ContentExample extends Component {
               <Form
                 style={{
                   flex: 2,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
               >
                 <Picker
                   mode="dropdown"
                   placeholder="Select your SIM"
-                  placeholderStyle={{ color: '#bfc6ea' }}
+                  placeholderStyle={{ color: "#bfc6ea" }}
                   placeholderIconColor="#007aff"
                   style={{ width: undefined }}
                   selectedValue={this.state.selected2}
@@ -408,11 +408,11 @@ class ContentExample extends Component {
                 light
                 style={{
                   flex: 1,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  justifyContent: 'center',
-                  backgroundColor: '#D9D9D9',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  justifyContent: "center",
+                  backgroundColor: "#D9D9D9",
+                  width: "20vw",
                 }}
               >
                 <Text>Unggah</Text>
@@ -427,21 +427,21 @@ class ContentExample extends Component {
               <Item
                 style={{
                   flex: 2,
-                  alignSelf: 'center',
-                  height: '3vh',
-                  backgroundColor: '#FFF',
-                  width: '20vw',
+                  alignSelf: "center",
+                  height: "3vh",
+                  backgroundColor: "#FFF",
+                  width: "20vw",
                 }}
                 regular
               >
-                <Input style={{ height: '3vh' }} />
+                <Input style={{ height: "3vh" }} />
               </Item>
               <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
             <Row style={{ margin: 10 }}>
               <View style={{ flex: 3 }} />
-              <Button rounded light style={{ backgroundColor: '#D9D9D9' }}>
+              <Button rounded light style={{ backgroundColor: "#D9D9D9" }}>
                 <Text>Simpan</Text>
               </Button>
               <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />

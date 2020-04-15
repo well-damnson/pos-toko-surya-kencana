@@ -284,7 +284,11 @@ let Jual = () => {
   };
   return (
     <View style={{ flex: 1, height: "100vh" }}>
-      <Modal isVisible={modalShow} onBackdropPress={() => setModalShow(false)}>
+      <Modal
+        style={{ alignSelf: "center" }}
+        isVisible={modalShow}
+        onBackdropPress={() => setModalShow(false)}
+      >
         <ConfirmModal
           function={() => removeData(selectedData)}
           close={() => setModalShow(false)}
