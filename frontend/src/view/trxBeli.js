@@ -71,7 +71,14 @@ function Table({ dat, setDat }) {
         accessor: 'berat',
       },
       { Header: 'Kadar (%)', accessor: 'kadar' },
-      { Header: 'Harga', accessor: 'beli' },
+      {
+        Header: 'Harga',
+        accessor: 'beli',
+        Cell: (props) => {
+          console.log(props);
+          return currency(props.row.values.beli);
+        },
+      },
       { Header: 'Tools', accessor: 'col6' },
     ],
     [],
@@ -162,11 +169,11 @@ function Table({ dat, setDat }) {
 }
 
 let Beli = () => {
-   let [state, setState] = useState({
-     paymentMethod: 'Tunai',
-     noRef: '',
-     memberBarcode: '',
-   });
+  let [state, setState] = useState({
+    paymentMethod: 'Tunai',
+    noRef: '',
+    memberBarcode: '',
+  });
   let [beli, setBeli] = useState([
     {
       nama: 'AntamPure24-001',

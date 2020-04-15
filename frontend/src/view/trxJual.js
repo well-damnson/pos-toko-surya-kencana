@@ -88,11 +88,10 @@ function Table({ dat, setDat }) {
           );
           return <>Total: {currency(total)}</>;
         },
-        // Cell: (props) =>
-        //   new Intl.NumberFormat("id-ID", {
-        //     style: "currency",
-        //     currency: "IDR",
-        //   }).format(props.value),
+        Cell: (props) => {
+          console.log(props);
+          return currency(props.row.values.jual);
+        },
         // https://stackoverflow.com/questions/48704269/react-table-package-formatting-float-as-currency , https://medium.com/@nidhinkumar/react-js-number-format-and-styling-a1a6e211e629
       },
       { Header: 'Tools', accessor: 'col6' },
