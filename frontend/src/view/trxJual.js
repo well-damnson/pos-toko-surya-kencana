@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { Component, useState } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   Content,
@@ -9,11 +9,13 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import { Text, View } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../currencyFormat";
-import { useTable } from "react-table";
+} from 'native-base';
+import { Text, View } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
+import { useTable } from 'react-table';
+
+import TambahItemModal from '../modals/modalTambahItem';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -56,9 +58,8 @@ const Styles = styled.div`
 `;
 
 function Table() {
-  const data = React.useMemo(
-    () => [
-      {
+  let [dat, setDat] = useState([
+    {
         col1: "1",
         col2: "AntamPure24-001",
         col3: "200gr",
@@ -82,24 +83,30 @@ function Table() {
         col5: 1800000,
         col6: "hapus",
       },
-    ],
-    []
-  );
+  ]);
+  let addData = () => {};
+  let removeData = (index) => {
+    let newData = [...dat];
+    newData.splice(index, 1);
+    setDat(newData);
+  };
+
+  const data = React.useMemo(() => dat, [dat]);
   const columns = React.useMemo(
     () => [
       {
-        Header: "No.",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No.',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Kode Barang",
-        accessor: "col2",
+        Header: 'Kode Barang',
+        accessor: 'col2',
       },
       {
-        Header: "Berat",
-        accessor: "col3",
+        Header: 'Berat',
+        accessor: 'col3',
       },
-      { Header: "Kadar", accessor: "col4" },
+      { Header: 'Kadar', accessor: 'col4' },
       {
         Header: "Harga",
         accessor: "col5",
@@ -117,11 +124,10 @@ function Table() {
         //   }).format(props.value),
         // https://stackoverflow.com/questions/48704269/react-table-package-formatting-float-as-currency , https://medium.com/@nidhinkumar/react-js-number-format-and-styling-a1a6e211e629
       },
-      { Header: "Tools", accessor: "col6" },
+      { Header: 'Tools', accessor: 'col6' },
     ],
-    []
+    [],
   );
-  // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
     getTableBodyProps,
@@ -131,9 +137,9 @@ function Table() {
     prepareRow,
   } = useTable({ columns, data });
 
-  // Render the UI for your table
+  let [showTambah, setShowTambah] = useState(false) 
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -141,36 +147,66 @@ function Table() {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: "solid 3px red",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
+                  borderBottom: 'solid 3px red',
+                  background: 'aliceblue',
+                  color: 'black',
+                  fontWeight: 'bold',
                 }}
               >
-                {column.render("Header")}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, rowIndex) => {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
+              {row.cells.map((cell, index) => {
+                let num = (
                   <td
-                    {...cell.getCellProps()}
+                    key={index}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
                     }}
                   >
-                    {cell.render("Cell")}
+                    {rowIndex + 1}
                   </td>
                 );
+                let content = (
+                  <td
+                    key={index + 1}
+                    {...cell.getCellProps()}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                );
+                let remove = (
+                  <td
+                    key={index + 2}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
+                    }}
+                  >
+                    <button onClick={() => removeData(rowIndex)}>Hapus</button>
+                  </td>
+                );
+                return index === 0
+                  ? num
+                  : index !== row.cells.length - 1
+                  ? content
+                  : remove;
               })}
             </tr>
           );
@@ -204,9 +240,9 @@ export default class Jual extends Component {
             {/* section 1 - Header */}
             <Row
               size={10}
-              style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
+              style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
             >
-              <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
+              <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
               <Item
                 style={{
                   alignSelf: "center",
@@ -216,13 +252,13 @@ export default class Jual extends Component {
                 }}
                 regular
               >
-                <Input style={{ height: "3vh" }} />
+                <Input style={{ height: '3vh' }} />
               </Item>
               <Button
                 light
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
+                  alignSelf: 'center',
+                  marginLeft: '1vw',
                   borderWidth: 1,
                   borderRadius: 15,
                 }}
@@ -231,11 +267,11 @@ export default class Jual extends Component {
               </Button>
             </Row>
             {/* section 2 - label penanda jual */}
-            <Row size={8} style={{ backgroundColor: "#FFF" }}>
+            <Row size={8} style={{ backgroundColor: '#FFF' }}>
               <Text
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "5vw",
+                  alignSelf: 'center',
+                  marginLeft: '5vw',
                   fontSize: 32,
                   padding: 5,
                 }}
@@ -244,12 +280,12 @@ export default class Jual extends Component {
               </Text>
             </Row>
             {/* section 3 - tabel penjualan */}
-            <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
+            <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
               <Grid>
                 {/* section 3.1 - whitespace */}
                 <Col size={5}></Col>
                 {/* section 3.2 - tabel */}
-                <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
+                <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
                   <Styles>
                     <Table />
                   </Styles>
@@ -259,13 +295,13 @@ export default class Jual extends Component {
                   <Button
                     light
                     style={{
-                      alignSelf: "center",
-                      marginLeft: "1vw",
+                      alignSelf: 'center',
+                      marginLeft: '1vw',
                       borderWidth: 1,
                       borderRadius: 15,
                       marginTop: 50,
-                      width: "10vw",
-                      justifyContent: "center",
+                      width: '10vw',
+                      justifyContent: 'center',
                     }}
                   >
                     <Text>Tambah Barang</Text>
@@ -412,13 +448,13 @@ export default class Jual extends Component {
                   <Button
                     light
                     style={{
-                      alignSelf: "center",
-                      marginLeft: "1vw",
+                      alignSelf: 'center',
+                      marginLeft: '1vw',
                       borderWidth: 1,
                       borderRadius: 15,
                       marginBottom: 50,
-                      width: "10vw",
-                      justifyContent: "center",
+                      width: '10vw',
+                      justifyContent: 'center',
                     }}
                   >
                     <Text> Selesai </Text>
@@ -427,7 +463,7 @@ export default class Jual extends Component {
               </Grid>
             </Row>
             {/* section 4 - white space */}
-            <Row size={10} style={{ backgroundColor: "#FFF" }}></Row>
+            <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
           </Grid>
         </Content>
       </Container>
