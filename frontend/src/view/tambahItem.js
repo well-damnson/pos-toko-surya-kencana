@@ -32,6 +32,31 @@ let TambahItem = () => {
     ...defaultState,
   });
 
+  let [toSubmit, setToSubmit] = useState({});
+
+  useEffect(() => {
+    let {
+      nama,
+      jenis,
+      jenisBaru,
+      berat,
+      kadar,
+      posisi,
+      posisiBaru,
+      beli,
+      picture,
+    } = state;
+    setToSubmit({
+      nama,
+      jenis: jenis === '-' ? jenisBaru : jenis,
+      berat,
+      kadar,
+      posisi: posisi === '-' ? posisiBaru : posisi,
+      beli,
+      picture,
+    });
+  }, [state]);
+
   let [jenisList, setJenisList] = useState([]);
   let [posisiList, setPosisiList] = useState([]);
 
@@ -58,6 +83,29 @@ let TambahItem = () => {
     };
     dataFetch();
   }, []);
+
+  let submit = async () => {
+    console.log('submit pressed');
+    let state = toSubmit;
+    console.log(state);
+    if (
+      state.nama.length &&
+      (state.jenis !== '-' || state.jenisBaru.length) &&
+      state.berat.length &&
+      state.kadar.length &&
+      (state.posisi !== '-' || state.posisiBaru.length) &&
+      state.beli.length
+    ) {
+      try {
+        let services = Client.service('item-area');
+        let result = await services.create(state);
+        console.log(result);
+        setState({ ...defaultState });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   console.log(state);
   return (
@@ -275,7 +323,12 @@ let TambahItem = () => {
 
           <Row style={{ margin: 10 }}>
             <View style={{ flex: 3 }} />
-            <Button rounded light style={{ backgroundColor: "#D9D9D9" }}>
+            <Button
+              rounded
+              light
+              style={{ backgroundColor: '#D9D9D9' }}
+              onPress={submit}
+            >
               <Text>Simpan</Text>
             </Button>
             <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />
