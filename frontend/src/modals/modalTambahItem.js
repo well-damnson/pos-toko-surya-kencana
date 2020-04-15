@@ -224,7 +224,7 @@ let ModalTambahItem = (props) => {
               <Input
                 style={{ height: "3vh" }}
                 value={state.beli}
-                onChangeText={(text) => setValue("beli", value)}
+                onChangeText={(text) => setValue('beli', text)}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
