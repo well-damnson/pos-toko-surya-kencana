@@ -20,6 +20,8 @@ import ConfirmModal from '../modals/modalConfirm';
 
 import Modal from 'modal-enhanced-react-native-web';
 
+import Hook from '@/wrapper';
+
 const Styles = styled.div`
   padding: 1rem;
 
@@ -169,11 +171,14 @@ function Table({ dat, setDat, removeData }) {
 }
 
 let Beli = () => {
-  let [state, setState] = useState({
+  let { Client } = Hook.useClientState();
+  let defaultState = {
     paymentMethod: 'Tunai',
     noRef: '',
     memberBarcode: '',
-  });
+  };
+  let defaultBeli = [];
+  let [state, setState] = useState({ ...defaultState });
   let [beli, setBeli] = useState([]);
 
   let [transactionData, setTransactionData] = useState({});
@@ -182,7 +187,7 @@ let Beli = () => {
     let total = 0;
     for (let index = 0; index < beli.length; index++) {
       const { beli: harga } = beli[index];
-      total += harga;
+      total += parseInt(harga);
     }
 
     setTransactionData({ ...state, beli, total, type: 'beli' });
@@ -246,6 +251,19 @@ let Beli = () => {
     }
   };
 
+  let submit = async () => {
+    if (beli.length > 0) {
+      console.log('toDatabase');
+      let service = Client.service('transaction-area');
+      let result = await service.create(transactionData);
+      console.log(result);
+      if (result._id) {
+        setState(defaultState);
+        setBeli(defaultBeli);
+      }
+    }
+  };
+
   return (
     <View style={{ flex: 1, height: '100vh' }}>
       <Modal
@@ -283,7 +301,13 @@ let Beli = () => {
             }}
             regular
           >
-            <Input style={{ height: '3vh' }} />
+            <Input
+              style={{ height: '3vh' }}
+              value={state.memberBarcode}
+              onChangeText={(text) =>
+                setState((state) => ({ ...state, memberBarcode: text }))
+              }
+            />
           </Item>
           <Button
             light
@@ -364,6 +388,9 @@ let Beli = () => {
                   marginBottom: 50,
                   width: '10vw',
                   justifyContent: 'center',
+                }}
+                onPress={() => {
+                  submit();
                 }}
               >
                 <Text> Selesai </Text>

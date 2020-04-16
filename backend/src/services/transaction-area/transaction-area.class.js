@@ -62,7 +62,18 @@ exports.TransactionArea = class TransactionArea {
       beli,
       noRef,
     } = newData;
-    if (type && memberBarcode && total && paymentMethod) {
+
+    const app = this.app;
+    const membersService = app.service('members');
+    const member = (
+      await membersService.find({
+        query: {barcode: memberBarcode},
+      })
+    ).data[0];
+    let memberValid = !!member;
+
+    if (type && memberBarcode && total && paymentMethod && memberValid) {
+      console.log(newData);
       let processJual = false;
       let processBeli = false;
       if (
@@ -83,8 +94,6 @@ exports.TransactionArea = class TransactionArea {
       }
       console.log('jual', processJual);
       console.log('beli', processBeli);
-
-      const app = this.app;
 
       // Process Jual Patch & Beli Create
       const itemsService = app.service('items');
@@ -108,6 +117,18 @@ exports.TransactionArea = class TransactionArea {
               });
             }),
           );
+          // Input Poin
+          const membersService = app.service('members');
+          const {_id: memberId, poin} = (
+            await membersService.find({
+              query: {barcode: memberBarcode},
+            })
+          ).data[0];
+          console.log(memberId);
+          const memberAreaService = app.service('member-area');
+          await memberAreaService.patch(memberId, {
+            poin: poin + Math.trunc(total / 1000000),
+          });
         } else {
           return {};
         }
@@ -116,9 +137,10 @@ exports.TransactionArea = class TransactionArea {
 
       let pembelian = [];
       if (processBeli) {
+        let itemAreaService = app.service('item-area');
         pembelian = await Promise.all(
           beli.map(async (item) => {
-            return await itemsService.create({...item});
+            return await itemAreaService.create({...item});
           }),
         );
       }
@@ -143,18 +165,7 @@ exports.TransactionArea = class TransactionArea {
         capitalizeFirstLetter(type);
 
       console.log(noTrx);
-      // Input Poin
-      const membersService = app.service('members');
-      const {_id: memberId, poin} = (
-        await membersService.find({
-          query: {barcode: memberBarcode},
-        })
-      ).data[0];
-      console.log(memberId);
-      const memberAreaService = app.service('member-area');
-      await memberAreaService.patch(memberId, {
-        poin: poin + Math.trunc(total / 1000000),
-      });
+
       result = await transactionsService.create({
         memberBarcode,
         noTransaksi: noTrx,
