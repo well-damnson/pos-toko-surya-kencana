@@ -11,7 +11,7 @@ export default class ConfirmModal extends Component {
           width: "18vw",
           height: "24vh",
           justifyContent: "center",
-          alignItem: "center",
+          alignItems: "center",
           borderWidth: 1,
           borderRadius: 15,
           padding: 15,
