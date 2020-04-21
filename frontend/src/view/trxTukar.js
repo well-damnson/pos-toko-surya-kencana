@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Content,
@@ -9,58 +9,58 @@ import {
   Input,
   Item,
   StyleProvider,
-} from 'native-base';
-import { Text, View } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { useTable } from 'react-table';
+} from "native-base";
+import { Text, View } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { useTable } from "react-table";
 
-import { currency } from '../utils';
+import { currency } from "../utils";
 
-import Modal from 'modal-enhanced-react-native-web';
+import Modal from "modal-enhanced-react-native-web";
 
 function TableJual() {
   const data = React.useMemo(
     () => [
       {
-        col1: '1',
+        col1: "1",
       },
       {
-        col1: '2',
+        col1: "2",
       },
       {
-        col1: '3',
+        col1: "3",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No.',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No.",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Kode Barang',
-        accessor: 'nama',
+        Header: "Kode Barang",
+        accessor: "nama",
       },
       {
-        Header: 'Berat',
-        accessor: 'berat',
+        Header: "Berat",
+        accessor: "berat",
       },
       {
-        Header: 'Kadar (%)',
-        accessor: 'kadar',
+        Header: "Kadar (%)",
+        accessor: "kadar",
       },
       {
-        Header: 'Harga',
-        accessor: 'jual',
+        Header: "Harga",
+        accessor: "jual",
       },
       {
-        Header: 'Tools',
-        accessor: 'col6',
+        Header: "Tools",
+        accessor: "col6",
       },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -70,7 +70,7 @@ function TableJual() {
     prepareRow,
   } = useTable({ columns, data });
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -78,13 +78,13 @@ function TableJual() {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 3px red',
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
+                  borderBottom: "solid 3px red",
+                  background: "aliceblue",
+                  color: "black",
+                  fontWeight: "bold",
                 }}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -100,12 +100,12 @@ function TableJual() {
                   <td
                     {...cell.getCellProps()}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 );
               })}
@@ -121,41 +121,41 @@ function TableBeli() {
   const data = React.useMemo(
     () => [
       {
-        col1: '1',
+        col1: "1",
       },
       {
-        col1: '2',
+        col1: "2",
       },
       {
-        col1: '3',
+        col1: "3",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No.',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No.",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Berat',
-        accessor: 'berat',
+        Header: "Berat",
+        accessor: "berat",
       },
       {
-        Header: 'Kadar (%)',
-        accessor: 'kadar',
+        Header: "Kadar (%)",
+        accessor: "kadar",
       },
       {
-        Header: 'Harga',
-        accessor: 'jual',
+        Header: "Harga",
+        accessor: "jual",
       },
       {
-        Header: 'Tools',
-        accessor: 'col6',
+        Header: "Tools",
+        accessor: "col6",
       },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -165,7 +165,7 @@ function TableBeli() {
     prepareRow,
   } = useTable({ columns, data });
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -173,13 +173,13 @@ function TableBeli() {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 3px red',
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
+                  borderBottom: "solid 3px red",
+                  background: "aliceblue",
+                  color: "black",
+                  fontWeight: "bold",
                 }}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -195,12 +195,12 @@ function TableBeli() {
                   <td
                     {...cell.getCellProps()}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 );
               })}
@@ -214,29 +214,29 @@ function TableBeli() {
 
 let Tukartambah = () => {
   let [state, setState] = useState({
-    paymentMethod: 'Tunai',
-    noRef: '',
-    memberBarcode: '',
+    paymentMethod: "Tunai",
+    noRef: "",
+    memberBarcode: "",
   });
 
   let listRadio = [
-    'Tunai',
-    'BCA',
-    'Mandiri',
-    'BNI',
-    'BRI',
-    'Visa',
-    'Master',
-    'Go-Pay',
-    'OVO',
+    "Tunai",
+    "BCA",
+    "Mandiri",
+    "BNI",
+    "BRI",
+    "Visa",
+    "Master",
+    "Go-Pay",
+    "OVO",
   ];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
+        flexDirection: "row",
+        alignSelf: "flex-start",
       }}
     >
       <Radio
@@ -254,25 +254,25 @@ let Tukartambah = () => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
           >
-            <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
+            <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
             <Item
               style={{
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '15vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "15vw",
               }}
               regular
             >
-              <Input style={{ height: '3vh' }} />
+              <Input style={{ height: "3vh" }} />
             </Item>
             <Button
               light
               style={{
-                alignSelf: 'center',
-                marginLeft: '1vw',
+                alignSelf: "center",
+                marginLeft: "1vw",
                 borderWidth: 1,
                 borderRadius: 15,
               }}
@@ -283,12 +283,12 @@ let Tukartambah = () => {
           {/* section 2 - label penanda jual */}
           <Row
             size={7}
-            style={{ backgroundColor: '#FFF', justifyContent: 'center' }}
+            style={{ backgroundColor: "#FFF", justifyContent: "center" }}
           >
             <Text
               style={{
-                alignSelf: 'center',
-                marginLeft: '5vw',
+                alignSelf: "center",
+                marginLeft: "5vw",
                 fontSize: 24,
                 padding: 5,
               }}
@@ -297,12 +297,12 @@ let Tukartambah = () => {
             </Text>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={5}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
                 <TableJual></TableJual>
               </Col>
               {/* section 3.3 Tombol Aksi*/}
@@ -310,13 +310,13 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: 'center',
-                    marginLeft: '1vw',
+                    alignSelf: "center",
+                    marginLeft: "1vw",
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: '10vw',
-                    justifyContent: 'center',
+                    width: "10vw",
+                    justifyContent: "center",
                   }}
                 >
                   <Text>Tambah Barang</Text>
@@ -327,12 +327,12 @@ let Tukartambah = () => {
           </Row>
           <Row
             size={7}
-            style={{ backgroundColor: '#FFF', justifyContent: 'center' }}
+            style={{ backgroundColor: "#FFF", justifyContent: "center" }}
           >
             <Text
               style={{
-                alignSelf: 'center',
-                marginLeft: '5vw',
+                alignSelf: "center",
+                marginLeft: "5vw",
                 fontSize: 24,
                 padding: 5,
               }}
@@ -341,12 +341,12 @@ let Tukartambah = () => {
             </Text>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={5}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
                 {/* section 3.2.1 - tabel isi */}
                 <TableBeli></TableBeli>
               </Col>
@@ -355,58 +355,75 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: 'center',
-                    marginLeft: '1vw',
+                    alignSelf: "center",
+                    marginLeft: "1vw",
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: '10vw',
-                    justifyContent: 'center',
+                    width: "10vw",
+                    justifyContent: "center",
                   }}
                 >
                   <Text>Tambah Barang</Text>
                 </Button>
                 <View style={{ flex: 1 }}></View>
-                <Button
-                  light
-                  style={{
-                    alignSelf: 'center',
-                    marginLeft: '1vw',
-                    borderWidth: 1,
-                    borderRadius: 15,
-                    marginBottom: 50,
-                    width: '10vw',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Text> Selesai </Text>
-                </Button>
               </Col>
             </Grid>
           </Row>
           {/* section 4 - white space */}
-          <Row size={25} style={{ backgroundColor: '#FFF' }}>
-            <Text
-              style={{
-                alignSelf: 'center',
-              }}
-            >
-              Metode Pembayaran
-            </Text>
+          <Row size={25} style={{ backgroundColor: "#FFF" }}>
+            <View style={{ flex: 5 }} />
             <View
               style={{
-                alignSelf: 'center',
-                marginLeft: 5,
-                paddingLeft: 5,
-                display: 'flex',
-                flexDirection: 'column',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                height: 80,
+                flex: 75,
+                flexDirection: "row",
+                paddingLeft: 50,
+                backgroundColor: "blue",
               }}
             >
-              {listRadio.map((item, index) => RadioButton(item, index))}
+              <Text
+                style={{
+                  alignSelf: "center",
+                }}
+              >
+                Metode Pembayaran
+              </Text>
+              <View
+                style={{
+                  alignSelf: "center",
+                  marginLeft: 5,
+                  paddingLeft: 5,
+                  display: "flex",
+                  flexDirection: "column",
+                  flexWrap: "wrap",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                  height: 80,
+                }}
+              >
+                {listRadio.map((item, index) => RadioButton(item, index))}
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 20,
+                flexDirection: "row",
+                justifyContent: "center",
+                backgroundColor: "green",
+              }}
+            >
+              <Button
+                light
+                style={{
+                  alignSelf: "center",
+                  borderWidth: 1,
+                  borderRadius: 15,
+                  width: "10vw",
+                  justifyContent: "center",
+                }}
+              >
+                <Text> Selesai </Text>
+              </Button>
             </View>
           </Row>
         </Grid>

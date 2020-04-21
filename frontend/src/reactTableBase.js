@@ -5,16 +5,23 @@ function Table() {
   const data = React.useMemo(
     () => [
       {
-        col1: "Hello",
-        col2: "World",
+        col1: "1",
+        nama: "Sample-Code",
+        jenis: "Sample-Gold",
+        berat: "Sample-weight",
+        kadar: "Sample-rate",
+        posisi: "Sample-Position",
+        beli: "123456789",
+        jual: "987654321",
+        col6: "Test",
       },
       {
-        col1: "react-table",
-        col2: "rocks",
+        col1: "2",
+        nama: "Sample",
       },
       {
-        col1: "whatever",
-        col2: "you want",
+        col1: "3",
+        nama: "Sample",
       },
     ],
     []
@@ -22,12 +29,48 @@ function Table() {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Column 1",
+        Header: "No",
         accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: "Column 2",
-        accessor: "col2",
+        Header: "Kode Barang",
+        accessor: "nama",
+      },
+      {
+        Header: "Jenis",
+        accessor: "jenis",
+      },
+      {
+        Header: "Berat",
+        accessor: "berat",
+      },
+      {
+        Header: "Kadar",
+        accessor: "kadar",
+      },
+      {
+        Header: "Posisi",
+        accessor: "posisi",
+      },
+      {
+        Header: "Harga Beli",
+        accessor: "beli",
+        Cell: (props) => {
+          console.log(props);
+          return currency(props.row.values.jual);
+        },
+      },
+      {
+        Header: "Harga Jual",
+        accessor: "jual",
+        Cell: (props) => {
+          console.log(props);
+          return currency(props.row.values.jual);
+        },
+      },
+      {
+        Header: "Tools",
+        accessor: "col6",
       },
     ],
     []
