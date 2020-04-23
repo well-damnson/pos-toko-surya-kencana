@@ -27,6 +27,17 @@ server.on('listening', async () => {
       }
     };
     dummyItemData();
+    let dummyMemberData = async () => {
+      const itemsService = app.service('members');
+      let items = await itemsService.find({limit: 1});
+      if (items.total === 0) {
+        let dummyData = require('./dummyMemberData.json');
+        const registrationService = app.service('register');
+        let registration = await registrationService.create(dummyData);
+        console.log(registration);
+      }
+    };
+    dummyMemberData();
   }, 2000);
   logger.info(
     'Feathers application started on http://%s:%d',
