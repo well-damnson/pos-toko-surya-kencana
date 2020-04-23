@@ -3,7 +3,7 @@ function dateToArray(ms) {
   let date = newDate.getDate();
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
-  let array = [date, month, year];
+  let array = [prepend(date, 2), prepend(month, 2), year];
   return array;
 }
 

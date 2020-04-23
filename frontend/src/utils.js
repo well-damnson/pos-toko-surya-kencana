@@ -32,4 +32,13 @@ function currency(
     console.log(e);
   }
 }
-export { currency };
+
+function prepend(number, width, z) {
+  z = z || '0';
+  number = number + '';
+  return number.length >= width
+    ? number
+    : new Array(width - number.length + 1).join(z) + number;
+}
+
+export { currency, prepend };

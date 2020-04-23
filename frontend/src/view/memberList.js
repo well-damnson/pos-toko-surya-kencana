@@ -38,6 +38,10 @@ function Table({ dat }) {
       {
         Header: 'Tanggal Lahir',
         accessor: 'lahir',
+        Cell: (props) => {
+          console.log(props);
+          return props.row.values.lahir.join('-');
+        },
       },
       {
         Header: 'Alamat',

@@ -73,7 +73,7 @@ function Table(props) {
         Header: 'Harga Beli',
         accessor: 'beli',
         Cell: (props) => {
-          console.log(props);
+          // console.log(props);
           return currency(props.row.values.beli);
         },
       },
@@ -81,7 +81,7 @@ function Table(props) {
         Header: 'Harga Jual',
         accessor: 'jual',
         Cell: (props) => {
-          console.log(props);
+          // console.log(props);
           return currency(props.row.values.jual);
         },
       },
@@ -99,7 +99,6 @@ function Table(props) {
     rows,
     prepareRow,
   } = useTable({ columns, data });
-  console.log('DATA:', props);
   return (
     <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
       <thead>
@@ -227,7 +226,7 @@ let ItemList = () => {
     let fetchFunction = async () => {
       let ItemAreaServices = Client.service('item-area');
       let data = await ItemAreaServices.find();
-      console.log(data);
+      // console.log(data);
       setData([...data]);
       setFiltered([...data]);
       let posisi = {};
@@ -236,15 +235,15 @@ let ItemList = () => {
         posisi[item.posisi] = true;
         jenis[item.jenis] = true;
       });
-      setPosisiPicker(Object.keys(posisi));
-      setJenisPicker(Object.keys(jenis));
+      setPosisiPicker(Object.keys(posisi).sort());
+      setJenisPicker(Object.keys(jenis).sort());
     };
     fetchFunction();
   }, []);
 
   useEffect(() => {
-    console.log('Query Changed');
-    console.log('data', data);
+    // console.log('Query Changed');
+    // console.log('data', data);
     let filtered = [];
     let {
       barcode,
@@ -258,9 +257,9 @@ let ItemList = () => {
       filter,
     } = state;
     for (let index = 0; index < data.length; index++) {
-      console.log('index', index);
+      // console.log('index', index);
       const item = data[index];
-      console.log('item', item);
+      // console.log('item', item);
       if (barcode && !item.barcode.includes(barcode)) {
         continue;
       }
@@ -293,12 +292,12 @@ let ItemList = () => {
       }
       filtered.push(item);
     }
-    console.log(filtered);
+    // console.log(filtered);
     setFiltered(filtered);
   }, [state]);
 
-  console.log('data', data);
-  console.log('filter', filtered);
+  // console.log('data', data);
+  // console.log('filter', filtered);
 
   return (
     <Container>
