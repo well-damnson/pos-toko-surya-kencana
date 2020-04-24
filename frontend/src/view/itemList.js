@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Content,
@@ -9,88 +9,88 @@ import {
   Button,
   Input,
   Item,
-} from 'native-base';
-import { Text, View, TextInput, Picker } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { currency } from '../utils';
+} from "native-base";
+import { Text, View, TextInput, Picker } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { currency } from "../utils";
 
-import Hook from '@/wrapper';
-import { useTable } from 'react-table';
+import Hook from "@/wrapper";
+import { useTable } from "react-table";
 
 function Table(props) {
   const data = React.useMemo(() => [...props.show], [props]);
   const data1 = React.useMemo(
     () => [
       {
-        col1: '1',
-        nama: 'Sample-Code',
-        jenis: 'Sample-Gold',
-        berat: 'Sample-Weight',
-        kadar: 'Sample-Rate',
-        posisi: 'Sample-Position',
-        beli: '123456789',
-        jual: '987654321',
-        col6: 'Test',
+        col1: "1",
+        nama: "Sample-Code",
+        jenis: "Sample-Gold",
+        berat: "Sample-Weight",
+        kadar: "Sample-Rate",
+        posisi: "Sample-Position",
+        beli: "123456789",
+        jual: "987654321",
+        col6: "Test",
       },
       {
-        col1: '2',
-        nama: 'Sample',
+        col1: "2",
+        nama: "Sample",
       },
       {
-        col1: '3',
-        nama: 'Sample',
+        col1: "3",
+        nama: "Sample",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Kode Barang',
-        accessor: 'nama',
+        Header: "Kode Barang",
+        accessor: "nama",
       },
       {
-        Header: 'Jenis',
-        accessor: 'jenis',
+        Header: "Jenis",
+        accessor: "jenis",
       },
       {
-        Header: 'Berat',
-        accessor: 'berat',
+        Header: "Berat",
+        accessor: "berat",
       },
       {
-        Header: 'Kadar',
-        accessor: 'kadar',
+        Header: "Kadar",
+        accessor: "kadar",
       },
       {
-        Header: 'Posisi',
-        accessor: 'posisi',
+        Header: "Posisi",
+        accessor: "posisi",
       },
       {
-        Header: 'Harga Beli',
-        accessor: 'beli',
+        Header: "Harga Beli",
+        accessor: "beli",
         Cell: (props) => {
           // console.log(props);
           return currency(props.row.values.beli);
         },
       },
       {
-        Header: 'Harga Jual',
-        accessor: 'jual',
+        Header: "Harga Jual",
+        accessor: "jual",
         Cell: (props) => {
           // console.log(props);
           return currency(props.row.values.jual);
         },
       },
       {
-        Header: 'Tools',
-        accessor: 'col6',
+        Header: "Tools",
+        accessor: "col6",
       },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -100,7 +100,7 @@ function Table(props) {
     prepareRow,
   } = useTable({ columns, data });
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -108,13 +108,13 @@ function Table(props) {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 1px black',
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
+                  borderBottom: "solid 1px black",
+                  background: "aliceblue",
+                  color: "black",
+                  fontWeight: "bold",
                 }}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -132,9 +132,9 @@ function Table(props) {
                     <td
                       {...cell.getCellProps()}
                       style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
                       }}
                     >
                       {rowIndex + 1}
@@ -145,9 +145,9 @@ function Table(props) {
                     <td
                       {...cell.getCellProps()}
                       style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
                       }}
                     >
                       Hapus
@@ -158,12 +158,12 @@ function Table(props) {
                     <td
                       {...cell.getCellProps()}
                       style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
                       }}
                     >
-                      {cell.render('Cell')}
+                      {cell.render("Cell")}
                     </td>
                   );
                 }
@@ -181,15 +181,15 @@ let ItemList = () => {
   let { Client } = Hook.useClientState();
 
   let [state, setState] = useState({
-    barcode: '',
-    nama: '',
-    jenis: '',
-    posisi: '',
-    kadarStart: '',
-    kadarEnd: '',
-    beratStart: '',
-    beratEnd: '',
-    filter: 'Tampilkan Semua',
+    barcode: "",
+    nama: "",
+    jenis: "",
+    posisi: "",
+    kadarStart: "",
+    kadarEnd: "",
+    beratStart: "",
+    beratEnd: "",
+    filter: "Tampilkan Semua",
   });
 
   let [filtered, setFiltered] = useState([]);
@@ -200,23 +200,23 @@ let ItemList = () => {
 
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
-      value = value.replace(/[^\d.-]/g, '');
+      value = value.replace(/[^\d.-]/g, "");
     }
     setState((state) => ({ ...state, [key]: value }));
   };
 
-  let listRadio = ['Tampilkan Semua', 'Hanya Terjual', 'Sembunyikan Terjual'];
+  let listRadio = ["Tampilkan Semua", "Hanya Terjual", "Sembunyikan Terjual"];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
+        flexDirection: "row",
+        alignSelf: "flex-start",
       }}
     >
       <Radio
-        onPress={() => setter('filter', item)}
+        onPress={() => setter("filter", item)}
         selected={state.filter == item}
       />
       <Text style={{ marginRight: 5 }}>{item}</Text>
@@ -224,7 +224,7 @@ let ItemList = () => {
   );
   useEffect(() => {
     let fetchFunction = async () => {
-      let ItemAreaServices = Client.service('item-area');
+      let ItemAreaServices = Client.service("item-area");
       let data = await ItemAreaServices.find();
       // console.log(data);
       setData([...data]);
@@ -284,10 +284,10 @@ let ItemList = () => {
       if (beratEnd && !(item.berat <= beratEnd)) {
         continue;
       }
-      if (filter && filter === 'Hanya Terjual' && item.terjual === false) {
+      if (filter && filter === "Hanya Terjual" && item.terjual === false) {
         continue;
       }
-      if (filter && filter === 'Sembunyikan Terjual' && item.terjual === true) {
+      if (filter && filter === "Sembunyikan Terjual" && item.terjual === true) {
         continue;
       }
       filtered.push(item);
@@ -306,83 +306,83 @@ let ItemList = () => {
           {/* section 1 - Header */}
           <Row
             size={35}
-            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
           >
             <Grid>
               <Col size={50}>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Barcode: </Text>
+                  <Text style={{ alignSelf: "center" }}>Barcode: </Text>
                   <TextInput
                     placeholder="Barcode"
                     style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
+                      alignSelf: "center",
+                      textAlign: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     value={state.barcode}
-                    onChangeText={(text) => setter('barcode', text)}
+                    onChangeText={(text) => setter("barcode", text)}
                   />
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Kode Barang:</Text>
+                  <Text style={{ alignSelf: "center" }}>Kode Barang:</Text>
                   <TextInput
                     placeholder="Kode Barang"
                     style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
+                      alignSelf: "center",
+                      textAlign: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     value={state.nama}
-                    onChangeText={(text) => setter('nama', text)}
+                    onChangeText={(text) => setter("nama", text)}
                   />
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
                     Jenis:
                   </Text>
                   <Picker
                     mode="dropdown"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
+                      alignSelf: "center",
+                      alignContent: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     selectedValue={state.jenis}
                     onValueChange={(value) => {
-                      setter('jenis', value);
+                      setter("jenis", value);
                     }}
                   >
                     <Picker.Item label="Pilih" value="" />
@@ -394,29 +394,29 @@ let ItemList = () => {
 
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
                     Posisi:
                   </Text>
                   <Picker
                     mode="dropdown"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
+                      alignSelf: "center",
+                      alignContent: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     selectedValue={state.posisi}
                     onValueChange={(value) => {
-                      setter('posisi', value);
+                      setter("posisi", value);
                     }}
                   >
                     <Picker.Item label="Pilih" value="" />
@@ -430,59 +430,59 @@ let ItemList = () => {
                 <Row
                   size={25}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Kadar: </Text>
+                  <Text style={{ alignSelf: "center" }}>Kadar: </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
-                      flexDirection: 'row',
+                      alignSelf: "center",
+                      flexDirection: "row",
                       marginRight: 5,
                     }}
                   >
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.kadarStart}
-                      onChangeText={(text) => setter('kadarStart', text)}
+                      onChangeText={(text) => setter("kadarStart", text)}
                     />
                     <Text>%</Text>
                   </View>
                   <Text
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginRight: 10,
                       fontSize: 24,
                     }}
                   >
                     -
                   </Text>
-                  <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.kadarEnd}
-                      onChangeText={(text) => setter('kadarEnd', text)}
+                      onChangeText={(text) => setter("kadarEnd", text)}
                     />
                     <Text>%</Text>
                   </View>
@@ -490,59 +490,59 @@ let ItemList = () => {
                 <Row
                   size={25}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Berat: </Text>
+                  <Text style={{ alignSelf: "center" }}>Berat: </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
-                      flexDirection: 'row',
+                      alignSelf: "center",
+                      flexDirection: "row",
                       marginRight: 5,
                     }}
                   >
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.beratStart}
-                      onChangeText={(text) => setter('beratStart', text)}
+                      onChangeText={(text) => setter("beratStart", text)}
                     />
                     <Text>gr</Text>
                   </View>
                   <Text
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginRight: 10,
                       fontSize: 24,
                     }}
                   >
                     -
                   </Text>
-                  <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.beratEnd}
-                      onChangeText={(text) => setter('beratEnd', text)}
+                      onChangeText={(text) => setter("beratEnd", text)}
                     />
                     <Text>gr</Text>
                   </View>
@@ -550,19 +550,19 @@ let ItemList = () => {
                 <Row
                   size={50}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: "#d3ece1",
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: '10' }}>
+                  <Text style={{ alignSelf: "center", marginRight: "10" }}>
                     Terjual:
                   </Text>
-                  <Text style={{ alignSelf: 'center', marginRight: '10' }}>
-                    {' '}
+                  <Text style={{ alignSelf: "center", marginRight: "10" }}>
+                    {" "}
                   </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginLeft: 5,
                       paddingLeft: 5,
                     }}
@@ -575,12 +575,12 @@ let ItemList = () => {
             </Grid>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={65} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={65} style={{ backgroundColor: "#f2e3c6" }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={2}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
                 {/* section 3.2.1 - tabel isi */}
                 <Table show={filtered}></Table>
                 {/*section 3.2.2 - total harga */}
@@ -590,7 +590,7 @@ let ItemList = () => {
             </Grid>
           </Row>
           {/* section 4 - white space */}
-          <Row size={2} style={{ backgroundColor: '#FFF' }}></Row>
+          {/* <Row size={2} style={{ backgroundColor: '#FFF' }}></Row> */}
         </Grid>
       </Content>
     </Container>
@@ -604,7 +604,7 @@ class MemberList extends Component {
     this.state = {
       selected: undefined,
       selected2: undefined,
-      radioSelected: 'item1',
+      radioSelected: "item1",
     };
   }
   onValueChange(value: string) {
@@ -625,75 +625,75 @@ class MemberList extends Component {
             {/* section 1 - Header */}
             <Row
               size={35}
-              style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+              style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
             >
               <Grid>
                 <Col size={50}>
                   <Row
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'flex-end',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center' }}>Barcode: </Text>
+                    <Text style={{ alignSelf: "center" }}>Barcode: </Text>
                     <TextInput
                       placeholder="Barcode"
                       style={{
-                        alignSelf: 'center',
-                        textAlign: 'center',
+                        alignSelf: "center",
+                        textAlign: "center",
                         marginHorizontal: 7,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
                         borderRadius: 2,
-                        width: '25vw',
+                        width: "25vw",
                       }}
                     />
                   </Row>
                   <Row
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'flex-end',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center' }}>Kode Barang:</Text>
+                    <Text style={{ alignSelf: "center" }}>Kode Barang:</Text>
                     <TextInput
                       placeholder="Kode Barang"
                       style={{
-                        alignSelf: 'center',
-                        textAlign: 'center',
+                        alignSelf: "center",
+                        textAlign: "center",
                         marginHorizontal: 7,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
                         borderRadius: 2,
-                        width: '25vw',
+                        width: "25vw",
                       }}
                     />
                   </Row>
                   <Row
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'flex-end',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                    <Text style={{ alignSelf: "center", marginRight: 10 }}>
                       Jenis:
                     </Text>
                     <Picker
                       mode="dropdown"
                       style={{
-                        alignSelf: 'center',
-                        alignContent: 'center',
+                        alignSelf: "center",
+                        alignContent: "center",
                         marginHorizontal: 7,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
                         borderRadius: 2,
-                        width: '25vw',
+                        width: "25vw",
                       }}
                       selectedValue={this.state.selected}
                       onValueChange={this.onValueChange.bind(this)}
@@ -708,25 +708,25 @@ class MemberList extends Component {
 
                   <Row
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'flex-end',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                    <Text style={{ alignSelf: "center", marginRight: 10 }}>
                       Posisi:
                     </Text>
                     <Picker
                       mode="dropdown"
                       style={{
-                        alignSelf: 'center',
-                        alignContent: 'center',
+                        alignSelf: "center",
+                        alignContent: "center",
                         marginHorizontal: 7,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
                         borderRadius: 2,
-                        width: '25vw',
+                        width: "25vw",
                       }}
                       selectedValue={this.state.selected2}
                       onValueChange2={this.onValueChange2.bind(this)}
@@ -743,54 +743,54 @@ class MemberList extends Component {
                   <Row
                     size={25}
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'center',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center' }}>Kadar: </Text>
+                    <Text style={{ alignSelf: "center" }}>Kadar: </Text>
                     <View
                       style={{
-                        alignSelf: 'center',
-                        flexDirection: 'row',
+                        alignSelf: "center",
+                        flexDirection: "row",
                         marginRight: 5,
                       }}
                     >
                       <TextInput
                         placeholder="xx"
                         style={{
-                          textAlign: 'center',
+                          textAlign: "center",
                           borderRadius: 2,
                           marginRight: 5,
-                          backgroundColor: 'white',
-                          borderColor: 'grey',
-                          height: '3vh',
+                          backgroundColor: "white",
+                          borderColor: "grey",
+                          height: "3vh",
                           borderWidth: 1,
-                          width: '5vw',
+                          width: "5vw",
                         }}
                       />
                       <Text>%</Text>
                     </View>
                     <Text
                       style={{
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         marginRight: 10,
                         fontSize: 24,
                       }}
                     >
                       -
                     </Text>
-                    <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                    <View style={{ alignSelf: "center", flexDirection: "row" }}>
                       <TextInput
                         placeholder="xx"
                         style={{
-                          textAlign: 'center',
+                          textAlign: "center",
                           borderRadius: 2,
                           marginRight: 5,
-                          backgroundColor: 'white',
-                          borderColor: 'grey',
-                          height: '3vh',
+                          backgroundColor: "white",
+                          borderColor: "grey",
+                          height: "3vh",
                           borderWidth: 1,
-                          width: '5vw',
+                          width: "5vw",
                         }}
                       />
                       <Text>%</Text>
@@ -799,54 +799,54 @@ class MemberList extends Component {
                   <Row
                     size={25}
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'center',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center' }}>Berat: </Text>
+                    <Text style={{ alignSelf: "center" }}>Berat: </Text>
                     <View
                       style={{
-                        alignSelf: 'center',
-                        flexDirection: 'row',
+                        alignSelf: "center",
+                        flexDirection: "row",
                         marginRight: 5,
                       }}
                     >
                       <TextInput
                         placeholder="xx"
                         style={{
-                          textAlign: 'center',
+                          textAlign: "center",
                           borderRadius: 2,
                           marginRight: 5,
-                          backgroundColor: 'white',
-                          borderColor: 'grey',
-                          height: '3vh',
+                          backgroundColor: "white",
+                          borderColor: "grey",
+                          height: "3vh",
                           borderWidth: 1,
-                          width: '5vw',
+                          width: "5vw",
                         }}
                       />
                       <Text>gr</Text>
                     </View>
                     <Text
                       style={{
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         marginRight: 10,
                         fontSize: 24,
                       }}
                     >
                       -
                     </Text>
-                    <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                    <View style={{ alignSelf: "center", flexDirection: "row" }}>
                       <TextInput
                         placeholder="xx"
                         style={{
-                          textAlign: 'center',
+                          textAlign: "center",
                           borderRadius: 2,
                           marginRight: 5,
-                          backgroundColor: 'white',
-                          borderColor: 'grey',
-                          height: '3vh',
+                          backgroundColor: "white",
+                          borderColor: "grey",
+                          height: "3vh",
                           borderWidth: 1,
-                          width: '5vw',
+                          width: "5vw",
                         }}
                       />
                       <Text>gr</Text>
@@ -855,48 +855,48 @@ class MemberList extends Component {
                   <Row
                     size={50}
                     style={{
-                      backgroundColor: '#d3ece1',
-                      justifyContent: 'center',
+                      backgroundColor: "#d3ece1",
+                      justifyContent: "center",
                     }}
                   >
-                    <Text style={{ alignSelf: 'center', marginRight: '10' }}>
+                    <Text style={{ alignSelf: "center", marginRight: "10" }}>
                       Terjual:
                     </Text>
-                    <Text style={{ alignSelf: 'center', marginRight: '10' }}>
-                      {' '}
+                    <Text style={{ alignSelf: "center", marginRight: "10" }}>
+                      {" "}
                     </Text>
                     <View
                       style={{
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         marginLeft: 5,
                         paddingLeft: 5,
                       }}
                     >
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignSelf: 'flex-start',
+                          flexDirection: "row",
+                          alignSelf: "flex-start",
                         }}
                       >
                         <Radio
                           onPress={() =>
-                            this.setState({ radioSelected: 'item1' })
+                            this.setState({ radioSelected: "item1" })
                           }
-                          selected={this.state.radioSelected == 'item1'}
+                          selected={this.state.radioSelected == "item1"}
                         />
                         <Text style={{ marginRight: 5 }}>Tampilkan Semua</Text>
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignSelf: 'flex-start',
+                          flexDirection: "row",
+                          alignSelf: "flex-start",
                         }}
                       >
                         <Radio
                           onPress={() =>
-                            this.setState({ radioSelected: 'item2' })
+                            this.setState({ radioSelected: "item2" })
                           }
-                          selected={this.state.radioSelected == 'item2'}
+                          selected={this.state.radioSelected == "item2"}
                         />
                         <Text style={{ marginRight: 5 }}>
                           Sembunyikan Terjual
@@ -904,15 +904,15 @@ class MemberList extends Component {
                       </View>
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignSelf: 'flex-start',
+                          flexDirection: "row",
+                          alignSelf: "flex-start",
                         }}
                       >
                         <Radio
                           onPress={() =>
-                            this.setState({ radioSelected: 'item3' })
+                            this.setState({ radioSelected: "item3" })
                           }
-                          selected={this.state.radioSelected == 'item3'}
+                          selected={this.state.radioSelected == "item3"}
                         />
                         <Text style={{ marginRight: 5 }}>Hanya Terjual</Text>
                       </View>
@@ -923,46 +923,46 @@ class MemberList extends Component {
               </Grid>
             </Row>
             {/* section 3 - tabel penjualan */}
-            <Row size={65} style={{ backgroundColor: '#f2e3c6' }}>
+            <Row size={65} style={{ backgroundColor: "#f2e3c6" }}>
               <Grid>
                 {/* section 3.1 - whitespace */}
                 <Col size={2}></Col>
                 {/* section 3.2 - tabel */}
-                <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+                <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
                   {/* section 3.2.1 - tabel isi */}
                   <Row size={95}>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Nomor
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Nama
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         No. Telefon
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Tanggal Lahir
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Alamat
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Poin
                       </Text>
                     </Col>
-                    <Col style={{ backgroundColor: '#f6dbdb', borderWidth: 1 }}>
-                      <Text style={{ alignSelf: 'center', fontSize: 24 }}>
+                    <Col style={{ backgroundColor: "#f6dbdb", borderWidth: 1 }}>
+                      <Text style={{ alignSelf: "center", fontSize: 24 }}>
                         Tools
                       </Text>
                     </Col>
@@ -974,7 +974,7 @@ class MemberList extends Component {
               </Grid>
             </Row>
             {/* section 4 - white space */}
-            <Row size={2} style={{ backgroundColor: '#FFF' }}></Row>
+            <Row size={2} style={{ backgroundColor: "#FFF" }}></Row>
           </Grid>
         </Content>
       </Container>
