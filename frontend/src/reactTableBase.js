@@ -91,7 +91,7 @@ function Table() {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: "solid 3px red",
+                  borderBottom: "solid 1px black",
                   background: "aliceblue",
                   color: "black",
                   fontWeight: "bold",
@@ -154,7 +154,7 @@ function Tablewithpaging({ columns, data }) {
     {
       columns,
       data,
-      initialState: { pageIndex: 2 },
+      // initialState: { pageIndex: 2 },
     },
     usePagination
   );
@@ -162,12 +162,22 @@ function Tablewithpaging({ columns, data }) {
   // Render the UI for your table
   return (
     <>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th
+                  {...column.getHeaderProps()}
+                  style={{
+                    borderBottom: "solid 1px black",
+                    background: "aliceblue",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {column.render("Header")}
+                </th>
               ))}
             </tr>
           ))}
@@ -179,7 +189,16 @@ function Tablewithpaging({ columns, data }) {
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
+                      }}
+                    >
+                      {cell.render("Cell")}
+                    </td>
                   );
                 })}
               </tr>
@@ -228,7 +247,7 @@ function Tablewithpaging({ columns, data }) {
             setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
+          {[10, 15, 20].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
