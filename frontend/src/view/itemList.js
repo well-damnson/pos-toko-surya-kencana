@@ -15,7 +15,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { currency } from "../utils";
 
 import Hook from "@/wrapper";
-import { useTable } from "react-table";
+import { useTable, usePagination } from "react-table";
 
 function Table(props) {
   const data = React.useMemo(() => [...props.show], [props]);
@@ -96,65 +96,60 @@ function Table(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
-  } = useTable({ columns, data });
+    page, // Instead of using 'rows', we'll use page,
+    // which has only the rows for the active page
+
+    // The rest of these things are super handy, too ;)
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      // initialState: { pageIndex: 2 }, incase gk mau start di page pertama (?)
+    },
+    usePagination
+  );
+
+  // Render the UI for your table
+  //TODO: apus style dalam tabel dan ganti make styled
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: "solid 1px black",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
-                }}
-              >
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, rowIndex) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell, index) => {
-                let ret;
-                if (index === 0) {
-                  ret = (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: "10px",
-                        border: "solid 1px gray",
-                        background: "papayawhip",
-                      }}
-                    >
-                      {rowIndex + 1}
-                    </td>
-                  );
-                } else if (index === row.cells.length - 1) {
-                  ret = (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: "10px",
-                        border: "solid 1px gray",
-                        background: "papayawhip",
-                      }}
-                    >
-                      Hapus
-                    </td>
-                  );
-                } else {
-                  ret = (
+    <>
+      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps()}
+                  style={{
+                    borderBottom: "solid 1px black",
+                    background: "aliceblue",
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {column.render("Header")}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
                     <td
                       {...cell.getCellProps()}
                       style={{
@@ -166,14 +161,61 @@ function Table(props) {
                       {cell.render("Cell")}
                     </td>
                   );
-                }
-                return ret;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      {/* 
+        Pagination can be built however you'd like. 
+        This is just a very basic UI implementation:
+      */}
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 15, 20].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
+      </div>
+    </>
   );
 }
 
@@ -305,7 +347,7 @@ let ItemList = () => {
         <Grid>
           {/* section 1 - Header */}
           <Row
-            size={35}
+            size={15}
             style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
           >
             <Grid>
