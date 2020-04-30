@@ -22,6 +22,9 @@ import custom from '../native-base-theme/variables/custom';
 
 import Hook from '@/wrapper';
 
+let pageWidth = 794;
+let pageHeight = 1123;
+
 let test = (data) => {
   let { nama, berat, kadar, barcode } = data;
   let refer;
@@ -48,10 +51,10 @@ let SingleBarcode = (data) => {
   // <Image style={{ width: 400, height: 200 }} src={}></Image>;
 
   return (
-    <div style={{ marginLeft: 10, marginTop: 4, width: 250 }}>
-      <p style={{ margin: 5 }}>{nama}</p>
+    <div style={{ marginTop: 3, width: 250 }}>
+      <p style={{ margin: 4 }}>{nama}</p>
       <div style={{ flexDirection: 'row', display: 'flex' }}>
-        <div style={{ flexDirection: 'column' }}>
+        <div style={{ flexDirection: 'column', backgroundColor: 'red' }}>
           {code}
           <p style={{ margin: 0, textAlign: 'center' }}>{barcode}</p>
         </div>
@@ -62,12 +65,16 @@ let SingleBarcode = (data) => {
             width: 48,
             marginLeft: 5,
             display: 'flex',
+            backgroundColor: 'grey',
           }}
         >
           <div
             style={{
-              display: 'table-cell',
+              margin: 0,
+              padding: 0,
+              // display: 'table-cell',
               verticalAlign: 'middle',
+              backgroundColor: 'blue',
             }}
           >
             <p style={{ margin: 0 }}>{berat} gr</p>
@@ -75,14 +82,39 @@ let SingleBarcode = (data) => {
           <div
             style={{
               margin: 0,
-              display: 'table-cell',
+              padding: 0,
+              // display: 'table-cell',
               verticalAlign: 'middle',
+              backgroundColor: 'yellow',
             }}
           >
             <p style={{ margin: 0 }}>{kadar} %</p>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+let Paging = (data) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        alignContent:'flex-start',
+        height: pageHeight,
+        paddingLeft: 10,
+        paddingRight: 10,
+      }}
+    >
+      {data.map((single, i) => (
+        <div style={{ padding: 0 }} key={i}>
+          {SingleBarcode(single)}
+        </div>
+      ))}
     </div>
   );
 };
@@ -104,6 +136,21 @@ let MultiBarcode = (props) => {
   // };
   // let data = randomDataCreator(37);
   let { data } = props;
+  let paging = [];
+  let temp = [];
+  for (let index = 0; index < data.length; index++) {
+    const element = data[index];
+    temp.push(element);
+    if (index % 33 === 32) {
+      paging.push([...temp]);
+      temp = [];
+    }
+  }
+  if (temp.length > 0) {
+    paging.push([...temp]);
+    temp = [];
+  }
+  console.log(paging);
   return (
     <div
       style={{
@@ -113,18 +160,24 @@ let MultiBarcode = (props) => {
         backgroundColor: 'white',
       }}
     >
-      {data.map((single, i) => (
+      {paging.map((single, i) => (
+        <div style={{ padding: 0 }} key={i}>
+          {Paging(single)}
+        </div>
+      ))}
+      {/*data.map((single, i) => (
         <div style={{ padding: 0 }} key={i}>
           {SingleBarcode(single)}
         </div>
-      ))}
+      ))*/}
     </div>
   );
 };
 
 let Page = (props) => {
   let { children } = props;
-  return <div style={{ width: 794 }}>{children}</div>;
+  return <div style={{ width: pageWidth }}>{children}</div>;
+  // return <div style={{ width: 794 }}>{children}</div>;
 };
 
 let Render = () => {
@@ -208,14 +261,19 @@ let Render = () => {
             </p>
           )}
           content={() => printRef.current}
-          pageStyle={
-            '@page { size: A4;  margin: 2mm; } @media print { body { -webkit-print-color-adjust: exact; min-device-pixel-ratio: 2;} }'
-          }
+          pageStyle="@page { size: A4; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; padding: 0px !important; } }"
+          // '@page { size: A4;  margin: 0; } @media print { body { -webkit-print-color-adjust: exact;}'
+          //  @media print { body { -webkit-print-color-adjust: exact; min-device-pixel-ratio: 2;} }
         />
       </div>
 
       <div ref={printRef} style={{ margin: 0 }}>
         <Page>
+          {/*
+          <div style={{ backgroundColor: 'blue', height: pageHeight }}>
+            text this here
+          </div>
+          */}
           <MultiBarcode data={printItem} />
         </Page>
       </div>
