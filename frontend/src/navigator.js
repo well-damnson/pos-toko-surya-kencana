@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Hook from './wrapper';
+import Hook from "./wrapper";
 
-import Activation from './view/aktivasi';
-import Login from './view/login';
-import Menu from './view/menu';
-import NewsBirthday from './view/newsMemberBirthday';
-import NewsPoin from './view/newsMemberPoin';
-import TrxBeli from './view/trxBeli';
-import TrxJual from './view/trxJual';
-import TrxTukar from './view/trxTukar';
-import Barcode from './view/barcode';
-import TambahMember from './view/tambahMember';
-import MemberList from './view/memberList';
-import TambahItem from './view/tambahItem';
-import ItemList from './view/itemList';
+import Activation from "./view/aktivasi";
+import Login from "./view/login";
+import Menu from "./view/menu";
+import NewsBirthday from "./view/newsMemberBirthday";
+import NewsPoin from "./view/newsMemberPoin";
+import TrxBeli from "./view/trxBeli";
+import TrxJual from "./view/trxJual";
+import TrxTukar from "./view/trxTukar";
+import Barcode from "./view/barcode";
+import TambahMember from "./view/tambahMember";
+import MemberList from "./view/memberList";
+import TambahItem from "./view/tambahItem";
+import ItemList from "./view/itemList";
+import Admin from "./modals/modalSearchItem";
+// import Admin from "./view/administrasi";
 
-import './navigator.css';
+import "./navigator.css";
 
 let Routes = {
   Activation: {
@@ -71,6 +73,10 @@ let Routes = {
     Component: TambahItem,
     Menu: true,
   },
+  Admin: {
+    Component: Admin,
+    Menu: true,
+  },
 };
 
 let ActivationCheck = async () => {
@@ -92,9 +98,9 @@ let Navigator = ({ children }) => {
   if (ready === false) {
     // Check Activation
     ActivationCheck().then((Activated) => {
-      console.log('Activated', Activated);
+      console.log("Activated", Activated);
       if (Activated) {
-        setNavigation('Login');
+        setNavigation("Login");
         setReady(true);
       } else {
         setReady(true);
@@ -113,7 +119,7 @@ let Navigator = ({ children }) => {
           <MenuLayout />
         </div>
       )}
-      <div class={'body' + (LoginCheck ? 'login' : '')}>
+      <div class={"body" + (LoginCheck ? "login" : "")}>
         <Content />
       </div>
     </div>
