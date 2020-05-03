@@ -1,5 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { Component, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   Content,
@@ -9,72 +9,72 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import { Text, View, TextInput } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
-import { useTable, usePagination } from "react-table";
+} from 'native-base';
+import { Text, View, TextInput } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
+import { useTable, usePagination } from 'react-table';
 
-import Hook from "@/wrapper";
-import ConfirmModal from "../modals/modalConfirm";
-import Modal from "modal-enhanced-react-native-web";
+import Hook from '@/wrapper';
+import ConfirmModal from '../modals/modalConfirm';
+import Modal from 'modal-enhanced-react-native-web';
 
-function Table(props, setShowConfirm) {
+function Table(props) {
   const data = React.useMemo(() => [...props.show], [props]);
   const data1 = React.useMemo(
     () => [
       {
-        col1: "1",
-        nama: "Sample-Code",
-        jenis: "Sample-Gold",
-        berat: "Sample-Weight",
-        kadar: "Sample-Rate",
-        posisi: "Sample-Position",
-        col6: "Test",
+        col1: '1',
+        nama: 'Sample-Code',
+        jenis: 'Sample-Gold',
+        berat: 'Sample-Weight',
+        kadar: 'Sample-Rate',
+        posisi: 'Sample-Position',
+        col6: 'Test',
       },
       {
-        col1: "2",
-        nama: "Sample",
+        col1: '2',
+        nama: 'Sample',
       },
       {
-        col1: "3",
-        nama: "Sample",
+        col1: '3',
+        nama: 'Sample',
       },
     ],
-    []
+    [],
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: "No",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Kode Barang",
-        accessor: "nama",
+        Header: 'Kode Barang',
+        accessor: 'nama',
       },
       {
-        Header: "Jenis",
-        accessor: "jenis",
+        Header: 'Jenis',
+        accessor: 'jenis',
       },
       {
-        Header: "Berat",
-        accessor: "berat",
+        Header: 'Berat',
+        accessor: 'berat',
       },
       {
-        Header: "Kadar",
-        accessor: "kadar",
+        Header: 'Kadar',
+        accessor: 'kadar',
       },
       {
-        Header: "Posisi",
-        accessor: "posisi",
+        Header: 'Posisi',
+        accessor: 'posisi',
       },
-      {
-        Header: "Tools",
-        accessor: "col6",
-      },
+      // {
+      //   Header: "Tools",
+      //   accessor: "col6",
+      // },
     ],
-    []
+    [],
   );
   const {
     getTableProps,
@@ -100,14 +100,14 @@ function Table(props, setShowConfirm) {
       data,
       // initialState: { pageIndex: 2 }, incase gk mau start di page pertama (?)
     },
-    usePagination
+    usePagination,
   );
 
   // Render the UI for your table
   //TODO: apus style dalam tabel dan ganti make styled
   return (
     <>
-      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -115,13 +115,13 @@ function Table(props, setShowConfirm) {
                 <th
                   {...column.getHeaderProps()}
                   style={{
-                    borderBottom: "solid 1px black",
-                    background: "aliceblue",
-                    color: "black",
-                    fontWeight: "bold",
+                    borderBottom: 'solid 1px black',
+                    background: 'aliceblue',
+                    color: 'black',
+                    fontWeight: 'bold',
                   }}
                 >
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
@@ -139,9 +139,9 @@ function Table(props, setShowConfirm) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
-                          background: "papayawhip",
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                          background: 'papayawhip',
                         }}
                       >
                         {i + 1 + pageSize * pageIndex}
@@ -152,16 +152,23 @@ function Table(props, setShowConfirm) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
-                          background: "papayawhip",
-                          textAlign: "center",
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                          background: 'papayawhip',
+                          textAlign: 'center',
                         }}
                       >
-                        <button>Ubah</button> |{" "}
+                        <button
+                          onClick={() => {
+                            props.addData(props.show[i + pageSize * pageIndex]);
+                          }}
+                        >
+                          Pilih
+                        </button>
+                        {/* |{" "}
                         <button onClick={() => setShowConfirm(true, i)}>
                           Hapus
-                        </button>
+                        </button>*/}
                       </td>
                     );
                   else
@@ -169,12 +176,12 @@ function Table(props, setShowConfirm) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
-                          background: "papayawhip",
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                          background: 'papayawhip',
                         }}
                       >
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </td>
                     );
                   return ret;
@@ -190,25 +197,25 @@ function Table(props, setShowConfirm) {
       */}
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
+          {'<<'}
+        </button>{' '}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
+          {'<'}
+        </button>{' '}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
+          {'>'}
+        </button>{' '}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
+          {'>>'}
+        </button>{' '}
         <span>
-          Page{" "}
+          Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
+          </strong>{' '}
         </span>
         <span>
-          | Go to page:{" "}
+          | Go to page:{' '}
           <input
             type="number"
             defaultValue={pageIndex + 1}
@@ -216,9 +223,9 @@ function Table(props, setShowConfirm) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: "100px" }}
+            style={{ width: '100px' }}
           />
-        </span>{" "}
+        </span>{' '}
         <select
           value={pageSize}
           onChange={(e) => {
@@ -236,12 +243,12 @@ function Table(props, setShowConfirm) {
   );
 }
 
-let SearchItem = () => {
+let SearchItem = ({ addData, existing }) => {
   let { Client } = Hook.useClientState();
   // statenya diatas sini gw pake hook jadi kalo lu mau
   let [state, setState] = useState({
-    barcode: "",
-    nama: "",
+    barcode: '',
+    nama: '',
   });
 
   let [confirmShow, setConfirmShow] = useState(false);
@@ -257,18 +264,29 @@ let SearchItem = () => {
 
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
-      value = value.replace(/[^\d.-]/g, "");
+      value = value.replace(/[^\d.-]/g, '');
     }
     setState((state) => ({ ...state, [key]: value }));
   };
 
   useEffect(() => {
     let fetchFunction = async () => {
-      let ItemAreaServices = Client.service("item-area");
+      let ItemAreaServices = Client.service('item-area');
       let data = await ItemAreaServices.find();
       // console.log(data);
-      setData([...data]);
-      setFiltered([...data]);
+      let dataWithoutExisting = [];
+      for (let i = 0; i < data.length; i++) {
+        let exist = false;
+        for (let j = 0; j < existing.length; j++) {
+          console.log(existing[j], data[i]);
+          if (existing[j]._id === data[i]._id) exist = true;
+        }
+        if (!exist) {
+          dataWithoutExisting.push(data[i]);
+        }
+      }
+      setData([...dataWithoutExisting]);
+      setFiltered([...dataWithoutExisting]);
       let posisi = {};
       let jenis = {};
       data.forEach((item) => {
@@ -278,7 +296,20 @@ let SearchItem = () => {
     };
     fetchFunction();
   }, []);
-
+  useEffect(() => {
+    let dataWithoutExisting = [];
+    for (let i = 0; i < data.length; i++) {
+      let exist = false;
+      for (let j = 0; j < existing.length; j++) {
+        // console.log(existing[j], data[i]);
+        if (existing[j]._id === data[i]._id) exist = true;
+      }
+      if (!exist) {
+        dataWithoutExisting.push(data[i]);
+      }
+    }
+    setData([...dataWithoutExisting]);
+  }, [existing]);
   useEffect(() => {
     // console.log('Query Changed');
     // console.log('data', data);
@@ -298,7 +329,7 @@ let SearchItem = () => {
     }
     // console.log(filtered);
     setFiltered(filtered);
-  }, [state]);
+  }, [data, state]);
 
   // console.log('data', data);
   // console.log('filter', filtered);
@@ -307,7 +338,7 @@ let SearchItem = () => {
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={confirmShow}
           onBackdropPress={() => setConfirmShow(false)}
         >
@@ -320,58 +351,58 @@ let SearchItem = () => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
+            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
           >
             <Grid>
               <Col size={50}>
                 <Row
                   style={{
-                    backgroundColor: "#d3ece1",
-                    justifyContent: "center",
+                    backgroundColor: '#d3ece1',
+                    justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Barcode: </Text>
+                  <Text style={{ alignSelf: 'center' }}>Barcode: </Text>
                   <TextInput
                     placeholder="Barcode"
                     style={{
-                      alignSelf: "center",
-                      textAlign: "center",
+                      alignSelf: 'center',
+                      textAlign: 'center',
                       marginHorizontal: 7,
-                      backgroundColor: "white",
-                      borderColor: "grey",
-                      height: "3vh",
+                      backgroundColor: 'white',
+                      borderColor: 'grey',
+                      height: '3vh',
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: "25vw",
+                      width: '25vw',
                     }}
                     value={state.barcode}
-                    onChangeText={(text) => setter("barcode", text)}
+                    onChangeText={(text) => setter('barcode', text)}
                   />
                 </Row>
               </Col>
               <Col size={50}>
                 <Row
                   style={{
-                    backgroundColor: "#d3ece1",
-                    justifyContent: "center ",
+                    backgroundColor: '#d3ece1',
+                    justifyContent: 'center ',
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Kode Barang:</Text>
+                  <Text style={{ alignSelf: 'center' }}>Kode Barang:</Text>
                   <TextInput
                     placeholder="Kode Barang"
                     style={{
-                      alignSelf: "center",
-                      textAlign: "center",
+                      alignSelf: 'center',
+                      textAlign: 'center',
                       marginHorizontal: 7,
-                      backgroundColor: "white",
-                      borderColor: "grey",
-                      height: "3vh",
+                      backgroundColor: 'white',
+                      borderColor: 'grey',
+                      height: '3vh',
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: "25vw",
+                      width: '25vw',
                     }}
                     value={state.nama}
-                    onChangeText={(text) => setter("nama", text)}
+                    onChangeText={(text) => setter('nama', text)}
                   />
                 </Row>
               </Col>
@@ -379,14 +410,18 @@ let SearchItem = () => {
             </Grid>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={65} style={{ backgroundColor: "#f2e3c6" }}>
+          <Row size={65} style={{ backgroundColor: '#f2e3c6' }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={2}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
+              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
                 {/* section 3.2.1 - tabel isi */}
-                <Table show={filtered} setShowConfirm={setShowConfirm}></Table>
+                <Table
+                  show={filtered}
+                  setShowConfirm={setShowConfirm}
+                  addData={addData}
+                ></Table>
                 {/*section 3.2.2 - total harga */}
               </Col>
               {/* section 3.3 Tombol Aksi*/}

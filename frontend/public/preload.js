@@ -212,3 +212,7 @@ window.dummy = () => {
     console.log(license);
   });
 };
+
+window.checkHavingLicense = () => {
+  return haveLicense();
+};

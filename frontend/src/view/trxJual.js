@@ -1,5 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { Component, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   Content,
@@ -9,14 +9,15 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import { Text, View, TextInput } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
-import { useTable } from "react-table";
+} from 'native-base';
+import { Text, View, TextInput } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
+import { useTable } from 'react-table';
 
-import ConfirmModal from "../modals/modalConfirm";
-import Modal from "modal-enhanced-react-native-web";
+import ConfirmModal from '../modals/modalConfirm';
+import SearchItemModal from '../modals/modalSearchItem';
+import Modal from 'modal-enhanced-react-native-web';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -58,30 +59,34 @@ const Styles = styled.div`
   }
 `;
 
-function Table({ dat, setDat, setShowModal }) {
+function Table({ dat, setDat, setShowModal, changeJualAmount }) {
   const data = React.useMemo(() => dat, [dat]);
   const columns = React.useMemo(
     () => [
       {
-        Header: "No.",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No.',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Kode Barang",
-        accessor: "nama",
+        Header: 'Kode Barang',
+        accessor: 'nama',
       },
       {
-        Header: "Berat (gr)",
-        accessor: "berat",
+        Header: 'Berat (gr)',
+        accessor: 'berat',
       },
-      { Header: "Kadar (%)", accessor: "kadar" },
+      { Header: 'Kadar (%)', accessor: 'kadar' },
       {
-        Header: "Harga",
-        accessor: "jual",
+        Header: 'Harga',
+        accessor: 'jual',
         Footer: (info) => {
           const total = React.useMemo(
-            () => info.rows.reduce((sum, row) => row.values.jual + sum, 0),
-            [info.rows]
+            () =>
+              info.rows.reduce(
+                (sum, row) => parseInt(row.values.jual || 0) + sum,
+                0,
+              ),
+            [info.rows],
           );
           return <>Total: {currency(total)}</>;
         },
@@ -91,9 +96,9 @@ function Table({ dat, setDat, setShowModal }) {
         },
         // https://stackoverflow.com/questions/48704269/react-table-package-formatting-float-as-currency , https://medium.com/@nidhinkumar/react-js-number-format-and-styling-a1a6e211e629
       },
-      { Header: "Tools", accessor: "col6" },
+      { Header: 'Tools', accessor: 'col6' },
     ],
-    []
+    [],
   );
   const {
     getTableProps,
@@ -106,7 +111,7 @@ function Table({ dat, setDat, setShowModal }) {
 
   let [showTambah, setShowTambah] = useState(false);
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -114,13 +119,13 @@ function Table({ dat, setDat, setShowModal }) {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: "solid 3px red",
-                  background: "aliceblue",
-                  color: "black",
-                  fontWeight: "bold",
+                  borderBottom: 'solid 3px red',
+                  background: 'aliceblue',
+                  color: 'black',
+                  fontWeight: 'bold',
                 }}
               >
-                {column.render("Header")}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
@@ -132,13 +137,14 @@ function Table({ dat, setDat, setShowModal }) {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell, index) => {
+                if (index === row.cells.length) console.log('cell', cell);
                 let num = (
                   <td
                     key={index}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
                     }}
                   >
                     {rowIndex + 1}
@@ -146,24 +152,24 @@ function Table({ dat, setDat, setShowModal }) {
                 );
                 let content = (
                   <td
-                    key={index + 1}
+                    key={index}
                     {...cell.getCellProps()}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
                     }}
                   >
-                    {cell.render("Cell")}
+                    {cell.render('Cell')}
                   </td>
                 );
                 let remove = (
                   <td
-                    key={index + 2}
+                    key={index}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
-                      background: "papayawhip",
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
                     }}
                   >
                     <button onClick={() => setShowModal(true, rowIndex)}>
@@ -171,8 +177,29 @@ function Table({ dat, setDat, setShowModal }) {
                     </button>
                   </td>
                 );
+                let price = (
+                  <td
+                    key={index}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                      background: 'papayawhip',
+                    }}
+                  >
+                    <input
+                      style={{ height: '2em' }}
+                      type="text"
+                      value={cell.value}
+                      onChange={(text) => {
+                        changeJualAmount(rowIndex, text);
+                      }}
+                    />
+                  </td>
+                );
                 return index === 0
                   ? num
+                  : index === row.cells.length - 2
+                  ? price
                   : index !== row.cells.length - 1
                   ? content
                   : remove;
@@ -185,7 +212,7 @@ function Table({ dat, setDat, setShowModal }) {
         {footerGroups.map((group) => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map((column) => (
-              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+              <td {...column.getFooterProps()}>{column.render('Footer')}</td>
             ))}
           </tr>
         ))}
@@ -197,15 +224,16 @@ function Table({ dat, setDat, setShowModal }) {
 let Jual = () => {
   // statenya diatas sini gw pake hook jadi kalo lu mau
   let [state, setState] = useState({
-    paymentMethod: "Tunai",
-    noRef: "",
-    memberBarcode: "",
+    paymentMethod: 'Tunai',
+    noRef: '',
+    memberBarcode: '',
   });
 
   let setter = (key, value) => {
     setState((state) => ({ ...state, [key]: value }));
   };
 
+  let [searchShow, setSearchShow] = useState(false);
   let [modalShow, setModalShow] = useState(false);
   let [selectedData, setSelectedData] = useState(0);
 
@@ -214,26 +242,7 @@ let Jual = () => {
     setSelectedData(index);
   };
 
-  let [jual, setJual] = useState([
-    {
-      nama: "AntamPure24-001",
-      berat: 200,
-      kadar: 85,
-      jual: 2750000,
-    },
-    {
-      nama: "AntamPure24-002",
-      berat: 100,
-      kadar: 85,
-      jual: 1575000,
-    },
-    {
-      nama: "AntamPure24-001",
-      berat: 200,
-      kadar: 45,
-      jual: 1800000,
-    },
-  ]);
+  let [jual, setJual] = useState([]);
 
   let [transactionData, setTransactionData] = useState({});
 
@@ -244,28 +253,28 @@ let Jual = () => {
       total += harga;
     }
 
-    setTransactionData({ ...state, jual, total, type: "jual" });
+    setTransactionData({ ...state, jual, total, type: 'jual' });
   }, [state, jual]);
 
   console.log(transactionData);
   let listRadio = [
-    "Tunai",
-    "BCA",
-    "Mandiri",
-    "BNI",
-    "BRI",
-    "Visa",
-    "Master",
-    "Go-Pay",
-    "OVO",
+    'Tunai',
+    'BCA',
+    'Mandiri',
+    'BNI',
+    'BRI',
+    'Visa',
+    'Master',
+    'Go-Pay',
+    'OVO',
   ];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: "row",
-        alignSelf: "flex-start",
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
       }}
     >
       <Radio
@@ -276,16 +285,46 @@ let Jual = () => {
     </View>
   );
 
-  console.log(state.conModal);
+  // console.log(state.conModal);
   let removeData = (index) => {
     let newData = [...jual];
     newData.splice(index, 1);
     setJual(newData);
   };
+  let addData = (data) => {
+    let newData = [...jual];
+    newData.push({ ...data, jual: 0 });
+    console.log(newData);
+    setJual(newData);
+    setSearchShow(false);
+  };
+
+  let changeJualAmount = (index, price) => {
+    console.log(price.target.value);
+    let newPrice = price.target.value.replace(/\D/g, '');
+    let selected = jual[index];
+    let before = jual.slice(0, index);
+    let after = jual.slice(index + 1, jual.length);
+    selected.jual = newPrice;
+    let newJual = [...before, selected, ...after];
+    setJual(newJual);
+  };
   return (
-    <View style={{ flex: 1, height: "100vh" }}>
+    <View style={{ flex: 1, height: '100vh' }}>
       <Modal
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: 'center' }}
+        isVisible={searchShow}
+        onBackdropPress={() => setSearchShow(false)}
+      >
+        <SearchItemModal
+          // function={() => removeData(selectedData)}
+          addData={addData}
+          existing={jual}
+          close={() => setSearchShow(false)}
+        ></SearchItemModal>
+      </Modal>
+      <Modal
+        style={{ alignSelf: 'center' }}
         isVisible={modalShow}
         onBackdropPress={() => setModalShow(false)}
       >
@@ -299,27 +338,27 @@ let Jual = () => {
         <Row
           size={10}
           style={{
-            backgroundColor: "#d3ece1",
-            justifyContent: "center",
+            backgroundColor: '#d3ece1',
+            justifyContent: 'center',
           }}
         >
-          <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
+          <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
           <Item
             style={{
-              alignSelf: "center",
-              height: "3vh",
-              backgroundColor: "#FFF",
-              width: "15vw",
+              alignSelf: 'center',
+              height: '3vh',
+              backgroundColor: '#FFF',
+              width: '15vw',
             }}
             regular
           >
-            <Input style={{ height: "3vh" }} />
+            <Input style={{ height: '3vh' }} />
           </Item>
           <Button
             light
             style={{
-              alignSelf: "center",
-              marginLeft: "1vw",
+              alignSelf: 'center',
+              marginLeft: '1vw',
               borderWidth: 1,
               borderRadius: 15,
             }}
@@ -328,11 +367,11 @@ let Jual = () => {
           </Button>
         </Row>
         {/* section 2 - label penanda jual */}
-        <Row size={8} style={{ backgroundColor: "#FFF" }}>
+        <Row size={8} style={{ backgroundColor: '#FFF' }}>
           <Text
             style={{
-              alignSelf: "center",
-              marginLeft: "5vw",
+              alignSelf: 'center',
+              marginLeft: '5vw',
               fontSize: 32,
               padding: 5,
             }}
@@ -341,17 +380,18 @@ let Jual = () => {
           </Text>
         </Row>
         {/* section 3 - tabel penjualan */}
-        <Row size={75} style={{ backgroundColor: "#f2e3c6" }}>
+        <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
           <Grid>
             {/* section 3.1 - whitespace */}
             <Col size={5}></Col>
             {/* section 3.2 - tabel */}
-            <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
+            <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
               <Styles>
                 <Table
                   dat={jual}
                   setDat={setJual}
                   setShowModal={setShowModal}
+                  changeJualAmount={changeJualAmount}
                 />
               </Styles>
             </Col>
@@ -360,13 +400,16 @@ let Jual = () => {
               <Button
                 light
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
+                  alignSelf: 'center',
+                  marginLeft: '1vw',
                   borderWidth: 1,
                   borderRadius: 15,
                   marginTop: 50,
-                  width: "10vw",
-                  justifyContent: "center",
+                  width: '10vw',
+                  justifyContent: 'center',
+                }}
+                onClick={() => {
+                  setSearchShow(true);
                 }}
               >
                 <Text>Tambah Barang</Text>
@@ -374,14 +417,14 @@ let Jual = () => {
               <View style={{ flex: 1 }}></View>
               <Text
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                 }}
               >
                 Metode Pembayaran
               </Text>
               <View
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                   marginLeft: 5,
                   paddingLeft: 5,
                 }}
@@ -391,32 +434,32 @@ let Jual = () => {
               <TextInput
                 placeholder="Nomor Referensi"
                 style={{
-                  textAlign: "center",
+                  textAlign: 'center',
                   borderRadius: 2,
                   marginLeft: 10,
                   marginBottom: 10,
                   margin: 5,
-                  backgroundColor: "white",
-                  borderColor: "grey",
-                  height: "3vh",
+                  backgroundColor: 'white',
+                  borderColor: 'grey',
+                  height: '3vh',
                   borderWidth: 1,
-                  width: "15vw",
+                  width: '15vw',
                 }}
                 value={state.noRef}
                 onChangeText={(text) => {
-                  setter("noRef", text);
+                  setter('noRef', text);
                 }}
               />
               <Button
                 light
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
+                  alignSelf: 'center',
+                  marginLeft: '1vw',
                   borderWidth: 1,
                   borderRadius: 15,
                   marginBottom: 50,
-                  width: "10vw",
-                  justifyContent: "center",
+                  width: '10vw',
+                  justifyContent: 'center',
                 }}
                 onClick={() => {
                   setModalShow(true);
@@ -428,7 +471,7 @@ let Jual = () => {
           </Grid>
         </Row>
         {/* section 4 - white space */}
-        <Row size={10} style={{ backgroundColor: "#FFF" }}></Row>
+        <Row size={10} style={{ backgroundColor: '#FFF' }}></Row>
       </Grid>
     </View>
   );

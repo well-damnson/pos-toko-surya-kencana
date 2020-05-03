@@ -15,8 +15,8 @@ import TambahMember from "./view/tambahMember";
 import MemberList from "./view/memberList";
 import TambahItem from "./view/tambahItem";
 import ItemList from "./view/itemList";
-import Admin from "./modals/modalSearchItem";
-// import Admin from "./view/administrasi";
+// import Admin from "./modals/modalSearchItem";
+import Admin from "./view/administrasi";
 
 import "./navigator.css";
 
