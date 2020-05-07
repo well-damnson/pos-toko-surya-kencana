@@ -85,7 +85,7 @@ let Menu = () => {
                 <ListItem button onPress={() => setNav("NewsPoin")}>
                   <Text>Member > 25 Poin </Text>
                 </ListItem>
-                <ListItem itemDivider button onPress={() => console.log("z")}>
+                <ListItem itemDivider button onPress={() => setNav("Laporan")}>
                   <Text style={{ fontSize: 24 }}> Laporan </Text>
                 </ListItem>
                 <ListItem itemDivider button onPress={() => setNav("Barcode")}>

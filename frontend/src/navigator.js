@@ -18,6 +18,7 @@ import ItemList from "./view/itemList";
 // import Admin from "./modals/modalSearchItem";
 // import Admin from "./modals/modalSearchMember";
 import Admin from "./view/administrasi";
+import Laporan from "./view/laporan";
 
 import "./navigator.css";
 
@@ -76,6 +77,10 @@ let Routes = {
   },
   Admin: {
     Component: Admin,
+    Menu: true,
+  },
+  Laporan: {
+    Component: Laporan,
     Menu: true,
   },
 };
