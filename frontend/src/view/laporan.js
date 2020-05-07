@@ -11,7 +11,7 @@ import {
   Input,
   Item,
 } from "native-base";
-import { Text, View, TextInput, Picker } from "react-native";
+import { Text, View, TextInput, Picker, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { currency } from "../utils";
 import styled from "styled-components";
@@ -288,7 +288,123 @@ let Laporan = () => {
   return (
     <Container>
       <Content>
-        <Table columns={columns} data={data}></Table>
+        <Grid>
+          <Row size={25}>
+            <Col>
+              <Row style={{ justifyContent: "center" }}>
+                <Text style={{ alignSelf: "center" }}>Tgl Mulai: </Text>
+                <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                  <TextInput
+                    placeholder="DD"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      marginRight: 5,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                  <TextInput
+                    placeholder="MM"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      marginRight: 5,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                  <TextInput
+                    placeholder="YYYY"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                </View>
+              </Row>
+              <Row style={{ justifyContent: "center" }}>
+                <Text style={{ alignSelf: "center" }}>Tgl Akhir: </Text>
+                <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                  <TextInput
+                    placeholder="DD"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      marginRight: 5,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                  <TextInput
+                    placeholder="MM"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      marginRight: 5,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                  <TextInput
+                    placeholder="YYYY"
+                    style={{
+                      textAlign: "center",
+                      borderRadius: 2,
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
+                      borderWidth: 1,
+                      width: "5vw",
+                    }}
+                  />
+                </View>
+              </Row>
+            </Col>
+            <Col
+              style={{
+                justifyContent: "flex-end",
+                flexDirection: "row",
+                padding: 20,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  alignSelf: "center",
+                  width: "5vw",
+                  padding: 10,
+                  backgroundColor: "silver",
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  marginRight: 10,
+                }}
+              >
+                <Text style={{ alignSelf: "center" }}>Print</Text>
+              </TouchableOpacity>
+            </Col>
+          </Row>
+          <Row size={75} style={{ justifyContent: "center" }}>
+            <Table columns={columns} data={data}></Table>
+          </Row>
+        </Grid>
       </Content>
     </Container>
   );
