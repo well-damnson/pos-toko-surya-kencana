@@ -272,8 +272,8 @@ let SearchItem = ({ addData, existing }) => {
   useEffect(() => {
     let fetchFunction = async () => {
       let ItemAreaServices = Client.service('item-area');
-      let data = await ItemAreaServices.find();
-      // console.log(data);
+      let data = await ItemAreaServices.find({ query: { terjual: false } });
+      console.log(data);
       let dataWithoutExisting = [];
       for (let i = 0; i < data.length; i++) {
         let exist = false;
