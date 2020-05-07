@@ -261,7 +261,7 @@ let SearchItem = ({ addData, existing }) => {
 
   let [filtered, setFiltered] = useState([]);
   let [data, setData] = useState([]);
-
+  let [rawData, setRawData] = useState([]);
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
       value = value.replace(/[^\d.-]/g, '');
@@ -285,6 +285,7 @@ let SearchItem = ({ addData, existing }) => {
           dataWithoutExisting.push(data[i]);
         }
       }
+      setRawData([...data]);
       setData([...dataWithoutExisting]);
       setFiltered([...dataWithoutExisting]);
       let posisi = {};
@@ -298,14 +299,14 @@ let SearchItem = ({ addData, existing }) => {
   }, []);
   useEffect(() => {
     let dataWithoutExisting = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < rawData.length; i++) {
       let exist = false;
       for (let j = 0; j < existing.length; j++) {
-        // console.log(existing[j], data[i]);
-        if (existing[j]._id === data[i]._id) exist = true;
+        // console.log(existing[j], rawData[i]);
+        if (existing[j]._id === rawData[i]._id) exist = true;
       }
       if (!exist) {
-        dataWithoutExisting.push(data[i]);
+        dataWithoutExisting.push(rawData[i]);
       }
     }
     setData([...dataWithoutExisting]);
