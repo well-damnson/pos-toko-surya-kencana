@@ -7,7 +7,7 @@ import {
   Text,
   Button,
   Form,
-  Textarea
+  Textarea,
 } from "native-base";
 import { View, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -17,17 +17,17 @@ export default class ContentExample extends Component {
     super(props);
     this.state = {
       selected: undefined,
-      selected2: undefined
+      selected2: undefined,
     };
   }
   onValueChange(value: string) {
     this.setState({
-      selected: value
+      selected: value,
     });
   }
   onValueChange2(value: string) {
     this.setState({
-      selected2: value
+      selected2: value,
     });
   }
   render() {
@@ -36,51 +36,37 @@ export default class ContentExample extends Component {
         <Content>
           <Grid>
             <Row style={{ margin: 10, justifyContent: "center" }}>
-              <View style={{ flex: 1 }} />
-              <Text style={{ flex: 4, fontSize: 24 }}>Ubah Data Member</Text>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
+              <Text style={{ fontSize: 24 }}>Ubah Data Member</Text>
             </Row>
             <Row style={{ margin: 10 }}>
-              <Text style={{ flex: 1.5 }}>Nama:</Text>
-              <View style={{ flex: 0.2 }} />
+              <Text style={{ alignSelf: "center", flex: 1.5 }}>Nama:</Text>
+              <View style={{ flex: 0.05 }} />
               <Item
                 style={{
                   flex: 2,
                   alignSelf: "center",
                   height: "3vh",
                   backgroundColor: "#FFF",
-                  width: "20vw"
+                  width: "20vw",
                 }}
                 regular
               >
                 <Input style={{ height: "3vh" }} />
               </Item>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
-            <Row style={{ margin: 10 }}>
-              <Text style={{ flex: 1.5 }}>Tanggal Lahir: </Text>
-              <View style={{ flex: 0.2 }} />
-              {/* <Item
-                style={{
-                  flex: 4,
-                  alignSelf: "center",
-                  height: "3vh",
-                  backgroundColor: "#FFF",
-                  width: "20vw"
-                }}
-                regular
-              >
-                <Input style={{ height: "3vh" }} />
-                <Input style={{ height: "3vh" }} />
-                <Input style={{ height: "3vh" }} />
-              </Item> */}
+            <Row style={{ margin: 10, padding: "5" }}>
+              <Text style={{ alignSelf: "center", flex: 1.5 }}>
+                Tanggal Lahir:{" "}
+              </Text>
+              <View style={{ flex: 0.05 }} />
               <View
                 style={{
+                  padding: "20",
                   flex: 2.5,
                   alignSelf: "center",
                   justifyContent: "center",
-                  flexDirection: "row"
+                  flexDirection: "row",
                 }}
               >
                 <TextInput
@@ -92,7 +78,7 @@ export default class ContentExample extends Component {
                     borderColor: "grey",
                     height: "3vh",
                     borderWidth: 1,
-                    width: "5vw"
+                    width: "5vw",
                   }}
                 />
                 <TextInput
@@ -104,7 +90,7 @@ export default class ContentExample extends Component {
                     borderColor: "grey",
                     height: "3vh",
                     borderWidth: 1,
-                    width: "5vw"
+                    width: "5vw",
                   }}
                 />
                 <TextInput
@@ -116,64 +102,62 @@ export default class ContentExample extends Component {
                     borderColor: "grey",
                     height: "3vh",
                     borderWidth: 1,
-                    width: "5vw"
+                    width: "5vw",
                   }}
                 />
               </View>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
             <Row style={{ margin: 10 }}>
               <Text style={{ flex: 1.5 }}>No HP:</Text>
-              <View style={{ flex: 0.2 }} />
+              <View style={{ flex: 0.05 }} />
               <Item
                 style={{
                   flex: 2,
                   alignSelf: "center",
                   height: "3vh",
                   backgroundColor: "#FFF",
-                  width: "20vw"
+                  width: "20vw",
                 }}
                 regular
               >
                 <Input style={{ height: "3vh" }} />
               </Item>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
             <Row size={3} style={{ margin: 10 }}>
               <Text style={{ flex: 1.5 }}>Alamat:</Text>
-              <View style={{ flex: 0.2 }} />
+              <View style={{ flex: 0.05 }} />
               <Form style={{ flex: 2 }}>
                 <Textarea rowSpan={5} bordered placeholder="masukan alamat" />
               </Form>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
             <Row style={{ margin: 10 }}>
               <Text style={{ flex: 1.5 }}>Barcode:</Text>
-              <View style={{ flex: 0.2 }} />
+              <View style={{ flex: 0.05 }} />
               <Item
                 style={{
                   flex: 2,
                   alignSelf: "center",
                   height: "3vh",
                   backgroundColor: "#FFF",
-                  width: "20vw"
+                  width: "20vw",
                 }}
                 regular
               >
                 <Input style={{ height: "3vh" }} />
               </Item>
-              <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
             </Row>
 
-            <Row style={{ margin: 10 }}>
-              <View style={{ flex: 3 }} />
-              <Button rounded light style={{ backgroundColor: "#D9D9D9" }}>
+            <Row style={{ margin: 10, justifyContent: "center" }}>
+              <Button
+                rounded
+                light
+                style={{ alignSelf: "center", backgroundColor: "#D9D9D9" }}
+              >
                 <Text>Simpan</Text>
               </Button>
-              <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />
             </Row>
           </Grid>
         </Content>

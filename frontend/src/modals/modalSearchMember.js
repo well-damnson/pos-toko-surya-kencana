@@ -18,7 +18,6 @@ import Hook from "@/wrapper";
 import { useTable, usePagination } from "react-table";
 import ConfirmModal from "../modals/modalConfirm";
 import Modal from "modal-enhanced-react-native-web";
-import UbahModal from "../modals/modalUbahMember";
 // TODO: belajar cara make styled ini
 const Styles = styled.div`
   padding: 1rem;
@@ -53,7 +52,7 @@ const Styles = styled.div`
   }
 `;
 
-function Table({ dat, setShowConfirm, setShowUbah }) {
+function Table({ dat, setShowConfirm }) {
   console.log(dat);
   const data = React.useMemo(() => [...dat], [dat]);
   const columns = React.useMemo(
@@ -125,50 +124,6 @@ function Table({ dat, setShowConfirm, setShowUbah }) {
 
   return (
     <>
-      {/* <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: "solid 1px black",
-                    background: "aliceblue",
-                    color: "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {column.render("Header")}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: "10px",
-                        border: "solid 1px gray",
-                        background: "papayawhip",
-                      }}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table> */}
       <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -221,13 +176,7 @@ function Table({ dat, setShowConfirm, setShowUbah }) {
                           textAlign: "center",
                         }}
                       >
-                        <button onClick={() => setShowUbah(true, i)}>
-                          Ubah
-                        </button>{" "}
-                        |{" "}
-                        <button onClick={() => setShowConfirm(true, i)}>
-                          Hapus
-                        </button>
+                        <button onClick={() => {}}>Pilih</button>
                       </td>
                     );
                   else
@@ -305,22 +254,15 @@ function Table({ dat, setShowConfirm, setShowUbah }) {
   );
 }
 
-let MemberList = () => {
+let ModalSearchMember = () => {
   let { Client } = Hook.useClientState();
   let [state, setState] = useState([]);
-  let [confirmShow, setConfirmShow] = useState(false); //buat modal confirm
-  let [ubahShow, setUbahShow] = useState(false); //buat modal ubah member
+  let [confirmShow, setConfirmShow] = useState(false);
   let [selectedData, setSelectedData] = useState(0);
 
   let setShowConfirm = (value, index) => {
     setConfirmShow(value);
     setSelectedData(index);
-  };
-
-  let setShowUbah = (value, index) => {
-    setUbahShow(value);
-    setSelectedData(index);
-    console.log("State Ubah = ", ubahShow);
   };
 
   let removeData = (index) => {
@@ -396,93 +338,6 @@ let MemberList = () => {
     setFiltered(filtered);
   }, [state, query]);
 
-  let testData = useState([
-    {
-      _id: "5e4cf73516ef992c086a886b",
-      poin: 0,
-      nama: "Andi",
-      alamat: "Jl. Ada Deh Mau Tau Aja",
-      hp: "089012345678",
-      lahir: [22, 11, 1997],
-      barcode: "123",
-      createdAt: "2020-02-19T08:52:05.289Z",
-      updatedAt: "2020-03-23T03:27:16.646Z",
-      __v: 0,
-    },
-    {
-      _id: "5e4d04fed3ee174b9cbb6d6b",
-      poin: 0,
-      nama: "Anto",
-      alamat: "Jl. Ada Deh Mau Tau Aja 2",
-      hp: "089876543210",
-      lahir: [22, 11, 2000],
-      barcode: "",
-      createdAt: "2020-02-19T09:50:54.953Z",
-      updatedAt: "2020-02-19T09:50:54.953Z",
-      __v: 0,
-    },
-    {
-      _id: "5e4d052317097d0930a39faa",
-      poin: 0,
-      nama: "Anto",
-      alamat: "Jl. Ada Deh Mau Tau Aja 2",
-      hp: "089876543210",
-      lahir: [22, 11, 2000],
-      barcode: "",
-      createdAt: "2020-02-19T09:51:31.253Z",
-      updatedAt: "2020-02-19T09:51:31.253Z",
-      __v: 0,
-    },
-    {
-      _id: "5e4d0528e5f3a835ecab5b5e",
-      poin: 0,
-      nama: "Anto",
-      alamat: "Jl. Ada Deh Mau Tau Aja 2",
-      hp: "089876543210",
-      lahir: [22, 11, 2000],
-      barcode: "",
-      createdAt: "2020-02-19T09:51:36.847Z",
-      updatedAt: "2020-02-19T09:51:36.847Z",
-      __v: 0,
-    },
-    {
-      _id: "5e4d05d3a879c60b7cf6b002",
-      poin: 0,
-      nama: "Anto",
-      alamat: "Jl. Ada Deh Mau Tau Aja 2",
-      hp: "089876543210",
-      lahir: [22, 11, 2000],
-      barcode: "",
-      createdAt: "2020-02-19T09:54:27.905Z",
-      updatedAt: "2020-02-19T09:54:27.905Z",
-      __v: 0,
-    },
-    {
-      _id: "5e4d06a13a57173f30555e8c",
-      poin: 0,
-      nama: "Anto",
-      alamat: "Jl. Ada Deh Mau Tau Aja 2",
-      hp: "089876543210",
-      lahir: [22, 11, 2000],
-      barcode: "",
-      createdAt: "2020-02-19T09:57:53.213Z",
-      updatedAt: "2020-02-19T09:57:53.213Z",
-      __v: 0,
-    },
-    {
-      _id: "5e782de00978474450cc1f24",
-      poin: 0,
-      nama: "Johan",
-      hp: "081617353000",
-      lahir: [22, 11, 1996],
-      alamat: "Jl. Adadehmautauaja",
-      barcode: "102938475665",
-      createdAt: "2020-03-23T03:32:48.912Z",
-      updatedAt: "2020-03-23T03:32:48.912Z",
-      __v: 0,
-    },
-  ]);
-
   console.log("filter", filtered);
 
   return (
@@ -498,13 +353,6 @@ let MemberList = () => {
             close={() => setConfirmShow(false)}
           ></ConfirmModal>
         </Modal>
-        <Modal
-          style={{ alignSelf: "center" }}
-          isVisible={ubahShow}
-          onBackdropPress={() => setUbahShow(false)}
-        >
-          <UbahModal></UbahModal>
-        </Modal>
         <Grid>
           {/* section 1 - Header */}
           <Row
@@ -512,7 +360,7 @@ let MemberList = () => {
             style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
           >
             <Grid>
-              <Col>
+              <Col size={50}>
                 <Row
                   style={{
                     backgroundColor: "#d3ece1",
@@ -565,8 +413,6 @@ let MemberList = () => {
                     />
                   </Item>
                 </Row>
-              </Col>
-              <Col>
                 <Row
                   style={{
                     backgroundColor: "#d3ece1",
@@ -627,34 +473,8 @@ let MemberList = () => {
                     />
                   </View>
                 </Row>
-                <Row
-                  style={{
-                    backgroundColor: "#d3ece1",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
-                    No. HP:{}
-                  </Text>
-                  <Item
-                    style={{
-                      alignSelf: "center",
-                      height: "3vh",
-                      backgroundColor: "#FFF",
-                      width: "15vw",
-                    }}
-                    regular
-                  >
-                    <Input
-                      style={{ height: "3vh" }}
-                      onChangeText={(text) => {
-                        querySetter("hp", text);
-                      }}
-                      value={query.hp}
-                    />
-                  </Item>
-                </Row>
               </Col>
+              <Col size={50}></Col>
               <Col />
             </Grid>
           </Row>
@@ -669,11 +489,7 @@ let MemberList = () => {
                 {/* <Styles>
                   <Table dat={filtered}></Table>
                 </Styles> */}
-                <Table
-                  dat={filtered}
-                  setShowConfirm={setShowConfirm}
-                  setShowUbah={setShowUbah}
-                ></Table>
+                <Table dat={filtered} setShowConfirm={setShowConfirm}></Table>
               </Col>
               {/* section 3.3 Tombol Aksi*/}
               <Col size={2}></Col>
@@ -687,4 +503,4 @@ let MemberList = () => {
   );
 };
 
-export default MemberList;
+export default ModalSearchMember;
