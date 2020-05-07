@@ -12,12 +12,12 @@ exports.ItemArea = class ItemArea {
   async find(params) {
     const app = this.app;
     const itemsService = app.service('items');
-    let queryObj = filterObject(params.query, ['posisi']);
-    if (Object.keys(queryObj).length > 0) {
+    let queryObj = filterObject(params.query, ['posisi', 'terjual']);
+    if (queryObj.posisi) {
       queryObj.terjual = false;
     }
     console.log(queryObj);
-    let result = await itemsService.find({
+    let query = {
       paginate: false,
       query: {
         ...queryObj,
@@ -25,7 +25,9 @@ exports.ItemArea = class ItemArea {
           createdAt: -1,
         },
       },
-    });
+    };
+    console.log(query);
+    let result = await itemsService.find(query);
     return result;
   }
 

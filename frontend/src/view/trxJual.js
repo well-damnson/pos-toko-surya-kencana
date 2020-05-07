@@ -19,6 +19,8 @@ import ConfirmModal from '../modals/modalConfirm';
 import SearchItemModal from '../modals/modalSearchItem';
 import Modal from 'modal-enhanced-react-native-web';
 
+import Hook from '@/wrapper';
+
 const Styles = styled.div`
   padding: 1rem;
 
@@ -222,6 +224,7 @@ function Table({ dat, setDat, setShowModal, changeJualAmount }) {
 }
 
 let Jual = () => {
+  let { Client } = Hook.useClientState();
   // statenya diatas sini gw pake hook jadi kalo lu mau
   let [state, setState] = useState({
     paymentMethod: 'Tunai',
@@ -250,7 +253,7 @@ let Jual = () => {
     let total = 0;
     for (let index = 0; index < jual.length; index++) {
       const { jual: harga } = jual[index];
-      total += harga;
+      total += parseInt(harga);
     }
 
     setTransactionData({ ...state, jual, total, type: 'jual' });
@@ -309,6 +312,27 @@ let Jual = () => {
     let newJual = [...before, selected, ...after];
     setJual(newJual);
   };
+
+  let submitJual = () => {
+    let submit = async () => {
+      if (
+        transactionData.jual.length > 0 &&
+        transactionData.total > 0 &&
+        transactionData.memberBarcode.length > 0
+      ) {
+        let TransactionAreaServices = Client.service('transaction-area');
+        let result = await TransactionAreaServices.create(transactionData);
+        if (result._id) {
+          console.log(result);
+          setState({ paymentMethod: 'Tunai', noRef: '', memberBarcode: '' });
+          setTransactionData({});
+          setJual([]);
+        }
+      }
+    };
+    console.log(transactionData);
+    submit();
+  };
   return (
     <View style={{ flex: 1, height: '100vh' }}>
       <Modal
@@ -352,7 +376,13 @@ let Jual = () => {
             }}
             regular
           >
-            <Input style={{ height: '3vh' }} />
+            <Input
+              style={{ height: '3vh' }}
+              value={state.memberBarcode}
+              onChangeText={(text) => {
+                setter('memberBarcode', text);
+              }}
+            />
           </Item>
           <Button
             light
@@ -462,7 +492,7 @@ let Jual = () => {
                   justifyContent: 'center',
                 }}
                 onClick={() => {
-                  setModalShow(true);
+                  submitJual();
                 }}
               >
                 <Text> Selesai </Text>
