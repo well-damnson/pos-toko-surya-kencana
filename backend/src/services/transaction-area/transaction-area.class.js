@@ -17,15 +17,44 @@ exports.TransactionArea = class TransactionArea {
   }
 
   async find(params) {
+    let getDate = (noTrx) => {
+      let date = noTrx.split(' ')[2];
+      let [dd, mm, yyyy] = date.split('-');
+      let newDate = new Date(parseInt(yyyy), parseInt(mm) - 1, parseInt(dd));
+      console.log(newDate);
+      return newDate;
+    };
+
     let result = [];
     let {start, end} = params.query;
-    start = new Date(arrayToDate(JSON.parse(start)));
-    end = new Date(arrayToDate(JSON.parse(end)));
+    let startDate = start && arrayToDate(start);
+    let endDate = end && arrayToDate(end);
+    start = start && new Date(startDate);
+    end = end && new Date(endDate);
     console.log(start, end);
 
     const app = this.app;
     const transactionsService = app.service('transactions');
-
+    let transactions = await transactionsService.find();
+    console.log(transactions);
+    for (let index = 0; index < transactions.data.length; index++) {
+      const transaction = transactions.data[index];
+      // console.log(transaction);
+      let transactionDate = getDate(transaction.noTransaksi);
+      let push = false;
+      if (start && !end && transactionDate >= start) push = true;
+      else if (!start && end && transactionDate <= end) push = true;
+      else if (!start && !end) push = true;
+      else if (
+        start &&
+        end &&
+        transactionDate >= start &&
+        transactionDate <= end
+      )
+        push = true;
+      console.log(push);
+      if (push) result.push(transaction);
+    }
     return result;
   }
 
