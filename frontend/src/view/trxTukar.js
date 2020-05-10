@@ -22,6 +22,8 @@ import SearchItemModal from '../modals/modalSearchItem';
 
 import Modal from 'modal-enhanced-react-native-web';
 
+import Hook from '@/wrapper';
+
 function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
   const data = React.useMemo(() => dat, [dat]);
   const columns = React.useMemo(
@@ -100,7 +102,7 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell, index) => {
-                if (index === row.cells.length) console.log('cell', cell);
+                // if (index === row.cells.length) console.log('cell', cell);
                 let num = (
                   <td
                     key={index}
@@ -302,11 +304,17 @@ function TableBeli({ dat, removeData }) {
 }
 
 let Tukartambah = () => {
+  let { Client } = Hook.useClientState();
+
   let [state, setState] = useState({
     paymentMethod: 'Tunai',
     noRef: '',
     memberBarcode: '',
   });
+
+  let setter = (key, value) => {
+    setState((state) => ({ ...state, [key]: value }));
+  };
 
   let listRadio = [
     'Tunai',
@@ -329,7 +337,7 @@ let Tukartambah = () => {
       }}
     >
       <Radio
-        onPress={() => setState({ paymentMethod: item })}
+        onPress={() => setState(setter('paymentMethod', item))}
         selected={state.paymentMethod == item}
       />
       <Text style={{ marginRight: 5 }}>{item}</Text>
@@ -415,7 +423,29 @@ let Tukartambah = () => {
     setTransactionData({ ...state, jual, beli, total, type: 'tukar' });
   }, [state, jual, beli]);
 
-  console.log(transactionData);
+  let submitTukar = () => {
+    let submit = async () => {
+      if (
+        transactionData.jual.length > 0 &&
+        transactionData.beli.length > 0 &&
+        transactionData.total > 0 &&
+        transactionData.memberBarcode.length > 0
+      ) {
+        let TransactionAreaServices = Client.service('transaction-area');
+        let result = await TransactionAreaServices.create(transactionData);
+        console.log(result);
+        if (result._id) {
+          setState({ paymentMethod: 'Tunai', noRef: '', memberBarcode: '' });
+          setTransactionData({});
+          setJual([]);
+          setBeli([]);
+          console.log('success');
+        }
+      }
+    };
+    console.log(transactionData);
+    submit();
+  };
   return (
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
@@ -473,7 +503,13 @@ let Tukartambah = () => {
               }}
               regular
             >
-              <Input style={{ height: '3vh' }} />
+              <Input
+                style={{ height: '3vh' }}
+                value={state.memberBarcode}
+                onChangeText={(text) => {
+                  setter('memberBarcode', text);
+                }}
+              />
             </Item>
             <Button
               light
@@ -637,6 +673,7 @@ let Tukartambah = () => {
                   width: '10vw',
                   justifyContent: 'center',
                 }}
+                onPress={submitTukar}
               >
                 <Text> Selesai </Text>
               </Button>

@@ -35,10 +35,10 @@ exports.TransactionArea = class TransactionArea {
 
     const app = this.app;
     const transactionsService = app.service('transactions');
-    let transactions = await transactionsService.find();
+    let transactions = await transactionsService.find({paginate: false});
     console.log(transactions);
-    for (let index = 0; index < transactions.data.length; index++) {
-      const transaction = transactions.data[index];
+    for (let index = 0; index < transactions.length; index++) {
+      const transaction = transactions[index];
       // console.log(transaction);
       let transactionDate = getDate(transaction.noTransaksi);
       let push = false;

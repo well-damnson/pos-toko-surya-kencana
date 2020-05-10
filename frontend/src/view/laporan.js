@@ -124,13 +124,26 @@ function Table({ columns, data }) {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, i) => {
+          {page.map((row, rowIndex) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
+                {row.cells.map((cell, index) => {
+                  let num = (
                     <td
+                      key={index}
+                      style={{
+                        padding: '10px',
+                        border: 'solid 1px gray',
+                        background: 'papayawhip',
+                      }}
+                    >
+                      {rowIndex + 1 + pageSize * pageIndex}
+                    </td>
+                  );
+                  let content = (
+                    <td
+                      key={index + 1}
                       {...cell.getCellProps()}
                       style={{
                         padding: '10px',
@@ -141,6 +154,8 @@ function Table({ columns, data }) {
                       {cell.render('Cell')}
                     </td>
                   );
+
+                  return index === 0 ? num : content;
                 })}
               </tr>
             );
@@ -287,11 +302,11 @@ let Laporan = () => {
         Header: 'Total',
         columns: [
           {
-            Header: 'transaksi',
+            Header: 'Transaksi',
             accessor: 'total',
             Cell: (props) => {
               // console.log(props);
-              return currency(props.row.values.jual);
+              return currency(props.row.values.total);
             },
           },
         ],
