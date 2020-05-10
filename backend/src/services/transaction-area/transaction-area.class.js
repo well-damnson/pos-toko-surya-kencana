@@ -101,7 +101,7 @@ exports.TransactionArea = class TransactionArea {
     ).data[0];
     let memberValid = !!member;
 
-    if (type && memberBarcode && total && paymentMethod && memberValid) {
+    if (type && total && paymentMethod) {
       console.log(newData);
       let processJual = false;
       let processBeli = false;
@@ -147,17 +147,19 @@ exports.TransactionArea = class TransactionArea {
             }),
           );
           // Input Poin
-          const membersService = app.service('members');
-          const {_id: memberId, poin} = (
-            await membersService.find({
-              query: {barcode: memberBarcode},
-            })
-          ).data[0];
-          console.log(memberId);
-          const memberAreaService = app.service('member-area');
-          await memberAreaService.patch(memberId, {
-            poin: poin + Math.trunc(total / 1000000),
-          });
+          if (memberValid) {
+            const membersService = app.service('members');
+            const {_id: memberId, poin} = (
+              await membersService.find({
+                query: {barcode: memberBarcode},
+              })
+            ).data[0];
+            console.log(memberId);
+            const memberAreaService = app.service('member-area');
+            await memberAreaService.patch(memberId, {
+              poin: poin + Math.trunc(total / 1000000),
+            });
+          }
         } else {
           return {};
         }

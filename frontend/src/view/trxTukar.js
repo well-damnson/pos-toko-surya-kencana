@@ -428,8 +428,7 @@ let Tukartambah = () => {
       if (
         transactionData.jual.length > 0 &&
         transactionData.beli.length > 0 &&
-        transactionData.total > 0 &&
-        transactionData.memberBarcode.length > 0
+        transactionData.total > 0
       ) {
         let TransactionAreaServices = Client.service('transaction-area');
         let result = await TransactionAreaServices.create(transactionData);

@@ -2,7 +2,7 @@
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
-module.exports = function(app) {
+module.exports = function (app) {
   const modelName = 'transactions';
   const mongooseClient = app.get('mongooseClient');
   const {Schema} = mongooseClient;
@@ -20,7 +20,7 @@ module.exports = function(app) {
   });
   const schema = new Schema(
     {
-      memberBarcode: {type: String, required: true},
+      memberBarcode: {type: String},
       noTransaksi: {type: String, required: true},
       jual: [itemSchema],
       beli: [itemSchema],

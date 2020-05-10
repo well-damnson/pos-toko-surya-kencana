@@ -257,7 +257,7 @@ let Beli = () => {
   };
 
   let submit = async () => {
-    if (beli.length > 0) {
+    if (transactionData.beli.length > 0 && transactionData.total > 0) {
       console.log('toDatabase');
       let service = Client.service('transaction-area');
       let result = await service.create(transactionData);
