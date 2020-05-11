@@ -8,10 +8,12 @@ import {
   Text,
   StyleProvider,
 } from "native-base";
+import { Image } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import getTheme from "../native-base-theme/components";
 import custom from "../native-base-theme/variables/custom";
 import Pastel from "../context/color";
+import image from "../context/logo.jpeg";
 
 import Hook from "@/wrapper";
 
@@ -32,12 +34,14 @@ let Menu = () => {
             >
               <Thumbnail
                 style={{
+                  padding: 1,
                   height: 200,
                   width: 200,
                   alignSelf: "center",
-                  borderRadius: 100,
+                  borderRadius: 25,
+                  resizeMode: "contain",
                 }}
-                source={{ uri: uri }}
+                source={{ uri: image }}
               ></Thumbnail>
             </Row>
             <Row size={80} style={{ backgroundColor: Pastel.cell }}>

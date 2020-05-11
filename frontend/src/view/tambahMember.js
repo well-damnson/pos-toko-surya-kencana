@@ -66,10 +66,27 @@ let TambahMember = () => {
   return (
     <Container>
       <Content
-        contentContainerStyle={{ flex: 1, backgroundColor: Pastel.lback }}
+        contentContainerStyle={{
+          flex: 1,
+          backgroundColor: Pastel.lback,
+          paddingLeft: 50,
+        }}
       >
         <Grid>
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
+            <Text
+              style={{
+                flex: 5,
+                alignSelf: "center",
+                fontSize: 36,
+                fontWeight: "bold",
+              }}
+            >
+              Tambah Member
+            </Text>
+            <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
+          </Row>
+          <Row size={10}>
             <Text style={{ flex: 1.5, alignSelf: "center" }}>Nama:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
@@ -91,25 +108,11 @@ let TambahMember = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
             <Text style={{ flex: 1.5, alignSelf: "center" }}>
               Tanggal Lahir:{" "}
             </Text>
             <View style={{ flex: 0.2 }} />
-            {/* <Item
-                style={{
-                  flex: 4,
-                  alignSelf: "center",
-                  height: "3vh",
-                  backgroundColor: "#FFF",
-                  width: "20vw"
-                }}
-                regular
-              >
-                <Input style={{ height: "3vh" }} />
-                <Input style={{ height: "3vh" }} />
-                <Input style={{ height: "3vh" }} />
-              </Item> */}
             <View
               style={{
                 flex: 2.5,
@@ -167,7 +170,7 @@ let TambahMember = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
             <Text style={{ flex: 1.5, alignSelf: "center" }}>No HP:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
@@ -190,7 +193,7 @@ let TambahMember = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row size={3} style={{ margin: 10, justifyContent: "center" }}>
+          <Row size={25} style={{ justifyContent: "center" }}>
             <Text style={{ flex: 1.5, alignSelf: "center" }}>Alamat:</Text>
             <View style={{ flex: 0.2 }} />
             <Form
@@ -211,7 +214,7 @@ let TambahMember = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
             <Text style={{ flex: 1.5, alignSelf: "center" }}>Barcode:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
@@ -234,7 +237,7 @@ let TambahMember = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
             <View style={{ flex: 3 }} />
             <Button
               rounded
@@ -246,6 +249,7 @@ let TambahMember = () => {
             </Button>
             <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />
           </Row>
+          <Row size={30}></Row>
         </Grid>
       </Content>
     </Container>

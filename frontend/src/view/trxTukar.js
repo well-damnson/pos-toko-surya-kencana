@@ -10,7 +10,7 @@ import {
   Item,
   StyleProvider,
 } from "native-base";
-import { Text, View } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { useTable } from "react-table";
 
@@ -673,6 +673,30 @@ let Tukartambah = () => {
                 }}
               >
                 {listRadio.map((item, index) => RadioButton(item, index))}
+              </View>
+              <View
+                style={{
+                  justifyContent: "center",
+                  marginLeft: 150,
+                }}
+              >
+                <TextInput
+                  placeholder="Nomor Referensi"
+                  style={{
+                    textAlign: "center",
+                    alignSelf: "center",
+                    margin: 5,
+                    backgroundColor: "white",
+                    borderColor: "grey",
+                    height: "3vh",
+                    borderWidth: 1,
+                    width: "15vw",
+                  }}
+                  value={state.noRef}
+                  onChangeText={(text) => {
+                    setter("noRef", text);
+                  }}
+                />
               </View>
             </View>
             <View
