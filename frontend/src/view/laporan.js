@@ -1,5 +1,5 @@
-import React, { Component, useState, useEffect } from 'react';
-import { useTable, usePagination } from 'react-table';
+import React, { Component, useState, useEffect } from "react";
+import { useTable, usePagination } from "react-table";
 import {
   Container,
   Content,
@@ -10,13 +10,13 @@ import {
   Button,
   Input,
   Item,
-} from 'native-base';
-import { Text, View, TextInput, Picker, TouchableOpacity } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { currency } from '../utils';
-import styled from 'styled-components';
+} from "native-base";
+import { Text, View, TextInput, Picker, TouchableOpacity } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { currency } from "../utils";
+import styled from "styled-components";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 const Styles = styled.div`
   /* This is required to make the table full-width */
@@ -97,13 +97,13 @@ function Table({ columns, data }) {
       data,
       // initialState: { pageIndex: 2 },
     },
-    usePagination,
+    usePagination
   );
 
   // Render the UI for your table
   return (
     <Styles>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -112,12 +112,12 @@ function Table({ columns, data }) {
                   {...column.getHeaderProps()}
                   style={{
                     // borderBottom: 'solid 1px black',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
+                    background: "aliceblue",
+                    color: "black",
+                    fontWeight: "bold",
                   }}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -133,9 +133,9 @@ function Table({ columns, data }) {
                     <td
                       key={index}
                       style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
                       }}
                     >
                       {rowIndex + 1 + pageSize * pageIndex}
@@ -146,12 +146,12 @@ function Table({ columns, data }) {
                       key={index + 1}
                       {...cell.getCellProps()}
                       style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
+                        padding: "10px",
+                        border: "solid 1px gray",
+                        background: "papayawhip",
                       }}
                     >
-                      {cell.render('Cell')}
+                      {cell.render("Cell")}
                     </td>
                   );
 
@@ -168,25 +168,25 @@ function Table({ columns, data }) {
       */}
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
+          {"<<"}
+        </button>{" "}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
+          {"<"}
+        </button>{" "}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+          {">"}
+        </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+          {">>"}
+        </button>{" "}
         <span>
-          Page{' '}
+          Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+          </strong>{" "}
         </span>
         <span>
-          | Go to page:{' '}
+          | Go to page:{" "}
           <input
             type="number"
             defaultValue={pageIndex + 1}
@@ -194,9 +194,9 @@ function Table({ columns, data }) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           />
-        </span>{' '}
+        </span>{" "}
         <select
           value={pageSize}
           onChange={(e) => {
@@ -220,56 +220,56 @@ let Laporan = () => {
   const data1 = React.useMemo(
     () => [
       {
-        col1: '1',
-        trx: 'Sample-Code',
-        jenisjual: 'Sample-Gold',
-        beratjual: 'Sample-weight',
-        jenisbeli: 'Sample-Gold',
-        beratbeli: 'Sample-weight',
-        beli: '123456789',
-        jual: '987654321',
-        col6: 'Test',
+        col1: "1",
+        trx: "Sample-Code",
+        jenisjual: "Sample-Gold",
+        beratjual: "Sample-weight",
+        jenisbeli: "Sample-Gold",
+        beratbeli: "Sample-weight",
+        beli: "123456789",
+        jual: "987654321",
+        col6: "Test",
       },
       {
-        col1: '2',
-        nama: 'Sample',
+        col1: "2",
+        nama: "Sample",
       },
       {
-        col1: '3',
-        nama: 'Sample',
+        col1: "3",
+        nama: "Sample",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Info Transaksi',
+        Header: "Info Transaksi",
         columns: [
           {
-            Header: 'No',
-            accessor: 'col1', // accessor is the "key" in the data
+            Header: "No",
+            accessor: "col1", // accessor is the "key" in the data
           },
           {
-            Header: 'Kode Transaksi',
-            accessor: 'noTransaksi', // accessor is the "key" in the data
+            Header: "Kode Transaksi",
+            accessor: "noTransaksi", // accessor is the "key" in the data
           },
         ],
       },
       {
-        Header: 'Jual',
+        Header: "Jual",
         columns: [
           {
-            Header: 'Jumlah',
-            accessor: 'jumlahjual',
+            Header: "Jumlah",
+            accessor: "jumlahjual",
           },
           {
-            Header: 'Berat',
-            accessor: 'beratjual',
+            Header: "Berat",
+            accessor: "beratjual",
           },
           {
-            Header: 'Harga Jual',
-            accessor: 'jual',
+            Header: "Harga Jual",
+            accessor: "jual",
             Cell: (props) => {
               // console.log(props);
               return currency(props.row.values.jual);
@@ -278,19 +278,19 @@ let Laporan = () => {
         ],
       },
       {
-        Header: 'Beli',
+        Header: "Beli",
         columns: [
           {
-            Header: 'Jumlah',
-            accessor: 'jumlahbeli',
+            Header: "Jumlah",
+            accessor: "jumlahbeli",
           },
           {
-            Header: 'Berat',
-            accessor: 'beratbeli',
+            Header: "Berat",
+            accessor: "beratbeli",
           },
           {
-            Header: 'Harga Beli',
-            accessor: 'beli',
+            Header: "Harga Beli",
+            accessor: "beli",
             Cell: (props) => {
               // console.log(props);
               return currency(props.row.values.beli);
@@ -299,11 +299,11 @@ let Laporan = () => {
         ],
       },
       {
-        Header: 'Total',
+        Header: "Total",
         columns: [
           {
-            Header: 'Transaksi',
-            accessor: 'total',
+            Header: "Transaksi",
+            accessor: "total",
             Cell: (props) => {
               // console.log(props);
               return currency(props.row.values.total);
@@ -312,19 +312,19 @@ let Laporan = () => {
         ],
       },
     ],
-    [],
+    []
   );
 
-  let [start, setStart] = useState(['', '', '']);
-  let [end, setEnd] = useState(['', '', '']);
+  let [start, setStart] = useState(["", "", ""]);
+  let [end, setEnd] = useState(["", "", ""]);
 
   let setter = (time, type, value) => {
     let set;
     let oldData;
-    if (time === 'start') {
+    if (time === "start") {
       set = setStart;
       oldData = start;
-    } else if (time === 'end') {
+    } else if (time === "end") {
       set = setEnd;
       oldData = end;
     }
@@ -342,20 +342,20 @@ let Laporan = () => {
     transaction.jumlahjual = fetchData.jual.length;
     transaction.beratjual = fetchData.jual.reduce(
       (total, item) => total + item.berat,
-      0,
+      0
     );
     transaction.jual = fetchData.jual.reduce(
       (total, item) => total + item.jual,
-      0,
+      0
     );
     transaction.jumlahbeli = fetchData.beli.length;
     transaction.beratbeli = fetchData.beli.reduce(
       (total, item) => total + item.berat,
-      0,
+      0
     );
     transaction.beli = fetchData.beli.reduce(
       (total, item) => total + item.beli,
-      0,
+      0
     );
     transaction.total = transaction.jual - transaction.beli;
     console.log(transaction);
@@ -414,7 +414,7 @@ updatedAt: "2020-05 */
     }
     console.log(query);
     let fetchFunction = async () => {
-      let TransactionAreaServices = Client.service('transaction-area');
+      let TransactionAreaServices = Client.service("transaction-area");
       let data = await TransactionAreaServices.find({ query });
       console.log(data);
       setState(fetchToState(data));
@@ -423,7 +423,7 @@ updatedAt: "2020-05 */
   }, [start, end]);
   useEffect(() => {
     let fetchFunction = async () => {
-      let TransactionAreaServices = Client.service('transaction-area');
+      let TransactionAreaServices = Client.service("transaction-area");
       let data = await TransactionAreaServices.find();
       console.log(data);
       setState(fetchToState(data));
@@ -432,145 +432,147 @@ updatedAt: "2020-05 */
   }, []);
   return (
     <Container>
-      <Content>
+      <Content contentContainerStyle={{ flex: 1 }}>
         <Grid>
-          <Row size={25}>
-            <Col>
-              <Row style={{ justifyContent: 'center' }}>
-                <Text style={{ alignSelf: 'center' }}>Tgl Mulai: </Text>
-                <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-                  <TextInput
-                    placeholder="DD"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      marginRight: 5,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={start[0]}
-                    onChangeText={(text) => {
-                      setter('start', 0, text);
-                    }}
-                  />
-                  <TextInput
-                    placeholder="MM"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      marginRight: 5,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={start[1]}
-                    onChangeText={(text) => {
-                      setter('start', 1, text);
-                    }}
-                  />
-                  <TextInput
-                    placeholder="YYYY"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={start[2]}
-                    onChangeText={(text) => {
-                      setter('start', 2, text);
-                    }}
-                  />
-                </View>
-              </Row>
-              <Row style={{ justifyContent: 'center' }}>
-                <Text style={{ alignSelf: 'center' }}>Tgl Akhir: </Text>
-                <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-                  <TextInput
-                    placeholder="DD"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      marginRight: 5,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={end[0]}
-                    onChangeText={(text) => {
-                      setter('end', 0, text);
-                    }}
-                  />
-                  <TextInput
-                    placeholder="MM"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      marginRight: 5,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={end[1]}
-                    onChangeText={(text) => {
-                      setter('end', 1, text);
-                    }}
-                  />
-                  <TextInput
-                    placeholder="YYYY"
-                    style={{
-                      textAlign: 'center',
-                      borderRadius: 2,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
-                      borderWidth: 1,
-                      width: '5vw',
-                    }}
-                    value={end[2]}
-                    onChangeText={(text) => {
-                      setter('end', 2, text);
-                    }}
-                  />
-                </View>
-              </Row>
-            </Col>
-            <Col
-              style={{
-                justifyContent: 'flex-end',
-                flexDirection: 'row',
-                padding: 20,
-              }}
-            >
-              <TouchableOpacity
+          <Row size={15} style={{ justifyContent: "center" }}>
+            <Grid>
+              <Col>
+                <Row style={{ justifyContent: "center", margin: 10 }}>
+                  <Text style={{ alignSelf: "center" }}>Tgl Mulai: </Text>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                    <TextInput
+                      placeholder="DD"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        marginRight: 5,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={start[0]}
+                      onChangeText={(text) => {
+                        setter("start", 0, text);
+                      }}
+                    />
+                    <TextInput
+                      placeholder="MM"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        marginRight: 5,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={start[1]}
+                      onChangeText={(text) => {
+                        setter("start", 1, text);
+                      }}
+                    />
+                    <TextInput
+                      placeholder="YYYY"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={start[2]}
+                      onChangeText={(text) => {
+                        setter("start", 2, text);
+                      }}
+                    />
+                  </View>
+                </Row>
+                <Row style={{ justifyContent: "center", margin: 10 }}>
+                  <Text style={{ alignSelf: "center" }}>Tgl Akhir: </Text>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                    <TextInput
+                      placeholder="DD"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        marginRight: 5,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={end[0]}
+                      onChangeText={(text) => {
+                        setter("end", 0, text);
+                      }}
+                    />
+                    <TextInput
+                      placeholder="MM"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        marginRight: 5,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={end[1]}
+                      onChangeText={(text) => {
+                        setter("end", 1, text);
+                      }}
+                    />
+                    <TextInput
+                      placeholder="YYYY"
+                      style={{
+                        textAlign: "center",
+                        borderRadius: 2,
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
+                        borderWidth: 1,
+                        width: "5vw",
+                      }}
+                      value={end[2]}
+                      onChangeText={(text) => {
+                        setter("end", 2, text);
+                      }}
+                    />
+                  </View>
+                </Row>
+              </Col>
+              <Col
                 style={{
-                  alignSelf: 'center',
-                  width: '5vw',
-                  padding: 10,
-                  backgroundColor: 'silver',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  justifyContent: 'center',
-                  marginRight: 10,
+                  justifyContent: "flex-end",
+                  flexDirection: "row",
+                  padding: 20,
                 }}
               >
-                <Text style={{ alignSelf: 'center' }}>Print</Text>
-              </TouchableOpacity>
-            </Col>
+                <TouchableOpacity
+                  style={{
+                    alignSelf: "center",
+                    width: "5vw",
+                    padding: 10,
+                    backgroundColor: "silver",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    justifyContent: "center",
+                    marginRight: 10,
+                  }}
+                >
+                  <Text style={{ alignSelf: "center" }}>Print</Text>
+                </TouchableOpacity>
+              </Col>
+            </Grid>
           </Row>
-          <Row size={75} style={{ justifyContent: 'center' }}>
+          <Row size={75} style={{ justifyContent: "center" }}>
             <Table columns={columns} data={data}></Table>
           </Row>
         </Grid>

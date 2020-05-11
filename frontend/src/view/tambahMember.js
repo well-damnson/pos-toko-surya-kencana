@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState } from "react";
 import {
   Container,
   Item,
@@ -8,20 +8,21 @@ import {
   Button,
   Form,
   Textarea,
-} from 'native-base';
-import { View, TextInput } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+} from "native-base";
+import { View, TextInput } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import Pastel from "../context/color";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 let TambahMember = () => {
   let defaultState = {
-    nama: '',
-    alamat: '',
-    hp: '',
-    lahir: ['', '', ''],
-    barcode: '',
-    type: 'member',
+    nama: "",
+    alamat: "",
+    hp: "",
+    lahir: ["", "", ""],
+    barcode: "",
+    type: "member",
   };
 
   let [state, setState] = useState({
@@ -51,7 +52,7 @@ let TambahMember = () => {
       state.barcode.length
     ) {
       try {
-        let RegistrationServices = Client.service('register');
+        let RegistrationServices = Client.service("register");
         let result = await RegistrationServices.create(state);
         console.log(result);
         setState({ ...defaultState });
@@ -64,24 +65,26 @@ let TambahMember = () => {
   console.log(state);
   return (
     <Container>
-      <Content>
+      <Content
+        contentContainerStyle={{ flex: 1, backgroundColor: Pastel.lback }}
+      >
         <Grid>
           <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Nama:</Text>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Nama:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
-                onChangeText={(text) => setter('nama', text)}
+                style={{ height: "3vh" }}
+                onChangeText={(text) => setter("nama", text)}
                 value={state.nama}
               />
             </Item>
@@ -89,7 +92,9 @@ let TambahMember = () => {
           </Row>
 
           <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Tanggal Lahir: </Text>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>
+              Tanggal Lahir:{" "}
+            </Text>
             <View style={{ flex: 0.2 }} />
             {/* <Item
                 style={{
@@ -108,22 +113,22 @@ let TambahMember = () => {
             <View
               style={{
                 flex: 2.5,
-                alignSelf: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
+                alignSelf: "center",
+                justifyContent: "center",
+                flexDirection: "row",
               }}
             >
               <TextInput
                 type="tel"
                 placeholder="DD"
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   marginRight: 5,
-                  backgroundColor: 'white',
-                  borderColor: 'grey',
-                  height: '3vh',
+                  backgroundColor: "white",
+                  borderColor: "grey",
+                  height: "3vh",
                   borderWidth: 1,
-                  width: '5vw',
+                  width: "5vw",
                 }}
                 onChangeText={(text) => setLahir(0, text)}
                 value={state.lahir[0]}
@@ -132,13 +137,13 @@ let TambahMember = () => {
                 type="tel"
                 placeholder="MM"
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   marginRight: 5,
-                  backgroundColor: 'white',
-                  borderColor: 'grey',
-                  height: '3vh',
+                  backgroundColor: "white",
+                  borderColor: "grey",
+                  height: "3vh",
                   borderWidth: 1,
-                  width: '5vw',
+                  width: "5vw",
                 }}
                 onChangeText={(text) => setLahir(1, text)}
                 value={state.lahir[1]}
@@ -147,13 +152,13 @@ let TambahMember = () => {
                 type="tel"
                 placeholder="YYYY"
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   marginRight: 5,
-                  backgroundColor: 'white',
-                  borderColor: 'grey',
-                  height: '3vh',
+                  backgroundColor: "white",
+                  borderColor: "grey",
+                  height: "3vh",
                   borderWidth: 1,
-                  width: '5vw',
+                  width: "5vw",
                 }}
                 onChangeText={(text) => setLahir(2, text)}
                 value={state.lahir[2]}
@@ -163,37 +168,43 @@ let TambahMember = () => {
           </Row>
 
           <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>No HP:</Text>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>No HP:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
                 type="tel"
-                style={{ height: '3vh' }}
-                onChangeText={(text) => setter('hp', text)}
+                style={{ height: "3vh" }}
+                onChangeText={(text) => setter("hp", text)}
                 value={state.hp}
               />
             </Item>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row size={3} style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Alamat:</Text>
+          <Row size={3} style={{ margin: 10, justifyContent: "center" }}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Alamat:</Text>
             <View style={{ flex: 0.2 }} />
-            <Form style={{ flex: 2 }}>
+            <Form
+              style={{
+                flex: 2,
+                alignSelf: "center",
+              }}
+            >
               <Textarea
+                style={{ backgroundColor: Pastel.white }}
                 rowSpan={5}
                 bordered
                 placeholder="masukan alamat"
-                onChangeText={(text) => setter('alamat', text)}
+                onChangeText={(text) => setter("alamat", text)}
                 value={state.alamat}
               />
             </Form>
@@ -201,22 +212,22 @@ let TambahMember = () => {
           </Row>
 
           <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Barcode:</Text>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Barcode:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
                 flex: 2,
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '20vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "20vw",
               }}
               regular
             >
               <Input
                 type="tel"
-                style={{ height: '3vh' }}
-                onChangeText={(text) => setter('barcode', text)}
+                style={{ height: "3vh" }}
+                onChangeText={(text) => setter("barcode", text)}
                 value={state.barcode}
               />
             </Item>
@@ -228,7 +239,7 @@ let TambahMember = () => {
             <Button
               rounded
               light
-              style={{ backgroundColor: '#D9D9D9' }}
+              style={{ backgroundColor: "#D9D9D9" }}
               onPress={submit}
             >
               <Text>Simpan</Text>

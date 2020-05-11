@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Content,
@@ -9,49 +9,50 @@ import {
   Input,
   Item,
   StyleProvider,
-} from 'native-base';
-import { Text, View } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { useTable } from 'react-table';
+} from "native-base";
+import { Text, View } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { useTable } from "react-table";
 
-import { currency } from '../utils';
+import { currency } from "../utils";
+import Pastel from "../context/color";
 
-import TambahItemModal from '../modals/modalTambahItem';
-import ConfirmModal from '../modals/modalConfirm';
-import SearchItemModal from '../modals/modalSearchItem';
+import TambahItemModal from "../modals/modalTambahItem";
+import ConfirmModal from "../modals/modalConfirm";
+import SearchItemModal from "../modals/modalSearchItem";
 
-import Modal from 'modal-enhanced-react-native-web';
+import Modal from "modal-enhanced-react-native-web";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
   const data = React.useMemo(() => dat, [dat]);
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No.',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No.",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Kode Barang',
-        accessor: 'nama',
+        Header: "Kode Barang",
+        accessor: "nama",
       },
       {
-        Header: 'Berat (gr)',
-        accessor: 'berat',
+        Header: "Berat (gr)",
+        accessor: "berat",
       },
-      { Header: 'Kadar (%)', accessor: 'kadar' },
+      { Header: "Kadar (%)", accessor: "kadar" },
       {
-        Header: 'Harga',
-        accessor: 'jual',
+        Header: "Harga",
+        accessor: "jual",
         Footer: (info) => {
           const total = React.useMemo(
             () =>
               info.rows.reduce(
                 (sum, row) => parseInt(row.values.jual || 0) + sum,
-                0,
+                0
               ),
-            [info.rows],
+            [info.rows]
           );
           return <>Total: {currency(total)}</>;
         },
@@ -61,9 +62,9 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
         },
         // https://stackoverflow.com/questions/48704269/react-table-package-formatting-float-as-currency , https://medium.com/@nidhinkumar/react-js-number-format-and-styling-a1a6e211e629
       },
-      { Header: 'Tools', accessor: 'col6' },
+      { Header: "Tools", accessor: "col6" },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -76,7 +77,7 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
 
   let [showTambah, setShowTambah] = useState(false);
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()} style={{ border: "solid 1px black" }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -84,13 +85,12 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 3px red',
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
+                  background: Pastel.dcell,
+                  color: "black",
+                  fontWeight: "bold",
                 }}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -107,9 +107,9 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
                   <td
                     key={index}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
                     {rowIndex + 1}
@@ -120,21 +120,21 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
                     key={index}
                     {...cell.getCellProps()}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 );
                 let remove = (
                   <td
                     key={index}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
                     <button onClick={() => setShowModal(true, rowIndex)}>
@@ -146,13 +146,13 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
                   <td
                     key={index}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
                     <input
-                      style={{ height: '2em' }}
+                      style={{ height: "2em" }}
                       type="text"
                       value={cell.value}
                       onChange={(text) => {
@@ -177,7 +177,7 @@ function TableJual({ dat, setDat, setShowModal, changeJualAmount }) {
         {footerGroups.map((group) => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map((column) => (
-              <td {...column.getFooterProps()}>{column.render('Footer')}</td>
+              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
             ))}
           </tr>
         ))}
@@ -191,40 +191,52 @@ function TableBeli({ dat, removeData }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No.',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No.",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Kode Barang',
-        accessor: 'nama',
+        Header: "Kode Barang",
+        accessor: "nama",
       },
       {
-        Header: 'Berat (gr)',
-        accessor: 'berat',
+        Header: "Berat (gr)",
+        accessor: "berat",
       },
-      { Header: 'Kadar (%)', accessor: 'kadar' },
+      { Header: "Kadar (%)", accessor: "kadar" },
       {
-        Header: 'Harga',
-        accessor: 'beli',
+        Header: "Harga",
+        accessor: "beli",
+        Footer: (info) => {
+          const total = React.useMemo(
+            () =>
+              info.rows.reduce(
+                (sum, row) => parseInt(row.values.beli || 0) + sum,
+                0
+              ),
+            [info.rows]
+          );
+          return <>Total: {currency(total)}</>;
+        },
         Cell: (props) => {
           console.log(props);
           return currency(props.row.values.beli);
         },
       },
-      { Header: 'Tools', accessor: 'col6' },
+      { Header: "Tools", accessor: "col6" },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    footerGroups,
     rows,
     prepareRow,
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+    <table {...getTableProps()} style={{ border: "solid 1px black" }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -232,13 +244,12 @@ function TableBeli({ dat, removeData }) {
               <th
                 {...column.getHeaderProps()}
                 style={{
-                  borderBottom: 'solid 3px red',
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
+                  background: Pastel.dcell,
+                  color: "black",
+                  fontWeight: "bold",
                 }}
               >
-                {column.render('Header')}
+                {column.render("Header")}
               </th>
             ))}
           </tr>
@@ -254,9 +265,9 @@ function TableBeli({ dat, removeData }) {
                   <td
                     key={index}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
                     {rowIndex + 1}
@@ -267,21 +278,21 @@ function TableBeli({ dat, removeData }) {
                     key={index + 1}
                     {...cell.getCellProps()}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
-                    {cell.render('Cell')}
+                    {cell.render("Cell")}
                   </td>
                 );
                 let remove = (
                   <td
                     key={index + 2}
                     style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                      background: 'papayawhip',
+                      padding: "10px",
+                      border: "solid 1px gray",
+                      background: "papayawhip",
                     }}
                   >
                     <button onClick={() => removeData(true, rowIndex)}>
@@ -299,6 +310,15 @@ function TableBeli({ dat, removeData }) {
           );
         })}
       </tbody>
+      <tfoot>
+        {footerGroups.map((group) => (
+          <tr {...group.getFooterGroupProps()}>
+            {group.headers.map((column) => (
+              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+            ))}
+          </tr>
+        ))}
+      </tfoot>
     </table>
   );
 }
@@ -307,9 +327,9 @@ let Tukartambah = () => {
   let { Client } = Hook.useClientState();
 
   let [state, setState] = useState({
-    paymentMethod: 'Tunai',
-    noRef: '',
-    memberBarcode: '',
+    paymentMethod: "Tunai",
+    noRef: "",
+    memberBarcode: "",
   });
 
   let setter = (key, value) => {
@@ -317,27 +337,27 @@ let Tukartambah = () => {
   };
 
   let listRadio = [
-    'Tunai',
-    'BCA',
-    'Mandiri',
-    'BNI',
-    'BRI',
-    'Visa',
-    'Master',
-    'Go-Pay',
-    'OVO',
+    "Tunai",
+    "BCA",
+    "Mandiri",
+    "BNI",
+    "BRI",
+    "Visa",
+    "Master",
+    "Go-Pay",
+    "OVO",
   ];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
+        flexDirection: "row",
+        alignSelf: "flex-start",
       }}
     >
       <Radio
-        onPress={() => setState(setter('paymentMethod', item))}
+        onPress={() => setState(setter("paymentMethod", item))}
         selected={state.paymentMethod == item}
       />
       <Text style={{ marginRight: 5 }}>{item}</Text>
@@ -367,7 +387,7 @@ let Tukartambah = () => {
   };
   let changeJualAmount = (index, price) => {
     console.log(price.target.value);
-    let newPrice = price.target.value.replace(/\D/g, '');
+    let newPrice = price.target.value.replace(/\D/g, "");
     let selected = jual[index];
     let before = jual.slice(0, index);
     let after = jual.slice(index + 1, jual.length);
@@ -390,17 +410,17 @@ let Tukartambah = () => {
     setSelectedIndex(index);
   };
   let addDataBeli = (state) => {
-    console.log('submit pressed');
+    console.log("submit pressed");
     console.log(state);
     if (
       state.nama.length &&
-      (state.jenis !== '-' || state.jenisBaru.length) &&
+      (state.jenis !== "-" || state.jenisBaru.length) &&
       state.berat.length &&
       state.kadar.length &&
-      (state.posisi !== '-' || state.posisiBaru.length) &&
+      (state.posisi !== "-" || state.posisiBaru.length) &&
       state.beli.length
     ) {
-      console.log('Submitted');
+      console.log("Submitted");
       setBeli((beli) => [...beli, state]);
       setAddItemShow(false);
     }
@@ -420,7 +440,7 @@ let Tukartambah = () => {
       total -= parseInt(harga);
     }
 
-    setTransactionData({ ...state, jual, beli, total, type: 'tukar' });
+    setTransactionData({ ...state, jual, beli, total, type: "tukar" });
   }, [state, jual, beli]);
 
   let submitTukar = () => {
@@ -430,15 +450,15 @@ let Tukartambah = () => {
         transactionData.beli.length > 0 &&
         transactionData.total > 0
       ) {
-        let TransactionAreaServices = Client.service('transaction-area');
+        let TransactionAreaServices = Client.service("transaction-area");
         let result = await TransactionAreaServices.create(transactionData);
         console.log(result);
         if (result._id) {
-          setState({ paymentMethod: 'Tunai', noRef: '', memberBarcode: '' });
+          setState({ paymentMethod: "Tunai", noRef: "", memberBarcode: "" });
           setTransactionData({});
           setJual([]);
           setBeli([]);
-          console.log('success');
+          console.log("success");
         }
       }
     };
@@ -449,7 +469,7 @@ let Tukartambah = () => {
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Modal
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: "center" }}
           isVisible={searchShow}
           onBackdropPress={() => setSearchShow(false)}
         >
@@ -461,7 +481,7 @@ let Tukartambah = () => {
           ></SearchItemModal>
         </Modal>
         <Modal
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: "center" }}
           isVisible={modalShow}
           onBackdropPress={() => setModalShow(false)}
         >
@@ -477,7 +497,7 @@ let Tukartambah = () => {
           <TambahItemModal submit={addDataBeli}></TambahItemModal>
         </Modal>
         <Modal
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: "center" }}
           isVisible={removeItemShow}
           onBackdropPress={() => setRemoveItemShow(false)}
         >
@@ -490,31 +510,31 @@ let Tukartambah = () => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
           >
-            <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
+            <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
             <Item
               style={{
-                alignSelf: 'center',
-                height: '3vh',
-                backgroundColor: '#FFF',
-                width: '15vw',
+                alignSelf: "center",
+                height: "3vh",
+                backgroundColor: "#FFF",
+                width: "15vw",
               }}
               regular
             >
               <Input
-                style={{ height: '3vh' }}
+                style={{ height: "3vh" }}
                 value={state.memberBarcode}
                 onChangeText={(text) => {
-                  setter('memberBarcode', text);
+                  setter("memberBarcode", text);
                 }}
               />
             </Item>
             <Button
               light
               style={{
-                alignSelf: 'center',
-                marginLeft: '1vw',
+                alignSelf: "center",
+                marginLeft: "1vw",
                 borderWidth: 1,
                 borderRadius: 15,
               }}
@@ -524,13 +544,13 @@ let Tukartambah = () => {
           </Row>
           {/* section 2 - label penanda jual */}
           <Row
-            size={7}
-            style={{ backgroundColor: '#FFF', justifyContent: 'center' }}
+            size={8}
+            style={{ backgroundColor: Pastel.lback, justifyContent: "center" }}
           >
             <Text
               style={{
-                alignSelf: 'center',
-                marginLeft: '5vw',
+                alignSelf: "center",
+                marginLeft: "5vw",
                 fontSize: 24,
                 padding: 5,
               }}
@@ -539,12 +559,12 @@ let Tukartambah = () => {
             </Text>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={75} style={{ backgroundColor: Pastel.back }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={5}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: Pastel.back }}>
                 <TableJual
                   dat={jual}
                   setDat={setJual}
@@ -557,13 +577,13 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: 'center',
-                    marginLeft: '1vw',
+                    alignSelf: "center",
+                    marginLeft: "1vw",
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: '10vw',
-                    justifyContent: 'center',
+                    width: "10vw",
+                    justifyContent: "center",
                   }}
                   onClick={() => {
                     setSearchShow(true);
@@ -576,13 +596,13 @@ let Tukartambah = () => {
             </Grid>
           </Row>
           <Row
-            size={7}
-            style={{ backgroundColor: '#FFF', justifyContent: 'center' }}
+            size={8}
+            style={{ backgroundColor: Pastel.lback, justifyContent: "center" }}
           >
             <Text
               style={{
-                alignSelf: 'center',
-                marginLeft: '5vw',
+                alignSelf: "center",
+                marginLeft: "5vw",
                 fontSize: 24,
                 padding: 5,
               }}
@@ -591,12 +611,12 @@ let Tukartambah = () => {
             </Text>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={75} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={75} style={{ backgroundColor: Pastel.back }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={5}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: Pastel.back }}>
                 {/* section 3.2.1 - tabel isi */}
                 <TableBeli dat={beli} removeData={setShowModalBeli}></TableBeli>
               </Col>
@@ -605,13 +625,13 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: 'center',
-                    marginLeft: '1vw',
+                    alignSelf: "center",
+                    marginLeft: "1vw",
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: '10vw',
-                    justifyContent: 'center',
+                    width: "10vw",
+                    justifyContent: "center",
                   }}
                   onPress={() => setAddItemShow(true)}
                 >
@@ -622,33 +642,33 @@ let Tukartambah = () => {
             </Grid>
           </Row>
           {/* section 4 - white space */}
-          <Row size={25} style={{ backgroundColor: '#FFF' }}>
+          <Row size={25} style={{ backgroundColor: Pastel.back }}>
             <View style={{ flex: 5 }} />
             <View
               style={{
                 flex: 75,
-                flexDirection: 'row',
+                flexDirection: "row",
                 paddingLeft: 50,
-                backgroundColor: 'blue',
+                backgroundColor: Pastel.back,
               }}
             >
               <Text
                 style={{
-                  alignSelf: 'center',
+                  alignSelf: "center",
                 }}
               >
                 Metode Pembayaran
               </Text>
               <View
                 style={{
-                  alignSelf: 'center',
+                  alignSelf: "center",
                   marginLeft: 5,
                   paddingLeft: 5,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flexWrap: 'wrap',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
+                  display: "flex",
+                  flexDirection: "column",
+                  flexWrap: "wrap",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
                   height: 80,
                 }}
               >
@@ -658,19 +678,19 @@ let Tukartambah = () => {
             <View
               style={{
                 flex: 20,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                backgroundColor: 'green',
+                flexDirection: "row",
+                justifyContent: "center",
+                backgroundColor: Pastel.back,
               }}
             >
               <Button
                 light
                 style={{
-                  alignSelf: 'center',
+                  alignSelf: "center",
                   borderWidth: 1,
                   borderRadius: 15,
-                  width: '10vw',
-                  justifyContent: 'center',
+                  width: "10vw",
+                  justifyContent: "center",
                 }}
                 onPress={submitTukar}
               >

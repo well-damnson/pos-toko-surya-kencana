@@ -255,7 +255,7 @@ let ModalTambahItem = ({ submit, close }) => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          {/* <Row style={{ margin: 10 }}>
             <Text style={{ flex: 1.5 }}>Gambar:</Text>
             <View style={{ flex: 0.2 }} />
             <Button
@@ -273,7 +273,7 @@ let ModalTambahItem = ({ submit, close }) => {
               <Text>Unggah</Text>
             </Button>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
-          </Row>
+          </Row> */}
 
           <Row style={{ margin: 10 }}>
             <Text style={{ flex: 1.5 }}>Harga Beli:</Text>

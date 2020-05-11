@@ -11,6 +11,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import getTheme from "../native-base-theme/components";
 import custom from "../native-base-theme/variables/custom";
+import Pastel from "../context/color";
 
 import Hook from "@/wrapper";
 
@@ -21,16 +22,11 @@ let Menu = () => {
     <Container>
       <Content contentContainerStyle={{ backgroundColor: "#000" }}>
         <Grid>
-          <Col
-            size={20}
-            style={{
-              backgroundColor: "#635DB7",
-            }}
-          >
+          <Col size={20} style={{}}>
             <Row
               size={30}
               style={{
-                backgroundColor: "#635DB7",
+                backgroundColor: Pastel.back,
                 justifyContent: "center",
               }}
             >
@@ -44,7 +40,7 @@ let Menu = () => {
                 source={{ uri: uri }}
               ></Thumbnail>
             </Row>
-            <Row size={80} style={{ backgroundColor: "#98a45f" }}>
+            <Row size={80} style={{ backgroundColor: Pastel.cell }}>
               <Col>
                 <ListItem itemDivider>
                   <Text style={{ fontSize: 24 }}>Transaksi</Text>
