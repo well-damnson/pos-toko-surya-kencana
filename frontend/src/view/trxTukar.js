@@ -20,6 +20,7 @@ import Pastel from "../context/color";
 import TambahItemModal from "../modals/modalTambahItem";
 import ConfirmModal from "../modals/modalConfirm";
 import SearchItemModal from "../modals/modalSearchItem";
+import SearchMemberModal from "../modals/modalSearchMember";
 
 import Modal from "modal-enhanced-react-native-web";
 
@@ -371,6 +372,8 @@ let Tukartambah = () => {
     setSelectedData(index);
   };
 
+  let [memberShow, setMemberShow] = useState(false);
+
   let [jual, setJual] = useState([]);
   let [searchShow, setSearchShow] = useState(false);
   let removeData = (index) => {
@@ -506,6 +509,13 @@ let Tukartambah = () => {
             close={() => setRemoveItemShow(false)}
           ></ConfirmModal>
         </Modal>
+        <Modal
+          style={{ alignSelf: "center" }}
+          isVisible={memberShow}
+          onBackdropPress={() => setMemberShow(false)}
+        >
+          <SearchMemberModal></SearchMemberModal>
+        </Modal>
         <Grid>
           {/* section 1 - Header */}
           <Row
@@ -537,6 +547,9 @@ let Tukartambah = () => {
                 marginLeft: "1vw",
                 borderWidth: 1,
                 borderRadius: 15,
+              }}
+              onClick={() => {
+                setMemberShow(true);
               }}
             >
               <Text> Tambahkan Manual </Text>

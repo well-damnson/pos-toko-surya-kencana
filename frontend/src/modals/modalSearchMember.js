@@ -10,6 +10,8 @@ import {
 } from "native-base";
 import styled from "styled-components";
 
+import Pastel from "../context/color";
+
 import { Text, View, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { currency } from "../utils";
@@ -124,7 +126,7 @@ function Table({ dat, setShowConfirm }) {
 
   return (
     <>
-      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+      <table {...getTableProps()} style={{ border: "solid 1px black" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -133,7 +135,7 @@ function Table({ dat, setShowConfirm }) {
                   {...column.getHeaderProps()}
                   style={{
                     borderBottom: "solid 1px black",
-                    background: "aliceblue",
+                    background: Pastel.dcell,
                     color: "black",
                     fontWeight: "bold",
                   }}
@@ -159,7 +161,7 @@ function Table({ dat, setShowConfirm }) {
                         style={{
                           padding: "10px",
                           border: "solid 1px gray",
-                          background: "papayawhip",
+                          background: Pastel.cell,
                         }}
                       >
                         {i + 1 + pageSize * pageIndex}
@@ -172,7 +174,7 @@ function Table({ dat, setShowConfirm }) {
                         style={{
                           padding: "10px",
                           border: "solid 1px gray",
-                          background: "papayawhip",
+                          background: Pastel.cell,
                           textAlign: "center",
                         }}
                       >
@@ -186,7 +188,7 @@ function Table({ dat, setShowConfirm }) {
                         style={{
                           padding: "10px",
                           border: "solid 1px gray",
-                          background: "papayawhip",
+                          background: Pastel.cell,
                         }}
                       >
                         {cell.render("Cell")}
@@ -357,13 +359,13 @@ let ModalSearchMember = () => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
+            style={{ backgroundColor: Pastel.dback, justifyContent: "center" }}
           >
             <Grid>
               <Col size={50}>
                 <Row
                   style={{
-                    backgroundColor: "#d3ece1",
+                    backgroundColor: Pastel.dback,
                     justifyContent: "center",
                   }}
                 >
@@ -388,7 +390,7 @@ let ModalSearchMember = () => {
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "#d3ece1",
+                    backgroundColor: Pastel.dback,
                     justifyContent: "center",
                   }}
                 >
@@ -415,7 +417,7 @@ let ModalSearchMember = () => {
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: "#d3ece1",
+                    backgroundColor: Pastel.dback,
                     justifyContent: "center",
                   }}
                 >
@@ -479,12 +481,15 @@ let ModalSearchMember = () => {
             </Grid>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={100} style={{ backgroundColor: "#f2e3c6" }}>
+          <Row size={100} style={{ backgroundColor: Pastel.back }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={2}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: "#c2eec7" }}>
+              <Col
+                size={75}
+                style={{ paddingTop: 10, backgroundColor: Pastel.back }}
+              >
                 {/* section 3.2.1 - tabel isi */}
                 {/* <Styles>
                   <Table dat={filtered}></Table>

@@ -18,6 +18,7 @@ import Pastel from "../context/color";
 
 import ConfirmModal from "../modals/modalConfirm";
 import SearchItemModal from "../modals/modalSearchItem";
+import SearchMemberModal from "../modals/modalSearchMember";
 import Modal from "modal-enhanced-react-native-web";
 
 import Hook from "@/wrapper";
@@ -237,6 +238,7 @@ let Jual = () => {
   };
 
   let [searchShow, setSearchShow] = useState(false);
+  let [memberShow, setMemberShow] = useState(false);
   let [modalShow, setModalShow] = useState(false);
   let [selectedData, setSelectedData] = useState(0);
 
@@ -353,6 +355,13 @@ let Jual = () => {
           close={() => setModalShow(false)}
         ></ConfirmModal>
       </Modal>
+      <Modal
+        style={{ alignSelf: "center" }}
+        isVisible={memberShow}
+        onBackdropPress={() => setMemberShow(false)}
+      >
+        <SearchMemberModal></SearchMemberModal>
+      </Modal>
       <Grid>
         {/* section 1 - Header */}
         <Row
@@ -387,6 +396,9 @@ let Jual = () => {
               marginLeft: "1vw",
               borderWidth: 1,
               borderRadius: 15,
+            }}
+            onClick={() => {
+              setMemberShow(true);
             }}
           >
             <Text> Tambahkan Manual </Text>

@@ -18,6 +18,7 @@ import Pastel from "../context/color";
 
 import TambahItemModal from "../modals/modalTambahItem";
 import ConfirmModal from "../modals/modalConfirm";
+import SearchMemberModal from "../modals/modalSearchMember";
 
 import Modal from "modal-enhanced-react-native-web";
 
@@ -257,6 +258,8 @@ let Beli = () => {
     </View>
   );
 
+  let [memberShow, setMemberShow] = useState(false);
+
   let [addItemShow, setAddItemShow] = useState(false);
   let [removeItemShow, setRemoveItemShow] = useState(false);
   let [selectedIndex, setSelectedIndex] = useState(0);
@@ -317,6 +320,13 @@ let Beli = () => {
           close={() => setRemoveItemShow(false)}
         ></ConfirmModal>
       </Modal>
+      <Modal
+        style={{ alignSelf: "center" }}
+        isVisible={memberShow}
+        onBackdropPress={() => setMemberShow(false)}
+      >
+        <SearchMemberModal></SearchMemberModal>
+      </Modal>
       <Grid>
         {/* section 1 - Header */}
         <Row
@@ -351,6 +361,9 @@ let Beli = () => {
               marginLeft: "1vw",
               borderWidth: 1,
               borderRadius: 15,
+            }}
+            onClick={() => {
+              setMemberShow(true);
             }}
           >
             <Text> Tambahkan Manual </Text>
