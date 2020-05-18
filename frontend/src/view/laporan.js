@@ -16,6 +16,8 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { currency } from "../utils";
 import styled from "styled-components";
 
+import Pastel from "../context/color";
+
 import Hook from "@/wrapper";
 
 const Styles = styled.div`
@@ -103,7 +105,7 @@ function Table({ columns, data }) {
   // Render the UI for your table
   return (
     <Styles>
-      <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+      <table {...getTableProps()} style={{ border: "solid 1px black" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -112,7 +114,7 @@ function Table({ columns, data }) {
                   {...column.getHeaderProps()}
                   style={{
                     // borderBottom: 'solid 1px black',
-                    background: "aliceblue",
+                    background: Pastel.dcell,
                     color: "black",
                     fontWeight: "bold",
                   }}
@@ -135,7 +137,7 @@ function Table({ columns, data }) {
                       style={{
                         padding: "10px",
                         border: "solid 1px gray",
-                        background: "papayawhip",
+                        background: Pastel.cell,
                       }}
                     >
                       {rowIndex + 1 + pageSize * pageIndex}
@@ -148,7 +150,7 @@ function Table({ columns, data }) {
                       style={{
                         padding: "10px",
                         border: "solid 1px gray",
-                        background: "papayawhip",
+                        background: Pastel.cell,
                       }}
                     >
                       {cell.render("Cell")}
@@ -432,12 +434,14 @@ updatedAt: "2020-05 */
   }, []);
   return (
     <Container>
-      <Content contentContainerStyle={{ flex: 1 }}>
+      <Content
+        contentContainerStyle={{ flex: 1, backgroundColor: Pastel.back }}
+      >
         <Grid>
           <Row size={15} style={{ justifyContent: "center" }}>
             <Grid>
               <Col>
-                <Row style={{ justifyContent: "center", margin: 10 }}>
+                <Row style={{ justifyContent: "center" }}>
                   <Text style={{ alignSelf: "center" }}>Tgl Mulai: </Text>
                   <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
@@ -492,7 +496,7 @@ updatedAt: "2020-05 */
                     />
                   </View>
                 </Row>
-                <Row style={{ justifyContent: "center", margin: 10 }}>
+                <Row style={{ justifyContent: "center" }}>
                   <Text style={{ alignSelf: "center" }}>Tgl Akhir: </Text>
                   <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
