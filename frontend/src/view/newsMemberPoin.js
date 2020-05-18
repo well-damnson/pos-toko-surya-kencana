@@ -54,11 +54,11 @@ function Table(props) {
       },
       {
         Header: 'Alamat',
-        accessor: 'address',
+        accessor: 'alamat',
       },
       {
         Header: 'Nomor Handphone',
-        accessor: 'nomor',
+        accessor: 'hp',
       },
       {
         Header: 'Poin',
@@ -122,19 +122,35 @@ function Table(props) {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                        background: 'papayawhip',
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
+                {row.cells.map((cell, index) => {
+                  let ret;
+                  if (index === 0)
+                    ret = (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                          background: 'papayawhip',
+                        }}
+                      >
+                        {i + 1 + pageSize * pageIndex}
+                      </td>
+                    );
+                  else
+                    ret = (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                          background: 'papayawhip',
+                        }}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  return ret;
                 })}
               </tr>
             );
