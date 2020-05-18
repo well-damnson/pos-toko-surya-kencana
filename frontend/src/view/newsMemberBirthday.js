@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Content,
@@ -8,12 +8,14 @@ import {
   Input,
   Item,
   StyleProvider,
-} from 'native-base';
-import { Text, View, TextInput } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+} from "native-base";
+import { Text, View, TextInput } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
-import Hook from '@/wrapper';
-import { useTable, usePagination } from 'react-table';
+import Pastel from "../context/color";
+
+import Hook from "@/wrapper";
+import { useTable, usePagination } from "react-table";
 
 function Table(props) {
   console.log(props);
@@ -21,51 +23,51 @@ function Table(props) {
   const data1 = React.useMemo(
     () => [
       {
-        col1: '1',
-        nama: 'Sample-Code',
-        address: 'Sample-Gold',
-        nomor: 'Sample-weight',
-        birthday: '2020-02-20',
+        col1: "1",
+        nama: "Sample-Code",
+        address: "Sample-Gold",
+        nomor: "Sample-weight",
+        birthday: "2020-02-20",
       },
       {
-        col1: '2',
-        nama: 'Sample',
+        col1: "2",
+        nama: "Sample",
       },
       {
-        col1: '3',
-        nama: 'Sample',
+        col1: "3",
+        nama: "Sample",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Nama',
-        accessor: 'nama',
+        Header: "Nama",
+        accessor: "nama",
       },
       {
-        Header: 'Alamat',
-        accessor: 'alamat',
+        Header: "Alamat",
+        accessor: "alamat",
       },
       {
-        Header: 'Nomor Handphone',
-        accessor: 'hp',
+        Header: "Nomor Handphone",
+        accessor: "hp",
       },
       {
-        Header: 'Ulang Tahun',
-        accessor: 'lahir',
+        Header: "Ulang Tahun",
+        accessor: "lahir",
         Cell: (props) => {
           console.log(props);
-          return props.row.values.lahir.join('-');
+          return props.row.values.lahir.join("-");
         },
       },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -91,13 +93,13 @@ function Table(props) {
       data,
       // initialState: { pageIndex: 2 },
     },
-    usePagination,
+    usePagination
   );
 
   // Render the UI for your table
   return (
     <>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+      <table {...getTableProps()} style={{ border: "solid 1px black" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -105,13 +107,13 @@ function Table(props) {
                 <th
                   {...column.getHeaderProps()}
                   style={{
-                    borderBottom: 'solid 1px black',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
+                    borderBottom: "solid 1px black",
+                    background: Pastel.dcell,
+                    color: "black",
+                    fontWeight: "bold",
                   }}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -129,9 +131,9 @@ function Table(props) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                          background: 'papayawhip',
+                          padding: "10px",
+                          border: "solid 1px gray",
+                          background: Pastel.cell,
                         }}
                       >
                         {i + 1 + pageSize * pageIndex}
@@ -142,12 +144,12 @@ function Table(props) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                          background: 'papayawhip',
+                          padding: "10px",
+                          border: "solid 1px gray",
+                          background: Pastel.cell,
                         }}
                       >
-                        {cell.render('Cell')}
+                        {cell.render("Cell")}
                       </td>
                     );
                   return ret;
@@ -163,25 +165,25 @@ function Table(props) {
       */}
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
+          {"<<"}
+        </button>{" "}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
+          {"<"}
+        </button>{" "}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+          {">"}
+        </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+          {">>"}
+        </button>{" "}
         <span>
-          Page{' '}
+          Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+          </strong>{" "}
         </span>
         <span>
-          | Go to page:{' '}
+          | Go to page:{" "}
           <input
             type="number"
             defaultValue={pageIndex + 1}
@@ -189,9 +191,9 @@ function Table(props) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           />
-        </span>{' '}
+        </span>{" "}
         <select
           value={pageSize}
           onChange={(e) => {
@@ -214,22 +216,22 @@ let NewsBirthday = () => {
   let [data, setData] = useState([]);
   useEffect(() => {
     let birthdayFetch = async () => {
-      let newsServices = Client.service('news');
+      let newsServices = Client.service("news");
       let { birthday } = await newsServices.find();
       console.log(birthday);
       setData(birthday);
     };
     birthdayFetch();
   }, []);
-  console.log('render');
+  console.log("render");
   return (
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Grid>
-          <Row size={100} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={100} style={{ backgroundColor: Pastel.back }}>
             <Grid style={{ padding: 10 }}>
               <Col size={2}></Col>
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: Pastel.back }}>
                 <Table data={data}></Table>
                 {/*section 3.2.2 - total harga */}
               </Col>

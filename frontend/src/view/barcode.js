@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
-import Barcode from 'react-barcode';
-import ReactToPrint from 'react-to-print';
+import React, { useRef, useState, useEffect } from "react";
+import Barcode from "react-barcode";
+import ReactToPrint from "react-to-print";
 
 import {
   Container,
@@ -14,13 +14,13 @@ import {
   StyleProvider,
   Picker,
   Icon,
-} from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+} from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
-import getTheme from './../native-base-theme/components';
-import custom from '../native-base-theme/variables/custom';
+import getTheme from "./../native-base-theme/components";
+import custom from "../native-base-theme/variables/custom";
 
-import Hook from '@/wrapper';
+import Hook from "@/wrapper";
 
 let pageWidth = 794;
 let pageHeight = 1123;
@@ -34,7 +34,7 @@ let test = (data) => {
         value={barcode}
         height={50}
         width={2}
-        renderer={'canvas'}
+        renderer={"canvas"}
         margin={0}
         displayValue={false}
       />
@@ -53,19 +53,19 @@ let SingleBarcode = (data) => {
   return (
     <div style={{ marginTop: 3, width: 250 }}>
       <p style={{ margin: 4 }}>{nama}</p>
-      <div style={{ flexDirection: 'row', display: 'flex' }}>
-        <div style={{ flexDirection: 'column', backgroundColor: 'red' }}>
+      <div style={{ flexDirection: "row", display: "flex" }}>
+        <div style={{ flexDirection: "column", backgroundColor: "red" }}>
           {code}
-          <p style={{ margin: 0, textAlign: 'center' }}>{barcode}</p>
+          <p style={{ margin: 0, textAlign: "center" }}>{barcode}</p>
         </div>
         <div
           style={{
-            flexDirection: 'column',
+            flexDirection: "column",
             height: 60,
             width: 48,
             marginLeft: 5,
-            display: 'flex',
-            backgroundColor: 'grey',
+            display: "flex",
+            backgroundColor: "grey",
           }}
         >
           <div
@@ -73,8 +73,8 @@ let SingleBarcode = (data) => {
               margin: 0,
               padding: 0,
               // display: 'table-cell',
-              verticalAlign: 'middle',
-              backgroundColor: 'blue',
+              verticalAlign: "middle",
+              backgroundColor: "blue",
             }}
           >
             <p style={{ margin: 0 }}>{berat} gr</p>
@@ -84,8 +84,8 @@ let SingleBarcode = (data) => {
               margin: 0,
               padding: 0,
               // display: 'table-cell',
-              verticalAlign: 'middle',
-              backgroundColor: 'yellow',
+              verticalAlign: "middle",
+              backgroundColor: "yellow",
             }}
           >
             <p style={{ margin: 0 }}>{kadar} %</p>
@@ -100,11 +100,11 @@ let Paging = (data) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignContent:'flex-start',
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignContent: "flex-start",
         height: pageHeight,
         paddingLeft: 10,
         paddingRight: 10,
@@ -154,10 +154,10 @@ let MultiBarcode = (props) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        backgroundColor: 'white',
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        backgroundColor: "white",
       }}
     >
       {paging.map((single, i) => (
@@ -183,12 +183,12 @@ let Page = (props) => {
 let Render = () => {
   let { Client } = Hook.useClientState();
   let printRef = useRef();
-  let [posisi, setPosisi] = useState('-');
+  let [posisi, setPosisi] = useState("-");
   let [pickItem, setPickItem] = useState([]);
   let [printItem, setPrintItem] = useState([]);
   useEffect(() => {
     let fetchFunction = async () => {
-      let ItemAreaServices = Client.service('item-area');
+      let ItemAreaServices = Client.service("item-area");
       let data = await ItemAreaServices.find();
       console.log(data);
       let pos = {};
@@ -206,11 +206,11 @@ let Render = () => {
 
   useEffect(() => {
     let fetchFunction = async () => {
-      console.log('PICKITEM:', posisi);
-      if (posisi === '-') {
+      console.log("PICKITEM:", posisi);
+      if (posisi === "-") {
         setPrintItem([]);
       } else {
-        let ItemAreaServices = Client.service('item-area');
+        let ItemAreaServices = Client.service("item-area");
         let data = await ItemAreaServices.find({ query: { posisi } });
         console.log(data);
         setPrintItem(data);
@@ -220,16 +220,23 @@ let Render = () => {
   }, [posisi]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingLeft: 50,
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <StyleProvider style={getTheme(custom)}>
           <Form
             style={{
               flex: 2,
-              alignSelf: 'center',
-              height: '3vh',
-              backgroundColor: '#FFF',
-              width: '20vw',
+              alignSelf: "center",
+              height: "3vh",
+              backgroundColor: "#FFF",
+              width: "20vw",
             }}
           >
             <Picker
@@ -251,10 +258,10 @@ let Render = () => {
           trigger={() => (
             <p
               style={{
-                textAlign: 'right',
-                margin: 0,
-                padding: '1em',
-                backgroundColor: 'blue',
+                textAlign: "right",
+                margin: 20,
+                padding: "1em",
+                backgroundColor: "aliceblue",
               }}
             >
               Print this out!

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from "react";
 import {
   Container,
   Content,
@@ -9,90 +9,92 @@ import {
   Button,
   Input,
   Item,
-} from 'native-base';
-import { Text, View, TextInput, Picker } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { currency } from '../utils';
+} from "native-base";
+import { Text, View, TextInput, Picker } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import { currency } from "../utils";
+import Pastel from "../context/color";
 
-import Hook from '@/wrapper';
-import { useTable, usePagination } from 'react-table';
-import ConfirmModal from '../modals/modalConfirm';
-import Modal from 'modal-enhanced-react-native-web';
+import Hook from "@/wrapper";
+import { useTable, usePagination } from "react-table";
+import ConfirmModal from "../modals/modalConfirm";
+import UbahModal from "../modals/modalUbahItem";
+import Modal from "modal-enhanced-react-native-web";
 
-function Table(props) {
+function Table(props, setShowUbah) {
   const data = React.useMemo(() => [...props.show], [props]);
   const data1 = React.useMemo(
     () => [
       {
-        col1: '1',
-        nama: 'Sample-Code',
-        jenis: 'Sample-Gold',
-        berat: 'Sample-Weight',
-        kadar: 'Sample-Rate',
-        posisi: 'Sample-Position',
-        beli: '123456789',
-        jual: '987654321',
-        col6: 'Test',
+        col1: "1",
+        nama: "Sample-Code",
+        jenis: "Sample-Gold",
+        berat: "Sample-Weight",
+        kadar: "Sample-Rate",
+        posisi: "Sample-Position",
+        beli: "123456789",
+        jual: "987654321",
+        col6: "Test",
       },
       {
-        col1: '2',
-        nama: 'Sample',
+        col1: "2",
+        nama: "Sample",
       },
       {
-        col1: '3',
-        nama: 'Sample',
+        col1: "3",
+        nama: "Sample",
       },
     ],
-    [],
+    []
   );
   const columns = React.useMemo(
     () => [
       {
-        Header: 'No',
-        accessor: 'col1', // accessor is the "key" in the data
+        Header: "No",
+        accessor: "col1", // accessor is the "key" in the data
       },
       {
-        Header: 'Kode Barang',
-        accessor: 'nama',
+        Header: "Kode Barang",
+        accessor: "nama",
       },
       {
-        Header: 'Jenis',
-        accessor: 'jenis',
+        Header: "Jenis",
+        accessor: "jenis",
       },
       {
-        Header: 'Berat',
-        accessor: 'berat',
+        Header: "Berat",
+        accessor: "berat",
       },
       {
-        Header: 'Kadar',
-        accessor: 'kadar',
+        Header: "Kadar",
+        accessor: "kadar",
       },
       {
-        Header: 'Posisi',
-        accessor: 'posisi',
+        Header: "Posisi",
+        accessor: "posisi",
       },
       {
-        Header: 'Harga Beli',
-        accessor: 'beli',
+        Header: "Harga Beli",
+        accessor: "beli",
         Cell: (props) => {
           // console.log(props);
           return currency(props.row.values.beli);
         },
       },
       {
-        Header: 'Harga Jual',
-        accessor: 'jual',
+        Header: "Harga Jual",
+        accessor: "jual",
         Cell: (props) => {
           // console.log(props);
           return currency(props.row.values.jual);
         },
       },
       {
-        Header: 'Tools',
-        accessor: 'col6',
+        Header: "Tools",
+        accessor: "col6",
       },
     ],
-    [],
+    []
   );
   const {
     getTableProps,
@@ -118,14 +120,14 @@ function Table(props) {
       data,
       // initialState: { pageIndex: 2 }, incase gk mau start di page pertama (?)
     },
-    usePagination,
+    usePagination
   );
 
   // Render the UI for your table
   //TODO: apus style dalam tabel dan ganti make styled
   return (
     <>
-      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
+      <table {...getTableProps()} style={{ border: "solid 1px black" }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -133,13 +135,13 @@ function Table(props) {
                 <th
                   {...column.getHeaderProps()}
                   style={{
-                    borderBottom: 'solid 1px black',
-                    background: 'aliceblue',
-                    color: 'black',
-                    fontWeight: 'bold',
+                    borderBottom: "solid 1px black",
+                    background: Pastel.dcell,
+                    color: "black",
+                    fontWeight: "bold",
                   }}
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -157,9 +159,9 @@ function Table(props) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                          background: 'papayawhip',
+                          padding: "10px",
+                          border: "solid 1px gray",
+                          background: Pastel.cell,
                         }}
                       >
                         {i + 1 + pageSize * pageIndex}
@@ -170,13 +172,15 @@ function Table(props) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                          background: 'papayawhip',
-                          textAlign: 'center',
+                          padding: "10px",
+                          border: "solid 1px gray",
+                          background: Pastel.cell,
+                          textAlign: "center",
                         }}
                       >
-                        <button>Ubah</button>
+                        <button onClick={() => props.setShowUbah(true, i)}>
+                          Ubah
+                        </button>
                         {/*
                          |
                           <button onClick={() => props.setShowConfirm(true, i)}>
@@ -189,12 +193,12 @@ function Table(props) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                          background: 'papayawhip',
+                          padding: "10px",
+                          border: "solid 1px gray",
+                          background: Pastel.cell,
                         }}
                       >
-                        {cell.render('Cell')}
+                        {cell.render("Cell")}
                       </td>
                     );
                   return ret;
@@ -210,25 +214,25 @@ function Table(props) {
       */}
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
+          {"<<"}
+        </button>{" "}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
+          {"<"}
+        </button>{" "}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
+          {">"}
+        </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+          {">>"}
+        </button>{" "}
         <span>
-          Page{' '}
+          Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
+          </strong>{" "}
         </span>
         <span>
-          | Go to page:{' '}
+          | Go to page:{" "}
           <input
             type="number"
             defaultValue={pageIndex + 1}
@@ -236,9 +240,9 @@ function Table(props) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           />
-        </span>{' '}
+        </span>{" "}
         <select
           value={pageSize}
           onChange={(e) => {
@@ -260,23 +264,30 @@ let ItemList = () => {
   let { Client } = Hook.useClientState();
 
   let [state, setState] = useState({
-    barcode: '',
-    nama: '',
-    jenis: '',
-    posisi: '',
-    kadarStart: '',
-    kadarEnd: '',
-    beratStart: '',
-    beratEnd: '',
-    filter: 'Tampilkan Semua',
+    barcode: "",
+    nama: "",
+    jenis: "",
+    posisi: "",
+    kadarStart: "",
+    kadarEnd: "",
+    beratStart: "",
+    beratEnd: "",
+    filter: "Tampilkan Semua",
   });
 
+  let [ubahShow, setUbahShow] = useState(false);
   let [confirmShow, setConfirmShow] = useState(false);
   let [selectedData, setSelectedData] = useState(0);
 
   let setShowConfirm = (value, index) => {
     setConfirmShow(value);
     setSelectedData(index);
+  };
+
+  let setShowUbah = (value, index) => {
+    setUbahShow(value);
+    setSelectedData(index);
+    console.log("State Ubah = ", ubahShow);
   };
 
   let [filtered, setFiltered] = useState([]);
@@ -287,23 +298,23 @@ let ItemList = () => {
 
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
-      value = value.replace(/[^\d.-]/g, '');
+      value = value.replace(/[^\d.-]/g, "");
     }
     setState((state) => ({ ...state, [key]: value }));
   };
 
-  let listRadio = ['Tampilkan Semua', 'Hanya Terjual', 'Sembunyikan Terjual'];
+  let listRadio = ["Tampilkan Semua", "Hanya Terjual", "Sembunyikan Terjual"];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
+        flexDirection: "row",
+        alignSelf: "flex-start",
       }}
     >
       <Radio
-        onPress={() => setter('filter', item)}
+        onPress={() => setter("filter", item)}
         selected={state.filter == item}
       />
       <Text style={{ marginRight: 5 }}>{item}</Text>
@@ -311,7 +322,7 @@ let ItemList = () => {
   );
   useEffect(() => {
     let fetchFunction = async () => {
-      let ItemAreaServices = Client.service('item-area');
+      let ItemAreaServices = Client.service("item-area");
       let data = await ItemAreaServices.find();
       // console.log(data);
       setData([...data]);
@@ -371,10 +382,10 @@ let ItemList = () => {
       if (beratEnd && !(item.berat <= beratEnd)) {
         continue;
       }
-      if (filter && filter === 'Hanya Terjual' && item.terjual === false) {
+      if (filter && filter === "Hanya Terjual" && item.terjual === false) {
         continue;
       }
-      if (filter && filter === 'Sembunyikan Terjual' && item.terjual === true) {
+      if (filter && filter === "Sembunyikan Terjual" && item.terjual === true) {
         continue;
       }
       filtered.push(item);
@@ -390,7 +401,7 @@ let ItemList = () => {
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Modal
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: "center" }}
           isVisible={confirmShow}
           onBackdropPress={() => setConfirmShow(false)}
         >
@@ -399,87 +410,94 @@ let ItemList = () => {
             close={() => setConfirmShow(false)}
           ></ConfirmModal>
         </Modal>
+        <Modal
+          style={{ alignSelf: "center" }}
+          isVisible={ubahShow}
+          onBackdropPress={() => setUbahShow(false)}
+        >
+          <UbahModal></UbahModal>
+        </Modal>
         <Grid>
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
+            style={{ backgroundColor: Pastel.dback, justifyContent: "center" }}
           >
             <Grid>
               <Col size={50}>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Barcode: </Text>
+                  <Text style={{ alignSelf: "center" }}>Barcode: </Text>
                   <TextInput
                     placeholder="Barcode"
                     style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
+                      alignSelf: "center",
+                      textAlign: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     value={state.barcode}
-                    onChangeText={(text) => setter('barcode', text)}
+                    onChangeText={(text) => setter("barcode", text)}
                   />
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Kode Barang:</Text>
+                  <Text style={{ alignSelf: "center" }}>Kode Barang:</Text>
                   <TextInput
                     placeholder="Kode Barang"
                     style={{
-                      alignSelf: 'center',
-                      textAlign: 'center',
+                      alignSelf: "center",
+                      textAlign: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     value={state.nama}
-                    onChangeText={(text) => setter('nama', text)}
+                    onChangeText={(text) => setter("nama", text)}
                   />
                 </Row>
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
                     Jenis:
                   </Text>
                   <Picker
                     mode="dropdown"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
+                      alignSelf: "center",
+                      alignContent: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     selectedValue={state.jenis}
                     onValueChange={(value) => {
-                      setter('jenis', value);
+                      setter("jenis", value);
                     }}
                   >
                     <Picker.Item label="Pilih" value="" />
@@ -491,29 +509,29 @@ let ItemList = () => {
 
                 <Row
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'flex-end',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
                     Posisi:
                   </Text>
                   <Picker
                     mode="dropdown"
                     style={{
-                      alignSelf: 'center',
-                      alignContent: 'center',
+                      alignSelf: "center",
+                      alignContent: "center",
                       marginHorizontal: 7,
-                      backgroundColor: 'white',
-                      borderColor: 'grey',
-                      height: '3vh',
+                      backgroundColor: "white",
+                      borderColor: "grey",
+                      height: "3vh",
                       borderWidth: 1,
                       borderRadius: 2,
-                      width: '25vw',
+                      width: "25vw",
                     }}
                     selectedValue={state.posisi}
                     onValueChange={(value) => {
-                      setter('posisi', value);
+                      setter("posisi", value);
                     }}
                   >
                     <Picker.Item label="Pilih" value="" />
@@ -527,59 +545,59 @@ let ItemList = () => {
                 <Row
                   size={25}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Kadar: </Text>
+                  <Text style={{ alignSelf: "center" }}>Kadar: </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
-                      flexDirection: 'row',
+                      alignSelf: "center",
+                      flexDirection: "row",
                       marginRight: 5,
                     }}
                   >
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.kadarStart}
-                      onChangeText={(text) => setter('kadarStart', text)}
+                      onChangeText={(text) => setter("kadarStart", text)}
                     />
                     <Text>%</Text>
                   </View>
                   <Text
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginRight: 10,
                       fontSize: 24,
                     }}
                   >
                     -
                   </Text>
-                  <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.kadarEnd}
-                      onChangeText={(text) => setter('kadarEnd', text)}
+                      onChangeText={(text) => setter("kadarEnd", text)}
                     />
                     <Text>%</Text>
                   </View>
@@ -587,59 +605,59 @@ let ItemList = () => {
                 <Row
                   size={25}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center' }}>Berat: </Text>
+                  <Text style={{ alignSelf: "center" }}>Berat: </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
-                      flexDirection: 'row',
+                      alignSelf: "center",
+                      flexDirection: "row",
                       marginRight: 5,
                     }}
                   >
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.beratStart}
-                      onChangeText={(text) => setter('beratStart', text)}
+                      onChangeText={(text) => setter("beratStart", text)}
                     />
                     <Text>gr</Text>
                   </View>
                   <Text
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginRight: 10,
                       fontSize: 24,
                     }}
                   >
                     -
                   </Text>
-                  <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
                     <TextInput
                       placeholder="xx"
                       style={{
-                        textAlign: 'center',
+                        textAlign: "center",
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: 'white',
-                        borderColor: 'grey',
-                        height: '3vh',
+                        backgroundColor: "white",
+                        borderColor: "grey",
+                        height: "3vh",
                         borderWidth: 1,
-                        width: '5vw',
+                        width: "5vw",
                       }}
                       value={state.beratEnd}
-                      onChangeText={(text) => setter('beratEnd', text)}
+                      onChangeText={(text) => setter("beratEnd", text)}
                     />
                     <Text>gr</Text>
                   </View>
@@ -647,19 +665,19 @@ let ItemList = () => {
                 <Row
                   size={50}
                   style={{
-                    backgroundColor: '#d3ece1',
-                    justifyContent: 'center',
+                    backgroundColor: Pastel.dback,
+                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ alignSelf: 'center', marginRight: '10' }}>
+                  <Text style={{ alignSelf: "center", marginRight: "10" }}>
                     Terjual:
                   </Text>
-                  <Text style={{ alignSelf: 'center', marginRight: '10' }}>
-                    {' '}
+                  <Text style={{ alignSelf: "center", marginRight: "10" }}>
+                    {" "}
                   </Text>
                   <View
                     style={{
-                      alignSelf: 'center',
+                      alignSelf: "center",
                       marginLeft: 5,
                       paddingLeft: 5,
                     }}
@@ -672,14 +690,18 @@ let ItemList = () => {
             </Grid>
           </Row>
           {/* section 3 - tabel penjualan */}
-          <Row size={65} style={{ backgroundColor: '#f2e3c6' }}>
+          <Row size={65} style={{ backgroundColor: Pastel.back }}>
             <Grid>
               {/* section 3.1 - whitespace */}
               <Col size={2}></Col>
               {/* section 3.2 - tabel */}
-              <Col size={75} style={{ backgroundColor: '#c2eec7' }}>
+              <Col size={75} style={{ backgroundColor: Pastel.back }}>
                 {/* section 3.2.1 - tabel isi */}
-                <Table show={filtered} setShowConfirm={setShowConfirm}></Table>
+                <Table
+                  show={filtered}
+                  setShowConfirm={setShowConfirm}
+                  setShowUbah={setShowUbah}
+                ></Table>
                 {/*section 3.2.2 - total harga */}
               </Col>
               {/* section 3.3 Tombol Aksi*/}

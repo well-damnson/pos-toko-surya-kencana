@@ -12,6 +12,7 @@ import {
 } from "native-base";
 import { View, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import Pastel from "../context/color";
 
 import Hook from "@/wrapper";
 
@@ -48,10 +49,10 @@ let TambahItem = () => {
     } = state;
     setToSubmit({
       nama,
-      jenis: jenis === '-' ? jenisBaru : jenis,
+      jenis: jenis === "-" ? jenisBaru : jenis,
       berat,
       kadar,
-      posisi: posisi === '-' ? posisiBaru : posisi,
+      posisi: posisi === "-" ? posisiBaru : posisi,
       beli,
       picture,
     });
@@ -85,19 +86,19 @@ let TambahItem = () => {
   }, []);
 
   let submit = async () => {
-    console.log('submit pressed');
+    console.log("submit pressed");
     let state = toSubmit;
     console.log(state);
     if (
       state.nama.length &&
-      (state.jenis !== '-' || state.jenisBaru.length) &&
+      (state.jenis !== "-" || state.jenisBaru.length) &&
       state.berat.length &&
       state.kadar.length &&
-      (state.posisi !== '-' || state.posisiBaru.length) &&
+      (state.posisi !== "-" || state.posisiBaru.length) &&
       state.beli.length
     ) {
       try {
-        let services = Client.service('item-area');
+        let services = Client.service("item-area");
         let result = await services.create(state);
         console.log(result);
         setState({ ...defaultState });
@@ -110,10 +111,29 @@ let TambahItem = () => {
   console.log(state);
   return (
     <Container>
-      <Content>
+      <Content
+        contentContainerStyle={{
+          flex: 1,
+          backgroundColor: Pastel.lback,
+          paddingLeft: 50,
+        }}
+      >
         <Grid>
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Nama:</Text>
+          <Row size={10}>
+            <Text
+              style={{
+                flex: 5,
+                alignSelf: "center",
+                fontSize: 36,
+                fontWeight: "bold",
+              }}
+            >
+              Tambah Barang
+            </Text>
+            <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
+          </Row>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Nama:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
@@ -134,8 +154,8 @@ let TambahItem = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Jenis:</Text>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Jenis:</Text>
             <View style={{ flex: 0.2 }} />
             <Form
               style={{
@@ -144,7 +164,7 @@ let TambahItem = () => {
                 height: "3vh",
                 backgroundColor: "#FFF",
                 width: "20vw",
-                paddingLeft: state.jenis === "-" ? 30 : 0,
+                marginLeft: state.jenis === "-" ? 30 : 0,
               }}
             >
               <Picker
@@ -175,6 +195,7 @@ let TambahItem = () => {
                 style={{
                   width: "10vw",
                   height: "3vh",
+                  backgroundColor: "#FFF",
                   borderWidth: "1px",
                 }}
                 value={state.jenisBaru}
@@ -184,8 +205,8 @@ let TambahItem = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Berat: </Text>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Berat: </Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
@@ -203,12 +224,14 @@ let TambahItem = () => {
                 onChangeText={(text) => setter("berat", text, true)}
               />
             </Item>
-            <Text style={{ marginHorizontal: 10 }}>gr</Text>
+            <Text style={{ marginHorizontal: 10, alignSelf: "center" }}>
+              gr
+            </Text>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Kadar:</Text>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Kadar:</Text>
             <View style={{ flex: 0.2 }} />
             <Item
               style={{
@@ -226,12 +249,12 @@ let TambahItem = () => {
                 onChangeText={(text) => setter("kadar", text, true)}
               />
             </Item>
-            <Text style={{ marginHorizontal: 10 }}>%</Text>
+            <Text style={{ marginHorizontal: 10, alignSelf: "center" }}>%</Text>
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Posisi:</Text>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Posisi:</Text>
             <View style={{ flex: 0.2 }} />
             <Form
               style={{
@@ -240,7 +263,7 @@ let TambahItem = () => {
                 height: "3vh",
                 backgroundColor: "#FFF",
                 width: "20vw",
-                paddingLeft: state.posisi === "-" ? 30 : 0,
+                marginLeft: state.posisi === "-" ? 30 : 0,
               }}
             >
               <Picker
@@ -269,6 +292,7 @@ let TambahItem = () => {
                 style={{
                   width: "10vw",
                   height: "3vh",
+                  backgroundColor: "#FFF",
                   borderWidth: "1px",
                 }}
                 value={state.posisiBaru}
@@ -278,7 +302,7 @@ let TambahItem = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          {/*<Row style={{ margin: 10 }}>
+          {/*<Row size={10}>
             <Text style={{ flex: 1.5 }}>Gambar:</Text>
             <View style={{ flex: 0.2 }} />
             <Button
@@ -298,8 +322,8 @@ let TambahItem = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>*/}
 
-          <Row style={{ margin: 10 }}>
-            <Text style={{ flex: 1.5 }}>Harga Beli:</Text>
+          <Row size={10}>
+            <Text style={{ flex: 1.5, alignSelf: "center" }}>Harga Beli:</Text>
             <View style={{ flex: 0.2 }} />
 
             <Item
@@ -321,18 +345,19 @@ let TambahItem = () => {
             <View style={{ flex: 2, flexGrow: 10, flexBasis: 25 }} />
           </Row>
 
-          <Row style={{ margin: 10 }}>
+          <Row size={10}>
             <View style={{ flex: 3 }} />
             <Button
               rounded
               light
-              style={{ backgroundColor: '#D9D9D9' }}
+              style={{ backgroundColor: "#D9D9D9" }}
               onPress={submit}
             >
               <Text>Simpan</Text>
             </Button>
             <View style={{ flex: 1, flexGrow: 10, flexBasis: 25 }} />
           </Row>
+          <Row size={30}></Row>
         </Grid>
       </Content>
     </Container>
