@@ -3,16 +3,42 @@ import { Container, Input, Content, Text, Button } from 'native-base';
 import { View, TextInput } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
+import Hook from '@/wrapper';
 let Admin = () => {
+  let { Client } = Hook.useClientState();
+
   let [state, setState] = React.useState({
     license: 'abcd-efgh-ijkl-mnop-abcd-efgh-ijkl-mnop-abcd-efgh-ijkl-mnop',
     secret: 'abcd-efgh-ijkl-mnop',
   });
+  let toSubmitDefault = {
+    name: '',
+    password: '',
+    type: 'admin',
+  };
+  let [toSubmit, setToSubmit] = React.useState({
+    ...toSubmitDefault,
+  });
+  let setter = (key, value) => {
+    setToSubmit((state) => ({ ...state, [key]: value }));
+  };
   React.useEffect(() => {
     let newState = window.checkHavingLicense();
     console.log(newState);
     setState(newState);
   }, []);
+
+  let submit = () => {
+    let submitData = async () => {
+      let Services = Client.service('register');
+      let data = await Services.create(toSubmit);
+      console.log(data);
+      if (data._id) {
+        setToSubmit(toSubmitDefault);
+      }
+    };
+    submitData();
+  };
   return (
     <Container style={{ height: '100vh' }}>
       <Content
@@ -80,6 +106,10 @@ let Admin = () => {
                   borderColor: 'grey',
                   width: '15vw',
                 }}
+                value={toSubmit.name}
+                onChangeText={(text) => {
+                  setter('name', text);
+                }}
               />
             </Row>
             <Row size={2} style={{ padding: 25 }}>
@@ -92,10 +122,14 @@ let Admin = () => {
                   borderColor: 'grey',
                   width: '15vw',
                 }}
+                value={toSubmit.password}
+                onChangeText={(text) => {
+                  setter('password', text);
+                }}
               />
             </Row>
             <Row size={2} style={{ padding: 25 }}>
-              <Button>
+              <Button onPress={submit}>
                 <Text>Simpan</Text>
               </Button>
             </Row>
