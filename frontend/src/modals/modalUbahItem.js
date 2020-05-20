@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from 'react';
 import {
   Container,
   Item,
@@ -8,23 +8,23 @@ import {
   Button,
   Form,
   Picker,
-} from "native-base";
-import { View, TextInput } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
+} from 'native-base';
+import { View, TextInput } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
-import Hook from "@/wrapper";
+import Hook from '@/wrapper';
 
-let ModalUbahItem = ({ submit, close }) => {
+let ModalUbahItem = ({ submit, close, data }) => {
   let defaultState = {
-    nama: "",
-    jenis: "-",
-    jenisBaru: "",
-    berat: "",
-    kadar: "",
-    posisi: "-",
-    posisiBaru: "",
-    jual: "",
-    beli: "",
+    nama: '',
+    jenis: '-',
+    jenisBaru: '',
+    berat: '',
+    kadar: '',
+    posisi: '-',
+    posisiBaru: '',
+    jual: '',
+    beli: '',
   };
 
   let [state, setState] = useState({
@@ -47,10 +47,10 @@ let ModalUbahItem = ({ submit, close }) => {
     } = state;
     setToSubmit({
       nama,
-      jenis: jenis === "-" ? jenisBaru : jenis,
+      jenis: jenis === '-' ? jenisBaru : jenis,
       berat,
       kadar,
-      posisi: posisi === "-" ? posisiBaru : posisi,
+      posisi: posisi === '-' ? posisiBaru : posisi,
       beli,
       jual,
     });
@@ -63,7 +63,7 @@ let ModalUbahItem = ({ submit, close }) => {
 
   let setter = (key, value, numberOnly = false) => {
     if (numberOnly) {
-      value = value.replace(/[^\d.-]/g, "");
+      value = value.replace(/[^\d.-]/g, '');
     }
     setState((state) => ({ ...state, [key]: value }));
   };
@@ -71,7 +71,7 @@ let ModalUbahItem = ({ submit, close }) => {
     let jenisList = {};
     let posisiList = {};
     let dataFetch = async () => {
-      let itemAreaServices = Client.service("item-area");
+      let itemAreaServices = Client.service('item-area');
       let data = await itemAreaServices.find();
       data.forEach(({ posisi, jenis }) => {
         jenisList[jenis] = true;
@@ -82,48 +82,50 @@ let ModalUbahItem = ({ submit, close }) => {
     };
     dataFetch();
   }, []);
-
-  console.log(state);
+  useEffect(() => {
+    if (data) setState(data);
+  }, [data]);
+  // console.log(state);
 
   return (
     <Container>
       <Content>
         <Grid>
-          <Row style={{ margin: 10, justifyContent: "center" }}>
+          <Row style={{ margin: 10, justifyContent: 'center' }}>
             <Text style={{ fontSize: 24 }}>Ubah Data Item</Text>
           </Row>
           <Row style={{ margin: 10, paddingHorizontal: 10 }}>
-            <Text style={{ alignSelf: "center", flex: 1.5 }}>Nama:</Text>
+            <Text style={{ alignSelf: 'center', flex: 1.5 }}>Nama:</Text>
             <View style={{ flex: 0.05 }} />
             <Item
               style={{
                 flex: 2,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
               }}
               regular
             >
               <Input
                 value={state.nama}
-                onChangeText={(text) => setter("nama", text)}
-                style={{ height: "3vh" }}
+                onChangeText={(text) => setter('nama', text)}
+                style={{ height: '3vh' }}
               />
             </Item>
           </Row>
 
           <Row style={{ margin: 10, paddingHorizontal: 10 }}>
-            <Text style={{ alignSelf: "center", flex: 1.5 }}>Jenis:</Text>
+            <Text style={{ alignSelf: 'center', flex: 1.5 }}>Jenis:</Text>
             <View style={{ flex: 0.05 }} />
             <Form
               style={{
                 flex: 2,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
-                paddingLeft: state.jenis === "-" ? 30 : 0,
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
+                paddingLeft: state.jenis === '-' ? 30 : 0,
               }}
             >
               <Picker
@@ -134,7 +136,7 @@ let ModalUbahItem = ({ submit, close }) => {
                 style={{ width: undefined }}
                 selectedValue={state.jenis}
                 onValueChange={(value) => {
-                  setter("jenis", value);
+                  setter('jenis', value);
                 }}
               >
                 <Picker.Item label="Buat Baru" value="-" />
@@ -145,19 +147,19 @@ let ModalUbahItem = ({ submit, close }) => {
             </Form>
             <div
               style={{
-                alignSelf: "center",
-                display: state.jenis === "-" ? "block" : "none",
+                alignSelf: 'center',
+                display: state.jenis === '-' ? 'block' : 'none',
                 marginLeft: 20,
               }}
             >
               <TextInput
                 style={{
-                  width: "10vw",
-                  height: "3vh",
-                  borderWidth: "1px",
+                  width: '10vw',
+                  height: '3vh',
+                  borderWidth: '1px',
                 }}
                 value={state.jenisBaru}
-                onChangeText={(text) => setter("jenisBaru", text)}
+                onChangeText={(text) => setter('jenisBaru', text)}
               />
             </div>
           </Row>
@@ -168,17 +170,17 @@ let ModalUbahItem = ({ submit, close }) => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
               }}
               regular
             >
               <Input
-                value={state.berat}
-                onChangeText={(text) => setter("berat", text)}
-                style={{ height: "3vh" }}
+                value={'' + state.berat}
+                onChangeText={(text) => setter('berat', text)}
+                style={{ height: '3vh' }}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>gr</Text>
@@ -190,17 +192,17 @@ let ModalUbahItem = ({ submit, close }) => {
             <Item
               style={{
                 flex: 1.5,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
               }}
               regular
             >
               <Input
-                value={state.kadar}
-                onChangeText={(text) => setter("kadar", text)}
-                style={{ height: "3vh" }}
+                value={'' + state.kadar}
+                onChangeText={(text) => setter('kadar', text)}
+                style={{ height: '3vh' }}
               />
             </Item>
             <Text style={{ marginHorizontal: 10 }}>%</Text>
@@ -212,11 +214,11 @@ let ModalUbahItem = ({ submit, close }) => {
             <Form
               style={{
                 flex: 2,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
-                paddingLeft: state.posisi === "-" ? 30 : 0,
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
+                paddingLeft: state.posisi === '-' ? 30 : 0,
               }}
             >
               <Picker
@@ -226,7 +228,7 @@ let ModalUbahItem = ({ submit, close }) => {
                 // placeholderIconColor="#007aff"
                 style={{ width: undefined }}
                 selectedValue={state.posisi}
-                onValueChange={(value) => setter("posisi", value)}
+                onValueChange={(value) => setter('posisi', value)}
               >
                 <Picker.Item label="Buat Baru" value="-" />
                 {posisiList.map((value, index) => (
@@ -236,19 +238,19 @@ let ModalUbahItem = ({ submit, close }) => {
             </Form>
             <div
               style={{
-                alignSelf: "center",
-                display: state.posisi === "-" ? "block" : "none",
+                alignSelf: 'center',
+                display: state.posisi === '-' ? 'block' : 'none',
                 marginLeft: 20,
               }}
             >
               <TextInput
                 style={{
-                  width: "10vw",
-                  height: "3vh",
-                  borderWidth: "1px",
+                  width: '10vw',
+                  height: '3vh',
+                  borderWidth: '1px',
                 }}
                 value={state.posisiBaru}
-                onChangeText={(text) => setter("posisiBaru", text)}
+                onChangeText={(text) => setter('posisiBaru', text)}
               />
             </div>
           </Row>
@@ -280,17 +282,17 @@ let ModalUbahItem = ({ submit, close }) => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
               }}
               regular
             >
               <Input
-                style={{ height: "3vh" }}
-                value={state.beli}
-                onChangeText={(text) => setter("beli", text)}
+                style={{ height: '3vh' }}
+                value={'' + state.beli}
+                onChangeText={(text) => setter('beli', text)}
               />
             </Item>
           </Row>
@@ -302,17 +304,17 @@ let ModalUbahItem = ({ submit, close }) => {
             <Item
               style={{
                 flex: 2,
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "20vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '20vw',
               }}
               regular
             >
               <Input
-                style={{ height: "3vh" }}
-                value={state.jual}
-                onChangeText={(text) => setter("jual", text)}
+                style={{ height: '3vh' }}
+                value={'' + state.jual}
+                onChangeText={(text) => setter('jual', text)}
               />
             </Item>
           </Row>
@@ -322,10 +324,9 @@ let ModalUbahItem = ({ submit, close }) => {
             <Button
               rounded
               light
-              style={{ backgroundColor: "#D9D9D9" }}
+              style={{ backgroundColor: '#D9D9D9' }}
               onPress={() => {
                 submit(toSubmit);
-                setState(defaultState);
               }}
             >
               <Text>Simpan</Text>
