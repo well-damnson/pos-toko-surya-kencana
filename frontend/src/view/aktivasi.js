@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Container,
   Input,
@@ -6,17 +6,18 @@ import {
   Text,
   StyleProvider,
   Button,
-} from 'native-base';
-import { View } from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import getTheme from '../native-base-theme/components';
-import custom from '../native-base-theme/variables/custom';
+} from "native-base";
+import { View } from "react-native";
+import { Col, Row, Grid } from "react-native-easy-grid";
+import getTheme from "../native-base-theme/components";
+import custom from "../native-base-theme/variables/custom";
+import Pastel from "../context/color";
 
 export default class ContentExample extends Component {
   state = {
-    license: '',
-    secret: '',
-    activation: 'XXXX-XXXX-XXXX-XXXX',
+    license: "",
+    secret: "",
+    activation: "XXXX-XXXX-XXXX-XXXX",
   };
   async componentDidMount() {
     // let activated = await window.checkLicense();
@@ -40,59 +41,59 @@ export default class ContentExample extends Component {
       })
       .then((res) => {
         if (res) {
-          console.log('Activation Success');
+          console.log("Activation Success");
         }
       });
   };
   render() {
     return (
       <StyleProvider style={getTheme(custom)}>
-        <Container style={{ height: '100vh' }}>
+        <Container style={{ height: "100vh" }}>
           <Content
             contentContainerStyle={{
-              justifyContent: 'center',
+              justifyContent: "center",
               flex: 1,
             }}
-            style={{ alignSelf: 'center' }}
+            style={{ alignSelf: "center" }}
           >
-            <Grid style={{ width: '60vw' }}>
+            <Grid style={{ width: "60vw" }}>
               <Row size={25}></Row>
               <Row
                 Row
                 size={50}
                 style={{
-                  backgroundColor: 'green',
-                  justifyContent: 'center',
+                  backgroundColor: Pastel.lback,
+                  justifyContent: "center",
                   borderWidth: 3,
                   borderRadius: 20,
                 }}
               >
                 <View
                   style={{
-                    flexDirection: 'column',
+                    flexDirection: "column",
                     flex: 1,
                     padding: 20,
                   }}
                 >
                   <View
                     style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
+                      flexDirection: "row",
+                      justifyContent: "center",
                       flex: 4,
                     }}
                   >
                     <Text
                       style={{
                         fontSize: 48,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                       }}
                     >
-                      Activation:{' '}
+                      Activation:{" "}
                     </Text>
                     <Text
                       style={{
                         fontSize: 48,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                       }}
                     >
                       {this.state.activation}
@@ -101,8 +102,8 @@ export default class ContentExample extends Component {
                   <View style={{ flex: 1 }} />
                   <View
                     style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
+                      flexDirection: "row",
+                      justifyContent: "center",
                       flex: 2,
                       paddingHorizontal: 50,
                     }}
@@ -113,7 +114,7 @@ export default class ContentExample extends Component {
                     <View>
                       <Input
                         onChangeText={(text) => {
-                          this.handleText('license', text);
+                          this.handleText("license", text);
                         }}
                         style={{
                           fontSize: 48,
@@ -126,8 +127,8 @@ export default class ContentExample extends Component {
                   <View style={{ flex: 1 }} />
                   <View
                     style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
+                      flexDirection: "row",
+                      justifyContent: "center",
                       flex: 2,
                       paddingHorizontal: 50,
                     }}
@@ -139,13 +140,13 @@ export default class ContentExample extends Component {
                           paddingHorizontal: 18,
                         }}
                       >
-                        Secret:{' '}
+                        Secret:{" "}
                       </Text>
                     </View>
                     <View>
                       <Input
                         onChangeText={(text) => {
-                          this.handleText('secret', text);
+                          this.handleText("secret", text);
                         }}
                         style={{
                           fontSize: 48,
@@ -158,8 +159,8 @@ export default class ContentExample extends Component {
                   <View style={{ flex: 2 }} />
                   <View
                     style={{
-                      flexDirection: 'row',
-                      justifyContent: 'center',
+                      flexDirection: "row",
+                      justifyContent: "center",
                       flex: 1,
                     }}
                   >
@@ -168,7 +169,7 @@ export default class ContentExample extends Component {
                       light
                       style={{ borderRadius: 10 }}
                       onClick={() => {
-                        console.log('click');
+                        console.log("click");
                         window.Activate({
                           license: this.state.license,
                           secret: this.state.secret,
