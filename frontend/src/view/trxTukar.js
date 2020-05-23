@@ -468,11 +468,15 @@ let Tukartambah = () => {
     console.log(transactionData);
     submit();
   };
+  let memberBarcodeSubmit = (barcode) => {
+    setter('memberBarcode', barcode);
+    setMemberShow(false);
+  };
   return (
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={searchShow}
           onBackdropPress={() => setSearchShow(false)}
         >
@@ -484,7 +488,7 @@ let Tukartambah = () => {
           ></SearchItemModal>
         </Modal>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={modalShow}
           onBackdropPress={() => setModalShow(false)}
         >
@@ -500,7 +504,7 @@ let Tukartambah = () => {
           <TambahItemModal submit={addDataBeli}></TambahItemModal>
         </Modal>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={removeItemShow}
           onBackdropPress={() => setRemoveItemShow(false)}
         >
@@ -510,41 +514,41 @@ let Tukartambah = () => {
           ></ConfirmModal>
         </Modal>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={memberShow}
           onBackdropPress={() => setMemberShow(false)}
         >
-          <SearchMemberModal></SearchMemberModal>
+          <SearchMemberModal submit={memberBarcodeSubmit}></SearchMemberModal>
         </Modal>
         <Grid>
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: "#d3ece1", justifyContent: "center" }}
+            style={{ backgroundColor: '#d3ece1', justifyContent: 'center' }}
           >
-            <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
+            <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
             <Item
               style={{
-                alignSelf: "center",
-                height: "3vh",
-                backgroundColor: "#FFF",
-                width: "15vw",
+                alignSelf: 'center',
+                height: '3vh',
+                backgroundColor: '#FFF',
+                width: '15vw',
               }}
               regular
             >
               <Input
-                style={{ height: "3vh" }}
+                style={{ height: '3vh' }}
                 value={state.memberBarcode}
                 onChangeText={(text) => {
-                  setter("memberBarcode", text);
+                  setter('memberBarcode', text);
                 }}
               />
             </Item>
             <Button
               light
               style={{
-                alignSelf: "center",
-                marginLeft: "1vw",
+                alignSelf: 'center',
+                marginLeft: '1vw',
                 borderWidth: 1,
                 borderRadius: 15,
               }}
@@ -558,12 +562,12 @@ let Tukartambah = () => {
           {/* section 2 - label penanda jual */}
           <Row
             size={8}
-            style={{ backgroundColor: Pastel.lback, justifyContent: "center" }}
+            style={{ backgroundColor: Pastel.lback, justifyContent: 'center' }}
           >
             <Text
               style={{
-                alignSelf: "center",
-                marginLeft: "5vw",
+                alignSelf: 'center',
+                marginLeft: '5vw',
                 fontSize: 24,
                 padding: 5,
               }}
@@ -590,13 +594,13 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: "center",
-                    marginLeft: "1vw",
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: "10vw",
-                    justifyContent: "center",
+                    width: '10vw',
+                    justifyContent: 'center',
                   }}
                   onClick={() => {
                     setSearchShow(true);
@@ -610,12 +614,12 @@ let Tukartambah = () => {
           </Row>
           <Row
             size={8}
-            style={{ backgroundColor: Pastel.lback, justifyContent: "center" }}
+            style={{ backgroundColor: Pastel.lback, justifyContent: 'center' }}
           >
             <Text
               style={{
-                alignSelf: "center",
-                marginLeft: "5vw",
+                alignSelf: 'center',
+                marginLeft: '5vw',
                 fontSize: 24,
                 padding: 5,
               }}
@@ -638,13 +642,13 @@ let Tukartambah = () => {
                 <Button
                   light
                   style={{
-                    alignSelf: "center",
-                    marginLeft: "1vw",
+                    alignSelf: 'center',
+                    marginLeft: '1vw',
                     borderWidth: 1,
                     borderRadius: 15,
                     marginTop: 50,
-                    width: "10vw",
-                    justifyContent: "center",
+                    width: '10vw',
+                    justifyContent: 'center',
                   }}
                   onPress={() => setAddItemShow(true)}
                 >
@@ -660,28 +664,28 @@ let Tukartambah = () => {
             <View
               style={{
                 flex: 75,
-                flexDirection: "row",
+                flexDirection: 'row',
                 paddingLeft: 50,
                 backgroundColor: Pastel.back,
               }}
             >
               <Text
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                 }}
               >
                 Metode Pembayaran
               </Text>
               <View
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                   marginLeft: 5,
                   paddingLeft: 5,
-                  display: "flex",
-                  flexDirection: "column",
-                  flexWrap: "wrap",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flexWrap: 'wrap',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
                   height: 80,
                 }}
               >
@@ -689,25 +693,25 @@ let Tukartambah = () => {
               </View>
               <View
                 style={{
-                  justifyContent: "center",
+                  justifyContent: 'center',
                   marginLeft: 150,
                 }}
               >
                 <TextInput
                   placeholder="Nomor Referensi"
                   style={{
-                    textAlign: "center",
-                    alignSelf: "center",
+                    textAlign: 'center',
+                    alignSelf: 'center',
                     margin: 5,
-                    backgroundColor: "white",
-                    borderColor: "grey",
-                    height: "3vh",
+                    backgroundColor: 'white',
+                    borderColor: 'grey',
+                    height: '3vh',
                     borderWidth: 1,
-                    width: "15vw",
+                    width: '15vw',
                   }}
                   value={state.noRef}
                   onChangeText={(text) => {
-                    setter("noRef", text);
+                    setter('noRef', text);
                   }}
                 />
               </View>
@@ -715,19 +719,19 @@ let Tukartambah = () => {
             <View
               style={{
                 flex: 20,
-                flexDirection: "row",
-                justifyContent: "center",
+                flexDirection: 'row',
+                justifyContent: 'center',
                 backgroundColor: Pastel.back,
               }}
             >
               <Button
                 light
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                   borderWidth: 1,
                   borderRadius: 15,
-                  width: "10vw",
-                  justifyContent: "center",
+                  width: '10vw',
+                  justifyContent: 'center',
                 }}
                 onPress={submitTukar}
               >

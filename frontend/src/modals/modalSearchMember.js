@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useEffect } from 'react';
 import {
   Container,
   Content,
@@ -7,19 +7,19 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import styled from "styled-components";
+} from 'native-base';
+import styled from 'styled-components';
 
-import Pastel from "../context/color";
+import Pastel from '../context/color';
 
-import { Text, View, TextInput } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
+import { Text, View, TextInput } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
 
-import Hook from "@/wrapper";
-import { useTable, usePagination } from "react-table";
-import ConfirmModal from "../modals/modalConfirm";
-import Modal from "modal-enhanced-react-native-web";
+import Hook from '@/wrapper';
+import { useTable, usePagination } from 'react-table';
+import ConfirmModal from '../modals/modalConfirm';
+import Modal from 'modal-enhanced-react-native-web';
 // TODO: belajar cara make styled ini
 const Styles = styled.div`
   padding: 1rem;
@@ -54,45 +54,46 @@ const Styles = styled.div`
   }
 `;
 
-function Table({ dat, setShowConfirm }) {
-  console.log(dat);
+function Table({ dat, submit }) {
+  console.log('submit', submit);
+
   const data = React.useMemo(() => [...dat], [dat]);
   const columns = React.useMemo(
     () => [
       {
-        Header: "No",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Nama",
-        accessor: "nama",
+        Header: 'Nama',
+        accessor: 'nama',
       },
       {
-        Header: "No Hp.",
-        accessor: "hp",
+        Header: 'No Hp.',
+        accessor: 'hp',
       },
       {
-        Header: "Tanggal Lahir",
-        accessor: "lahir",
+        Header: 'Tanggal Lahir',
+        accessor: 'lahir',
         Cell: (props) => {
           console.log(props);
-          return props.row.values.lahir.join("-");
+          return props.row.values.lahir.join('-');
         },
       },
       {
-        Header: "Alamat",
-        accessor: "alamat",
+        Header: 'Alamat',
+        accessor: 'alamat',
       },
       {
-        Header: "Poin",
-        accessor: "poin",
+        Header: 'Poin',
+        accessor: 'poin',
       },
       {
-        Header: "Tools",
-        accessor: "col6",
+        Header: 'Tools',
+        accessor: 'col6',
       },
     ],
-    []
+    [],
   );
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -119,14 +120,14 @@ function Table({ dat, setShowConfirm }) {
       data,
       // initialState: { pageIndex: 2 },
     },
-    usePagination
+    usePagination,
   );
 
   //TODO: apus style dalam tabel dan ganti make styled
 
   return (
     <>
-      <table {...getTableProps()} style={{ border: "solid 1px black" }}>
+      <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -134,13 +135,13 @@ function Table({ dat, setShowConfirm }) {
                 <th
                   {...column.getHeaderProps()}
                   style={{
-                    borderBottom: "solid 1px black",
+                    borderBottom: 'solid 1px black',
                     background: Pastel.dcell,
-                    color: "black",
-                    fontWeight: "bold",
+                    color: 'black',
+                    fontWeight: 'bold',
                   }}
                 >
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
@@ -159,8 +160,8 @@ function Table({ dat, setShowConfirm }) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
+                          padding: '10px',
+                          border: 'solid 1px gray',
                           background: Pastel.cell,
                         }}
                       >
@@ -172,13 +173,19 @@ function Table({ dat, setShowConfirm }) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
+                          padding: '10px',
+                          border: 'solid 1px gray',
                           background: Pastel.cell,
-                          textAlign: "center",
+                          textAlign: 'center',
                         }}
                       >
-                        <button onClick={() => {}}>Pilih</button>
+                        <button
+                          onClick={() => {
+                            submit(dat[i + pageSize * pageIndex].barcode);
+                          }}
+                        >
+                          Pilih
+                        </button>
                       </td>
                     );
                   else
@@ -186,12 +193,12 @@ function Table({ dat, setShowConfirm }) {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          padding: "10px",
-                          border: "solid 1px gray",
+                          padding: '10px',
+                          border: 'solid 1px gray',
                           background: Pastel.cell,
                         }}
                       >
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </td>
                     );
                   return ret;
@@ -210,25 +217,25 @@ function Table({ dat, setShowConfirm }) {
 
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
+          {'<<'}
+        </button>{' '}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
+          {'<'}
+        </button>{' '}
         <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
+          {'>'}
+        </button>{' '}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
+          {'>>'}
+        </button>{' '}
         <span>
-          Page{" "}
+          Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
+          </strong>{' '}
         </span>
         <span>
-          | Go to page:{" "}
+          | Go to page:{' '}
           <input
             type="number"
             defaultValue={pageIndex + 1}
@@ -236,9 +243,9 @@ function Table({ dat, setShowConfirm }) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               gotoPage(page);
             }}
-            style={{ width: "100px" }}
+            style={{ width: '100px' }}
           />
-        </span>{" "}
+        </span>{' '}
         <select
           value={pageSize}
           onChange={(e) => {
@@ -256,7 +263,7 @@ function Table({ dat, setShowConfirm }) {
   );
 }
 
-let ModalSearchMember = () => {
+let ModalSearchMember = ({ submit }) => {
   let { Client } = Hook.useClientState();
   let [state, setState] = useState([]);
   let [confirmShow, setConfirmShow] = useState(false);
@@ -270,7 +277,7 @@ let ModalSearchMember = () => {
   let removeData = (index) => {
     let removeFunction = async () => {
       try {
-        let MemberAreaServices = Client.service("member-area");
+        let MemberAreaServices = Client.service('member-area');
         let removed = await MemberAreaServices.remove(filtered[index]._id);
         console.log(removed);
         if (removed._id) {
@@ -279,7 +286,7 @@ let ModalSearchMember = () => {
             let element = state[index];
             if (element._id !== removed._id) newState.push({ ...element });
           }
-          console.log("NewState =", newState);
+          console.log('NewState =', newState);
           setState(newState);
         }
       } catch (e) {}
@@ -289,19 +296,19 @@ let ModalSearchMember = () => {
 
   let [filtered, setFiltered] = useState([]);
   let [query, setQuery] = useState({
-    barcode: "",
-    nama: "",
-    hp: "",
-    dd: "",
-    mm: "",
-    yyyy: "",
+    barcode: '',
+    nama: '',
+    hp: '',
+    dd: '',
+    mm: '',
+    yyyy: '',
   });
   let querySetter = (key, value) => {
     setQuery((old) => ({ ...old, [key]: value }));
   };
   useEffect(() => {
     let fetchFunction = async () => {
-      let MemberAreaServices = Client.service("member-area");
+      let MemberAreaServices = Client.service('member-area');
       let data = await MemberAreaServices.find();
       console.log(data);
       setState(data);
@@ -311,7 +318,7 @@ let ModalSearchMember = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Query Changed");
+    console.log('Query Changed');
     let filtered = [];
     let { barcode, nama, hp, dd, mm, yyyy } = query;
     for (let index = 0; index < state.length; index++) {
@@ -340,13 +347,13 @@ let ModalSearchMember = () => {
     setFiltered(filtered);
   }, [state, query]);
 
-  console.log("filter", filtered);
+  console.log('filter', filtered);
 
   return (
     <Container>
       <Content contentContainerStyle={{ flex: 1 }}>
         <Modal
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: 'center' }}
           isVisible={confirmShow}
           onBackdropPress={() => setConfirmShow(false)}
         >
@@ -359,30 +366,30 @@ let ModalSearchMember = () => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: Pastel.dback, justifyContent: "center" }}
+            style={{ backgroundColor: Pastel.dback, justifyContent: 'center' }}
           >
             <Grid>
               <Col size={50}>
                 <Row
                   style={{
                     backgroundColor: Pastel.dback,
-                    justifyContent: "center",
+                    justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Barcode: </Text>
+                  <Text style={{ alignSelf: 'center' }}>Barcode: </Text>
                   <Item
                     style={{
-                      alignSelf: "center",
-                      height: "3vh",
-                      backgroundColor: "#FFF",
-                      width: "15vw",
+                      alignSelf: 'center',
+                      height: '3vh',
+                      backgroundColor: '#FFF',
+                      width: '15vw',
                     }}
                     regular
                   >
                     <Input
-                      style={{ height: "3vh" }}
+                      style={{ height: '3vh' }}
                       onChangeText={(text) => {
-                        querySetter("barcode", text);
+                        querySetter('barcode', text);
                       }}
                       value={query.barcode}
                     />
@@ -391,25 +398,25 @@ let ModalSearchMember = () => {
                 <Row
                   style={{
                     backgroundColor: Pastel.dback,
-                    justifyContent: "center",
+                    justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ alignSelf: "center", marginRight: 10 }}>
-                    Nama:{" "}
+                  <Text style={{ alignSelf: 'center', marginRight: 10 }}>
+                    Nama:{' '}
                   </Text>
                   <Item
                     style={{
-                      alignSelf: "center",
-                      height: "3vh",
-                      backgroundColor: "#FFF",
-                      width: "15vw",
+                      alignSelf: 'center',
+                      height: '3vh',
+                      backgroundColor: '#FFF',
+                      width: '15vw',
                     }}
                     regular
                   >
                     <Input
-                      style={{ height: "3vh" }}
+                      style={{ height: '3vh' }}
                       onChangeText={(text) => {
-                        querySetter("nama", text);
+                        querySetter('nama', text);
                       }}
                       value={query.nama}
                     />
@@ -418,58 +425,58 @@ let ModalSearchMember = () => {
                 <Row
                   style={{
                     backgroundColor: Pastel.dback,
-                    justifyContent: "center",
+                    justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ alignSelf: "center" }}>Tgl Lahir: </Text>
-                  <View style={{ alignSelf: "center", flexDirection: "row" }}>
+                  <Text style={{ alignSelf: 'center' }}>Tgl Lahir: </Text>
+                  <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
                     <TextInput
                       placeholder="DD"
                       style={{
-                        textAlign: "center",
+                        textAlign: 'center',
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: "white",
-                        borderColor: "grey",
-                        height: "3vh",
+                        backgroundColor: 'white',
+                        borderColor: 'grey',
+                        height: '3vh',
                         borderWidth: 1,
-                        width: "5vw",
+                        width: '5vw',
                       }}
                       onChangeText={(text) => {
-                        querySetter("dd", text);
+                        querySetter('dd', text);
                       }}
                       value={query.dd}
                     />
                     <TextInput
                       placeholder="MM"
                       style={{
-                        textAlign: "center",
+                        textAlign: 'center',
                         borderRadius: 2,
                         marginRight: 5,
-                        backgroundColor: "white",
-                        borderColor: "grey",
-                        height: "3vh",
+                        backgroundColor: 'white',
+                        borderColor: 'grey',
+                        height: '3vh',
                         borderWidth: 1,
-                        width: "5vw",
+                        width: '5vw',
                       }}
                       onChangeText={(text) => {
-                        querySetter("mm", text);
+                        querySetter('mm', text);
                       }}
                       value={query.mm}
                     />
                     <TextInput
                       placeholder="YYYY"
                       style={{
-                        textAlign: "center",
+                        textAlign: 'center',
                         borderRadius: 2,
-                        backgroundColor: "white",
-                        borderColor: "grey",
-                        height: "3vh",
+                        backgroundColor: 'white',
+                        borderColor: 'grey',
+                        height: '3vh',
                         borderWidth: 1,
-                        width: "5vw",
+                        width: '5vw',
                       }}
                       onChangeText={(text) => {
-                        querySetter("yyyy", text);
+                        querySetter('yyyy', text);
                       }}
                       value={query.yyyy}
                     />
@@ -492,9 +499,9 @@ let ModalSearchMember = () => {
               >
                 {/* section 3.2.1 - tabel isi */}
                 {/* <Styles>
-                  <Table dat={filtered}></Table>
+                  <Table dat={filtered} ></Table>
                 </Styles> */}
-                <Table dat={filtered} setShowConfirm={setShowConfirm}></Table>
+                <Table dat={filtered} submit={submit} setShowConfirm={setShowConfirm}></Table>
               </Col>
               {/* section 3.3 Tombol Aksi*/}
               <Col size={2}></Col>

@@ -331,6 +331,10 @@ let Jual = () => {
     console.log(transactionData);
     submit();
   };
+  let memberBarcodeSubmit = (barcode) => {
+    setter('memberBarcode', barcode);
+    setMemberShow(false);
+  };
   return (
     <View style={{ flex: 1, height: "100vh" }}>
       <Modal
@@ -360,7 +364,7 @@ let Jual = () => {
         isVisible={memberShow}
         onBackdropPress={() => setMemberShow(false)}
       >
-        <SearchMemberModal></SearchMemberModal>
+        <SearchMemberModal submit={memberBarcodeSubmit}></SearchMemberModal>
       </Modal>
       <Grid>
         {/* section 1 - Header */}

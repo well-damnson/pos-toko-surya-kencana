@@ -1,5 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { Component, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   Container,
   Content,
@@ -9,20 +9,20 @@ import {
   Button,
   Input,
   Item,
-} from "native-base";
-import { Text, View, TextInput } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { currency } from "../utils";
-import { useTable } from "react-table";
-import Pastel from "../context/color";
+} from 'native-base';
+import { Text, View, TextInput } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
+import { currency } from '../utils';
+import { useTable } from 'react-table';
+import Pastel from '../context/color';
 
-import TambahItemModal from "../modals/modalTambahItem";
-import ConfirmModal from "../modals/modalConfirm";
-import SearchMemberModal from "../modals/modalSearchMember";
+import TambahItemModal from '../modals/modalTambahItem';
+import ConfirmModal from '../modals/modalConfirm';
+import SearchMemberModal from '../modals/modalSearchMember';
 
-import Modal from "modal-enhanced-react-native-web";
+import Modal from 'modal-enhanced-react-native-web';
 
-import Hook from "@/wrapper";
+import Hook from '@/wrapper';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -69,29 +69,29 @@ function Table({ dat, removeData }) {
   const columns = React.useMemo(
     () => [
       {
-        Header: "No.",
-        accessor: "col1", // accessor is the "key" in the data
+        Header: 'No.',
+        accessor: 'col1', // accessor is the "key" in the data
       },
       {
-        Header: "Kode Barang",
-        accessor: "nama",
+        Header: 'Kode Barang',
+        accessor: 'nama',
       },
       {
-        Header: "Berat (gr)",
-        accessor: "berat",
+        Header: 'Berat (gr)',
+        accessor: 'berat',
       },
-      { Header: "Kadar (%)", accessor: "kadar" },
+      { Header: 'Kadar (%)', accessor: 'kadar' },
       {
-        Header: "Harga",
-        accessor: "beli",
+        Header: 'Harga',
+        accessor: 'beli',
         Footer: (info) => {
           const total = React.useMemo(
             () =>
               info.rows.reduce(
                 (sum, row) => parseInt(row.values.beli || 0) + sum,
-                0
+                0,
               ),
-            [info.rows]
+            [info.rows],
           );
           return <>Total: {currency(total)}</>;
         },
@@ -100,9 +100,9 @@ function Table({ dat, removeData }) {
           return currency(props.row.values.beli);
         },
       },
-      { Header: "Tools", accessor: "col6" },
+      { Header: 'Tools', accessor: 'col6' },
     ],
-    []
+    [],
   );
   const {
     getTableProps,
@@ -114,7 +114,7 @@ function Table({ dat, removeData }) {
   } = useTable({ columns, data });
 
   return (
-    <table {...getTableProps()} style={{ border: "solid 1px black" }}>
+    <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -123,11 +123,11 @@ function Table({ dat, removeData }) {
                 {...column.getHeaderProps()}
                 style={{
                   background: Pastel.dcell,
-                  color: "black",
-                  fontWeight: "bold",
+                  color: 'black',
+                  fontWeight: 'bold',
                 }}
               >
-                {column.render("Header")}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
@@ -143,8 +143,8 @@ function Table({ dat, removeData }) {
                   <td
                     key={index}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
+                      padding: '10px',
+                      border: 'solid 1px gray',
                       background: Pastel.cell,
                     }}
                   >
@@ -156,20 +156,20 @@ function Table({ dat, removeData }) {
                     key={index + 1}
                     {...cell.getCellProps()}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
+                      padding: '10px',
+                      border: 'solid 1px gray',
                       background: Pastel.cell,
                     }}
                   >
-                    {cell.render("Cell")}
+                    {cell.render('Cell')}
                   </td>
                 );
                 let remove = (
                   <td
                     key={index + 2}
                     style={{
-                      padding: "10px",
-                      border: "solid 1px gray",
+                      padding: '10px',
+                      border: 'solid 1px gray',
                       background: Pastel.cell,
                     }}
                   >
@@ -192,7 +192,7 @@ function Table({ dat, removeData }) {
         {footerGroups.map((group) => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map((column) => (
-              <td {...column.getFooterProps()}>{column.render("Footer")}</td>
+              <td {...column.getFooterProps()}>{column.render('Footer')}</td>
             ))}
           </tr>
         ))}
@@ -204,9 +204,9 @@ function Table({ dat, removeData }) {
 let Beli = () => {
   let { Client } = Hook.useClientState();
   let defaultState = {
-    paymentMethod: "Tunai",
-    noRef: "",
-    memberBarcode: "",
+    paymentMethod: 'Tunai',
+    noRef: '',
+    memberBarcode: '',
   };
   let defaultBeli = [];
   let [state, setState] = useState({ ...defaultState });
@@ -226,28 +226,28 @@ let Beli = () => {
       total += parseInt(harga);
     }
 
-    setTransactionData({ ...state, beli, total, type: "beli" });
+    setTransactionData({ ...state, beli, total, type: 'beli' });
   }, [state, beli]);
   console.log(transactionData);
 
   let listRadio = [
-    "Tunai",
-    "BCA",
-    "Mandiri",
-    "BNI",
-    "BRI",
-    "Visa",
-    "Master",
-    "Go-Pay",
-    "OVO",
+    'Tunai',
+    'BCA',
+    'Mandiri',
+    'BNI',
+    'BRI',
+    'Visa',
+    'Master',
+    'Go-Pay',
+    'OVO',
   ];
 
   let RadioButton = (item, index) => (
     <View
       key={index}
       style={{
-        flexDirection: "row",
-        alignSelf: "flex-start",
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
       }}
     >
       <Radio
@@ -274,14 +274,14 @@ let Beli = () => {
   };
 
   let addData = (state) => {
-    console.log("submit pressed");
+    console.log('submit pressed');
     console.log(state);
     if (
       state.nama.length &&
-      (state.jenis !== "-" || state.jenisBaru.length) &&
+      (state.jenis !== '-' || state.jenisBaru.length) &&
       state.berat.length &&
       state.kadar.length &&
-      (state.posisi !== "-" || state.posisiBaru.length) &&
+      (state.posisi !== '-' || state.posisiBaru.length) &&
       state.beli.length
     ) {
       setBeli((beli) => [...beli, state]);
@@ -291,8 +291,8 @@ let Beli = () => {
 
   let submit = async () => {
     if (transactionData.beli.length > 0 && transactionData.total > 0) {
-      console.log("toDatabase");
-      let service = Client.service("transaction-area");
+      console.log('toDatabase');
+      let service = Client.service('transaction-area');
       let result = await service.create(transactionData);
       console.log(result);
       if (result._id) {
@@ -302,8 +302,13 @@ let Beli = () => {
     }
   };
 
+  let memberBarcodeSubmit = (barcode) => {
+    setter('memberBarcode', barcode);
+    setMemberShow(false);
+  };
+
   return (
-    <View style={{ flex: 1, height: "100vh" }}>
+    <View style={{ flex: 1, height: '100vh' }}>
       <Modal
         isVisible={addItemShow}
         onBackdropPress={() => setAddItemShow(false)}
@@ -311,7 +316,7 @@ let Beli = () => {
         <TambahItemModal submit={addData}></TambahItemModal>
       </Modal>
       <Modal
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: 'center' }}
         isVisible={removeItemShow}
         onBackdropPress={() => setRemoveItemShow(false)}
       >
@@ -321,11 +326,11 @@ let Beli = () => {
         ></ConfirmModal>
       </Modal>
       <Modal
-        style={{ alignSelf: "center" }}
+        style={{ alignSelf: 'center' }}
         isVisible={memberShow}
         onBackdropPress={() => setMemberShow(false)}
       >
-        <SearchMemberModal></SearchMemberModal>
+        <SearchMemberModal submit={memberBarcodeSubmit}></SearchMemberModal>
       </Modal>
       <Grid>
         {/* section 1 - Header */}
@@ -333,21 +338,21 @@ let Beli = () => {
           size={10}
           style={{
             backgroundColor: Pastel.dback,
-            justifyContent: "center",
+            justifyContent: 'center',
           }}
         >
-          <Text style={{ alignSelf: "center" }}>Member Barcode: </Text>
+          <Text style={{ alignSelf: 'center' }}>Member Barcode: </Text>
           <Item
             style={{
-              alignSelf: "center",
-              height: "3vh",
-              backgroundColor: "#FFFFFF",
-              width: "15vw",
+              alignSelf: 'center',
+              height: '3vh',
+              backgroundColor: '#FFFFFF',
+              width: '15vw',
             }}
             regular
           >
             <Input
-              style={{ height: "3vh" }}
+              style={{ height: '3vh' }}
               value={state.memberBarcode}
               onChangeText={(text) =>
                 setState((state) => ({ ...state, memberBarcode: text }))
@@ -357,8 +362,8 @@ let Beli = () => {
           <Button
             light
             style={{
-              alignSelf: "center",
-              marginLeft: "1vw",
+              alignSelf: 'center',
+              marginLeft: '1vw',
               borderWidth: 1,
               borderRadius: 15,
             }}
@@ -373,8 +378,8 @@ let Beli = () => {
         <Row size={8} style={{ backgroundColor: Pastel.lback }}>
           <Text
             style={{
-              alignSelf: "center",
-              marginLeft: "5vw",
+              alignSelf: 'center',
+              marginLeft: '5vw',
               fontSize: 32,
               padding: 5,
             }}
@@ -398,13 +403,13 @@ let Beli = () => {
               <Button
                 light
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
+                  alignSelf: 'center',
+                  marginLeft: '1vw',
                   borderWidth: 1,
                   borderRadius: 15,
                   marginTop: 50,
-                  width: "10vw",
-                  justifyContent: "center",
+                  width: '10vw',
+                  justifyContent: 'center',
                 }}
                 onPress={() => setAddItemShow(true)}
               >
@@ -413,14 +418,14 @@ let Beli = () => {
               <View style={{ flex: 1 }}></View>
               <Text
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                 }}
               >
                 Metode Pembayaran
               </Text>
               <View
                 style={{
-                  alignSelf: "center",
+                  alignSelf: 'center',
                   marginLeft: 5,
                   paddingLeft: 5,
                 }}
@@ -430,32 +435,32 @@ let Beli = () => {
               <TextInput
                 placeholder="Nomor Referensi"
                 style={{
-                  textAlign: "center",
+                  textAlign: 'center',
                   borderRadius: 2,
                   marginLeft: 10,
                   marginBottom: 10,
                   margin: 5,
-                  backgroundColor: "white",
-                  borderColor: "grey",
-                  height: "3vh",
+                  backgroundColor: 'white',
+                  borderColor: 'grey',
+                  height: '3vh',
                   borderWidth: 1,
-                  width: "15vw",
+                  width: '15vw',
                 }}
                 value={state.noRef}
                 onChangeText={(text) => {
-                  setter("noRef", text);
+                  setter('noRef', text);
                 }}
               />
               <Button
                 light
                 style={{
-                  alignSelf: "center",
-                  marginLeft: "1vw",
+                  alignSelf: 'center',
+                  marginLeft: '1vw',
                   borderWidth: 1,
                   borderRadius: 15,
                   marginBottom: 50,
-                  width: "10vw",
-                  justifyContent: "center",
+                  width: '10vw',
+                  justifyContent: 'center',
                 }}
                 onPress={() => {
                   submit();
