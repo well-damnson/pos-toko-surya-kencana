@@ -366,7 +366,11 @@ let ModalSearchMember = ({ submit }) => {
           {/* section 1 - Header */}
           <Row
             size={15}
-            style={{ backgroundColor: Pastel.dback, justifyContent: 'center' }}
+            style={{
+              backgroundColor: Pastel.dback,
+              justifyContent: 'center',
+              minWidth: 800,
+            }}
           >
             <Grid>
               <Col size={50}>
@@ -501,7 +505,11 @@ let ModalSearchMember = ({ submit }) => {
                 {/* <Styles>
                   <Table dat={filtered} ></Table>
                 </Styles> */}
-                <Table dat={filtered} submit={submit} setShowConfirm={setShowConfirm}></Table>
+                <Table
+                  dat={filtered}
+                  submit={submit}
+                  setShowConfirm={setShowConfirm}
+                ></Table>
               </Col>
               {/* section 3.3 Tombol Aksi*/}
               <Col size={2}></Col>
